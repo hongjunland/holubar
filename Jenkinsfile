@@ -11,8 +11,8 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-                sh 'docker build -t web:latest /var/jenkins_home/workspace/NFT/backend'
-                sh 'docker build -t server:latest /var/jenkins_home/workspace/NFT/frontend'
+                sh 'docker build -t web:latest /jenkins/workspace/NFT/backend'
+                sh 'docker build -t server:latest /jenkins/workspace/NFT/frontend'
             }
         }
         stage('Docker run') {
