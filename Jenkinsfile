@@ -11,8 +11,8 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-                sh 'docker build -t web:latest /jenkins/workspace/NFT/backend'
-                sh 'docker build -t server:latest /jenkins/workspace/NFT/frontend'
+                sh 'docker build -t web:latest /var/jenkins_home/workspace/NFT/backend'
+                sh 'docker build -t server:latest /var/jenkins_home/workspace/NFT/frontend'
             }
         }
         stage('Docker run') {
@@ -34,13 +34,13 @@ pipeline {
                 sh 'docker run -d --name web \
                 -p 80:80 \
                 -p 443:443 \
-                -v /home/ubuntu/sslkey/:/var/jenkins_home/workspace/agaein/sslkey/ \
+                -v /home/ubuntu/sslkey/:/var/jenkins_home/workspace/nft/sslkey/ \
                 -v /etc/localtime:/etc/localtime:ro \
-                --network agaeinnet \
+                --network nftnet \
                 web:latest'
                 sh 'docker run -d --name server \
                 -v /etc/localtime:/etc/localtime:ro \
-                --network agaeinnet server:latest'
+                --network nftnet server:latest'
             }
         }
     }
