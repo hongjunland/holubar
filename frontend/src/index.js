@@ -1,14 +1,17 @@
-import 'simplebar/src/simplebar.css';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
+import { store } from './app/store';
+import { Provider } from 'react-redux';
+import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <HelmetProvider>
-    <BrowserRouter>
+  <React.StrictMode>
+    <Provider store={store}>
       <App />
-    </BrowserRouter>
-  </HelmetProvider>,
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
+
+serviceWorker.unregister();
