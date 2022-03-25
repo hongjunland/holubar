@@ -1,12 +1,12 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {Home} from "./pages/Home";
+import {Home} from "pages/Home";
 
-export default () =>{
+export default function routes(){
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home/>}/>
-            </Routes>
-        </BrowserRouter>
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Home/>}/>
+        </Routes>
+    </BrowserRouter>
     );
 }
