@@ -1,20 +1,23 @@
 import React from 'react';
-import { MainNav} from 'components/common/MainNav';
+import { Nav } from 'components/common/Nav';
 import { Footer } from 'components/common/Footer';
 import { Main } from 'components/common/Main';
-import Routes from 'Routes';
+import Routes from 'routes';
+import {BrowserRouter as Router} from "react-router-dom";
+import { Header } from 'antd/lib/layout/layout';
 
 function App() {
   return (
     <div className='app'>
-      <h1>dssd</h1>
-      <header>
-        <MainNav/>
-      </header>
-      <Main>
-        <Routes/>
-      </Main>
-      <Footer/>
+      <Router>
+        <Header>
+          <Nav/>
+        </Header>
+        <Main>
+          <Routes/>
+        </Main>
+        <Footer/>
+      </Router>
     </div>
   );
 }
