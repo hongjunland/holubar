@@ -1,10 +1,17 @@
+import { css } from '@emotion/react';
 
-export function Banner(){
+const Banner = props => {
     return (
         <div>
-            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA4MjNfOTQg%2FMDAxNjI5NzI5NDUyNzIz.95nxrHmJILozADqjuVILvEBL4sxP-RPSUCLEndwdLdkg.c9X7bjCm5ypYrKWXYVDjcdIHbjs-eB_tgn9yoQaX93Ug.PNG.dorazi07%2Fgoldenweek2.png&type=sc960_832"
-                width="100%" height="225px"
+            <img src="https://as1.ftcdn.net/v2/jpg/02/70/64/54/1000_F_270645457_FR4CBhmmKSNqn4hk0X21PPzu4FuXLGxR.jpg"
+                css={css`
+                    width: 100%;
+                    height: 225px;
+                    position: relative;
+                    z-index: 0;
+                `}
             />
         </div>
     );
 }
+export default Banner;
