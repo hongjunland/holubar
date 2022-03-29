@@ -1,0 +1,16 @@
+nav{
+    display: flex;
+}
+nav *{
+    display: flex;
+}
+.Navbar--left{
+    font-size: 32px;
+}
+.Navbar--containerList *{
+    display: flex;
+}
+.Navbar--containerList li{
+    list-style: none;
+    padding: 0px 20px;
+}
