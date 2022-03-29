@@ -8,6 +8,7 @@ const cors = require('cors');
 // const itemsRouter = require('./src/items/items.controller');
 const salesRouter = require('./src/sales/sales.controller');
 const s3Router = require('./src/S3/server.js');
+const userRouter = require('./src/user/user.controller');
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/items', itemsRouter);
 app.use('/sales', salesRouter);
+app.use('/user', userRouter);
 
 app.use('/s3', s3Router);
 
