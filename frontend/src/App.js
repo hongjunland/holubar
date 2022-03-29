@@ -1,5 +1,5 @@
 import React from 'react';
-import Routes from 'Routes';
+import Routes from './routes';
 import { MainBar} from 'components/common/MainBar';
 import { Footer } from 'components/common/Footer';
 
