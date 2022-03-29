@@ -2,7 +2,7 @@
  *  PJT Ⅲ - Req.1-SC3) 시나리오 테스트
  */
 const SsafyToken = artifacts.require("SsafyToken");
-const SsafyNFT = artifacts.require("SsafyNFT");
+const SsafyNFT = artifacts.require("DonateNFT");
 const SaleFactory = artifacts.require("SaleFactory");
 const Sale = artifacts.require("Sale");
 let ssafyTokenContract, salesFactoryContract, nftContract, salesContract;
