@@ -8,10 +8,17 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Contract build') {
+            agent any
+            steps {
+                sh 'ls'
+                // sh 'truffle migrate'
+            }
+        }
         stage('Docker build') {
             agent any
             steps {
-                sh 'docker build -t web:latest /var/jenkins_home/workspace/NFT/backend'
+                sh 'docker build -t web:latest /cd var/jenkins_home/workspace/NFT/backend'
                 sh 'docker build -t server:latest /var/jenkins_home/workspace/NFT/frontend'
             }
         }
