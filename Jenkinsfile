@@ -12,7 +12,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker build -t web:latest /var/jenkins_home/workspace/NFT/backend'
-                sh 'docker build -t contract:latest /var/jenkins_home/workspace/NFT/smart-contract'
+                sh 'docker build -t contract:latest /var/jenkins_home/workspace/NFT/smart-contracts'
                 sh 'docker build -t server:latest /var/jenkins_home/workspace/NFT/frontend'
             }
         }
