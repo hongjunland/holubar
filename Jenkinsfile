@@ -13,6 +13,7 @@ pipeline {
             steps {
                 sh 'docker build -t web:latest /var/jenkins_home/workspace/NFT/backend'
                 sh 'cd smart-contracts'
+                sh 'ls'
                 sh 'docker build -t contract:latest .'
                 sh 'cd ..'
                 sh 'docker build -t server:latest /var/jenkins_home/workspace/NFT/frontend'
