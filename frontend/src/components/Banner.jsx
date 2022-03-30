@@ -1,9 +1,16 @@
 import { css } from '@emotion/react';
 
-const Banner = props => {
+const Banner = ({imgURL}) => {
     return (
-        <div>
-            <img src="https://as1.ftcdn.net/v2/jpg/02/70/64/54/1000_F_270645457_FR4CBhmmKSNqn4hk0X21PPzu4FuXLGxR.jpg"
+        <div
+            css={
+                css`
+                position: relative;
+                z-index: 0;
+                `
+            }
+        >
+            <img src={imgURL}
                 css={css`
                     width: 100%;
                     height: 225px;

@@ -5,7 +5,6 @@ const Stack = ({className, children})=>{
         <div
             className={className}
             css={css`
-                padding: 0 24px;
                 display: flex;
                 flex-direction: column;
             `}
