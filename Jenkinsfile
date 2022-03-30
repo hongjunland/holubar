@@ -11,7 +11,7 @@ pipeline {
         stage('Contract build') {
             agent any
             steps {
-                sh 'sudo apt install npm'
+                sh 'apt install npm'
                 sh 'npm i -g truffle'
                 sh 'cd smart-contracts'
                 sh 'truffle compile'
