@@ -1,9 +1,0 @@
-#Container,
-#Container div {
-  border: 1px solid gray;
-  margin: 5px;
-}
-#grid {
-  display: gird;
-  grid-template-columns: 1fr 1fr;
-}

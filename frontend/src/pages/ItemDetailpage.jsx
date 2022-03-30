@@ -7,8 +7,6 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import './ItemDetailpage.css'
-
 
 export function ItemDetail() {
 
