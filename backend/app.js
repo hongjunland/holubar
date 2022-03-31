@@ -9,6 +9,7 @@ const cors = require('cors');
 const salesRouter = require('./src/sales/sales.controller');
 const s3Router = require('./src/S3/server.js');
 const userRouter = require('./src/user/user.controller');
+const donationRouter = require('./src/donation/donation.controller');
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/items', itemsRouter);
 app.use('/sales', salesRouter);
 app.use('/user', userRouter);
-
+app.use('/donation', donationRouter);
 app.use('/s3', s3Router);
 
 // catch 404 and forward to error handler

@@ -1,5 +1,5 @@
 /**
- * Services Logics related to Sale
+ * Services Logics related to User
  * Service/Repository 레이어의 함수를 호출해야합니다.
  */
  const UserRepository = require('./user.repository');
