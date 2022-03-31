@@ -13,6 +13,7 @@ export default function routes(){
         <Route path="/donate" element={<DonatePage/>}/>
         <Route path="/market" element={<MarketPage/>}/>
         <Route path="/ranking" element={<RankingPage/>}/>
+        <Route path="/items/:itemId" element={<ItemDetail/>}/>
     </Routes>
     );
 }
