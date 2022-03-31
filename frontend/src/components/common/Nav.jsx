@@ -1,7 +1,7 @@
 import "./Nav.css"
 import {Link} from 'react-router-dom'
 
-export function Nav(){
+export default function Nav(){
     return (
         <nav>
             <div className="Navbar--left"><div><Link to="/">Holubar</Link></div></div>
