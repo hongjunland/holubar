@@ -1,16 +1,13 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button'
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import {Grid,Container,Button} from "@mui/material"
+import {TreeView, TreeItem} from "@mui/lab";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import './ItemDetailpage.css'
 
 
-export function ItemDetail() {
+export default function ItemDetail() {
 
   // 샘플데이터
   const tokenData = require('./../samplejson/ItemDetailPage.json');
