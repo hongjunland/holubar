@@ -1,7 +1,13 @@
-export function ProfilePage(){
+
+import ProfileContainer from "components/profile/ProfileContainer";
+
+const ProfilePage = ()=>{
     return (
         <div>
-            <h1>ProfilePage</h1>
+            <ProfileContainer/>
         </div>
     );
 }
+
+
+export default ProfilePage;

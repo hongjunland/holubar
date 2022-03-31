@@ -1,7 +1,7 @@
-export function Header(){
+export default function Header({children}){
     return(
-    <header>
-    
-    </header>
+        <header>
+            {children}
+        </header>
     )
 }
