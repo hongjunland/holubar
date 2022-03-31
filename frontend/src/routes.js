@@ -1,11 +1,10 @@
 import {Routes, Route} from "react-router-dom";
-import {HomePage} from "pages/HomePage";
-import { ProfilePage } from "pages/ProfilePage";
-import { DonatePage } from "pages/DonatePage";
-import { MarketPage } from "pages/MarketPage";
-import { RankingPage } from "pages/RankingPage";
-import { ItemDetail } from "pages/ItemDetailpage";
-import { SalesRegist } from "pages/SalesRegistPage";
+import HomePage from "pages/HomePage";
+import ProfilePage from "pages/ProfilePage";
+import DonatePage from "pages/DonatePage";
+import MarketPage from "pages/MarketPage";
+import RankingPage from "pages/RankingPage";
+import ItemDetail from "pages/ItemDetailpage";
 
 export default function routes(){
     return (
