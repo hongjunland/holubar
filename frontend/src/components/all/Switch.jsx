@@ -1,12 +1,20 @@
 import * as React from 'react';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
+import {FormGroup, FormControlLabel, Switch} from '@mui/material'
 
-export function SwitchLabels() {
+export function SwitchLabels(props) {
+
   return (
     <FormGroup>
-      <FormControlLabel control={<Switch defaultChecked />} label="판매등록" />
+      <FormControlLabel
+        control={
+          <Switch 
+            checked={props.sales}
+            onChange={props.onChange}
+            name="switch"
+          />
+        }
+        label="판매등록"
+      />
     </FormGroup>
   );
 }

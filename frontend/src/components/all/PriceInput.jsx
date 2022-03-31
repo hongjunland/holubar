@@ -1,9 +1,5 @@
 import * as React from 'react';
-import Box from '@material-ui/core/Box';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
+import {Box, Input, InputLabel, InputAdornment, FormControl} from '@mui/material'
 
 export function InputAdornments() {
   const [values, setValues] = React.useState({
