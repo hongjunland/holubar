@@ -13,22 +13,24 @@ const s3 = new S3({
   secretAccessKey
 })
 
-// uploads a file to s3
+// s3에 파일 업로드
 function uploadFile(file) {
   const fileStream = fs.createReadStream(file.path)
 
   const uploadParams = {
     Bucket: bucketName,
     Body: fileStream,
-    Key: file.filename
+    Key: file.filename,
+    ContentType: "image/jpeg"
   }
-
+ 
   return s3.upload(uploadParams).promise()
 }
 exports.uploadFile = uploadFile
 
 
-// downloads a file from s3
+// s3파일 다운로드 
+// 사용x
 function getFileStream(fileKey) {
   const downloadParams = {
     Key: fileKey,

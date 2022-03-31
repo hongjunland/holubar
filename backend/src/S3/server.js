@@ -12,6 +12,8 @@ const { uploadFile, getFileStream } = require('./s3')
 // const app = express()
 const router = express.Router();
 
+
+
 router.get('/images/:key', (req, res) => {
   console.log(req.params)
   const key = req.params.key

@@ -17,7 +17,7 @@
         return {
             statusCode: 201,
             responseBody: {
-                result: "success"
+                message: "success"
             }
         };
     }
@@ -35,7 +35,7 @@
             return{
                 statusCode: 204,
                 responseBody: {
-                    result: "profile null"
+                    message: "profile null"
                 }
             }
         }
@@ -67,7 +67,7 @@
             return{
                 statusCode: 204,
                 responseBody: {
-                    result: "null"
+                    message: "profile null"
                 }
             }
         }
@@ -90,17 +90,41 @@
 	 */
      async editProfile(email,walletAddress,nickname,profileImageUrl,bio) {
 
-        userRepository.editProfileByWalletAddress(email,walletAddress,nickname,profileImageUrl,bio);
-    
-    
-    
-            return {
-                statusCode: 200,
+        try {
+            var q = await userRepository.editProfileByWalletAddress(email,walletAddress,nickname,profileImageUrl,bio);
+            console.log(q)
+        } catch (err) {
+            if (err.code === 'ER_DUP_ENTRY') {
+               //handleHttpErrors(SYSTEM_ERRORS.USER_ALREADY_EXISTS);
+               console.log("dup error시작")
+                return {
+                    statusCode: 500,
+                    responseBody: {
+                        message: "dup error"
+                    }
+                };
+           } else {
+               //handleHttpErrors(err.message);
+               return {
+                statusCode: 500,
                 responseBody: {
-                    result: "success"
+                    message: "error"
                 }
             };
+            }
         }
+
+        return {
+            statusCode: 200,
+            responseBody: {
+                message: "success"
+            }
+        };
+    
+    
+    
+            
+    }
  
  }
  

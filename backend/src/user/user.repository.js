@@ -46,7 +46,8 @@
      * 
      */
     editProfileByWalletAddress(email,walletAddress,nickname,profileImageUrl,bio){
-        connection.query( `UPDATE user SET email = (?), nickname = (?), profile_image_url = (?), bio = (?) WHERE wallet_address =?`,[email,nickname,profileImageUrl,bio,walletAddress]);
+        var a = connection.query( `UPDATE user SET email = (?), nickname = (?), profile_image_url = (?), bio = (?) WHERE wallet_address =?`,[email,nickname,profileImageUrl,bio,walletAddress]);
+        return a;
     }
 }
 
