@@ -46,7 +46,10 @@ const SearchFilter=()=>{
           <Text>Price</Text>
         </AccordionSummary>
         <AccordionDetails>
-          <CurrencySelect>
+          <CurrencySelect
+            type={currency}
+            onChange={handleCurrencyOnChange}
+          >
             <MenuItem value="USD">
               <img 
                 alt="USD" 
@@ -79,24 +82,6 @@ const SearchFilter=()=>{
   );
 }
 
-const currencies = [
-  {
-    value: 'USD',
-    label: '$',
-  },
-  {
-    value: 'KOR',
-    label: '원(원 기호가 백슬래시로 나옴;;',
-  },
-  {
-    value: 'BTC',
-    label: '฿(비트코인 단위)',
-  },
-  {
-    value: 'ETM',
-    label: '이더리움은 기호가 뭔지 모르겠음',
-  },
-];
 export default SearchFilter;
 const CurrencySelect = props=> <Select {...props} onChange={props.onChange}/>;
 const FiterHeader = styled.div`

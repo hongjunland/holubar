@@ -7,6 +7,8 @@ import ProfileTab from './ProfileTab';
 import { useState } from 'react';
 import { css } from '@emotion/react';
 import Stack from 'components/Stack';
+import MarketContainer from 'components/market/MarketContainer';
+import itemList from "samplejson/ItemList.json";
 
 const ProfileContainer = ()=>{
     
@@ -77,7 +79,7 @@ const ProfileContainer = ()=>{
                     >{summarize(walletAddress)}</TextAddress>          
                 </IconButton>
                 <TextField
-                    disabled="true"
+                    disabled={true}
                     value={bio}
                     css={css`
                         margin-top: 12px;
@@ -85,6 +87,7 @@ const ProfileContainer = ()=>{
                 />
             </MainContainer>
             <ProfileTab/>
+            <MarketContainer items = {itemList}/>
         </Stack>
     );
 }

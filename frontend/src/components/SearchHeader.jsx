@@ -8,7 +8,7 @@ const SearchHeader = ({items})=>{
     const [searchText, setSearchText] = useState("");
     const [sortType, setSortType] = useState("Recently");
     const handleSeachOnkeyPress = (e)=>{
-        if(e.key=='Enter'){
+        if(e.key =='Enter'){
             console.log(searchText +" 검색!");
         } 
     }
