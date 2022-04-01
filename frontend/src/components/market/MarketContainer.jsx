@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import Drawer from "components/PersistentDrawerLeft";
+import SearchFilter from "components/SearchFilter";
 import List from "components/List";
 import SearchHeader from "components/SearchHeader";
 
@@ -8,7 +8,7 @@ const MarketContainer = ({items})=>{
     return (
     <Container>
         <FilterContainer>
-            <Drawer/>
+            <SearchFilter/>
         </FilterContainer>
         <MainContainer>
             <SearchHeader items={items}/>
@@ -33,6 +33,7 @@ const FilterContainer = styled.div`
 `;
 
 const MainContainer = styled.div`
+    border-left: 1px solid rgb(229, 232, 235);
     @media (min-width: 600px){
         flex: 1 0 0%;
         padding: 0px 28px;
@@ -43,8 +44,3 @@ const SeachView = styled.div`
         padding: 16px 0px;
     }
 `;
-
-// const FilterContainer = styled.div`
-//     margin: 0;
-//     padding: 0;
-// `;

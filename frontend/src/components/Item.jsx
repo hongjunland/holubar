@@ -19,7 +19,7 @@ return (
             <CardContent
                 css={css`
                     display:flex;
-                    width: 100%;
+                    width: auto;
                 `}
             >
                 <CardContentLeft>
@@ -73,7 +73,7 @@ const CardContentLeft = styled.div`
     width: 60%;
 `;
 const CardContentRight = styled.div`
-width: 40%;
+    width: 40%;
 `;
 
 export default Item;

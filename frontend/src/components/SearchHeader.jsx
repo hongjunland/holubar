@@ -46,7 +46,7 @@ const SearchHeader = ({items})=>{
             <SelctContainer>
                 <Select
                     displayEmpty
-                    onChange={setType}
+                    onChange={handleSortTypeOnChange}
                     value={type}
                     css={css`
                         width:100%;
