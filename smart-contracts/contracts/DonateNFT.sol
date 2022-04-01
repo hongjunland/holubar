@@ -14,6 +14,7 @@ contract DonateNFT is ERC721, Ownable {
     Tokens[] public tokens;
 
     struct Tokens {
+        uint256 tokenId;
         string tokenURI;
         uint256 donateAmmount;
     }
@@ -39,7 +40,7 @@ contract DonateNFT is ERC721, Ownable {
         uint256 price
     ) public returns (uint256) {
         uint256 tokenId = tokens.length;
-        tokens.push(Tokens(_tokenURI, price));
+        tokens.push(Tokens(tokenId, _tokenURI, price));
         _mint(to, tokenId);
 
         return tokenId;
