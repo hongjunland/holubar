@@ -1,62 +1,44 @@
 import styled from "@emotion/styled";
 import { Input, MenuItem } from "@mui/material";
-import { css } from "@emotion/react";
-import { Select } from "@mui/material";
 import { useState} from "react";
-import SearchIcon from '@mui/icons-material/Search';
+import Select from "components/Select";
+import SearchBar from "./SearchBar";
 
 const SearchHeader = ({items})=>{
-    const [type, setType] = useState(0);
     const [searchText, setSearchText] = useState("");
-    const handleSortTypeOnChange = (event) => {
-        setType(event.target.value);
-    };
-    const handlesearchTextOnChange = (e)=>{
-        setSearchText(e.target.value);
-    };
+    const [sortType, setSortType] = useState("Recently");
     const handleSeachOnkeyPress = (e)=>{
         if(e.key=='Enter'){
             console.log(searchText +" 검색!");
         } 
     }
+    const handlesearchTextOnChange = (e)=>{
+        setSearchText(e.target.value);
+    };
+    const handleSortTypeOnchange= event=>{
+        setSortType(event.target.value);
+    }
     return(
         <Container>
             <Text>{items.length} items</Text>
             <SearchBarContainer>
-                <SearchIcon
-                    css={css`
-                        justify-content: center;
-                        margin-right: 8px;
-                        height:auto;
-                    `}
-                />
-                <input
-                    css={css`
-                        line-height: 26px;
-                        cursor: text;
-                        border: 0;
-                        width: 100%;
-                    `}
-                    placeholder="Seach items...."
+                <SearchBar
+                    className={SearchBarContainer}
                     value={searchText}
                     onChange={handlesearchTextOnChange}
                     onKeyPress={handleSeachOnkeyPress}
-                /> 
+                />
             </SearchBarContainer>
             <SelctContainer>
-                <Select
-                    displayEmpty
-                    onChange={handleSortTypeOnChange}
-                    value={type}
-                    css={css`
-                        width:100%;
-                    `}
+                <SortTypeSelect
+                    type={sortType}
+                    onChange={handleSortTypeOnchange}
                 >
                     <MenuItem value={0}>Recently</MenuItem>
                     <MenuItem value={1}>Oldest</MenuItem>
                     <MenuItem value={2}>Price: High to Low</MenuItem>
                     <MenuItem value={3}>Price: Low to High</MenuItem>
-                </Select>
+                </SortTypeSelect>
             </SelctContainer>
         </Container>
     );
@@ -72,7 +54,6 @@ const Container = styled.div`
 `;
 const SearchBarContainer = styled.div`
     max-width: 768px;
-    display: flex;
     width: 100%;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
@@ -80,7 +61,6 @@ const SearchBarContainer = styled.div`
     padding: 8px;
 `
 const SelctContainer = styled.div`
-    display: flex;
     justify-content: flex-end;
     width:15%;
     max-width: 100%;
@@ -94,7 +74,5 @@ const Text = styled.div`
     font-size: 16px;
 `;
 
-function escapeRegExp(value) {
-    return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
-}
+const SortTypeSelect = props=> <Select {...props} onChange={props.onChange}/>;
 export default SearchHeader;
