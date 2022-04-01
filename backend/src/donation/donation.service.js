@@ -7,9 +7,9 @@
  const donationRepository = new DonationRepository();
 
  class DonationService {
-    save(userId, price, nickname, profileIamgeUrl) {
+    save(userId, price, nickname, profileImageUrl) {
 
-        donationRepository.save(userId, price, nickname, profileIamgeUrl)
+        donationRepository.save(userId, price, nickname, profileImageUrl)
 
         return {
             statusCode: 201,
@@ -26,7 +26,7 @@
         return {
             statusCode: 201,
             responseBody: {
-                rankingList : rankList
+                rankList
             }
         };
     }

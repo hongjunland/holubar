@@ -6,21 +6,23 @@
  const DonationService = require('./donation.service');
  const donationService = new DonationService();
 
-
+//jwt
+const jwt = require('../jwt/jwt');
+const authUtil =  require('../jwt/auth').checkToken;
 
 
  /**
  * 기부 내역 저장 API
  */
- router.post('/save',  async function (req, res) {
+ router.post('/save', authUtil, async function (req, res) {
 
     const userId = req.body.userId;
 	const price = req.body.price;
 	const nickname = req.body.nickname;
-	const profileIamgeUrl = req.body.profileIamgeUrl;
+	const profileImageUrl = req.body.profileImageUrl;
 
 
-    const { statusCode, responseBody } = await donationService.save(userId, price, nickname, profileIamgeUrl);
+    const { statusCode, responseBody } = await donationService.save(userId, price, nickname, profileImageUrl);
 
 
 
@@ -31,7 +33,7 @@
 /**
  * 기부 랭킹 10위 조회
  */
-router.get('/rank',  async function (req, res) {
+router.get('/rank', authUtil, async function (req, res) {
 
 
 

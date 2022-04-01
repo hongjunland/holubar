@@ -7,9 +7,9 @@ const connection = require('../../config/connection').promise();
 class DonationRepository{
 
     //기부내역 저장
-    save(userId, price, nickname, profileIamgeUrl){
+    save(userId, price, nickname, profileImageUrl){
 
-        connection.query( `INSERT INTO donation(user_id,price,nickname,profile_image_url) VALUE (?,?,?,?)`,[userId, price, nickname, profileIamgeUrl]);
+        connection.query( `INSERT INTO donation(user_id,price,nickname,profile_image_url) VALUE (?,?,?,?)`,[userId, price, nickname, profileImageUrl]);
     }
 
     //기부랭킹 10등까지 가져오기
