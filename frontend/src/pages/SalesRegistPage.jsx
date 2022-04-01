@@ -1,26 +1,13 @@
 import React from 'react'
-import {Grid, Container} from '@mui/material'
+import {Grid, Container, Button} from '@mui/material'
 
-import { SwitchLabels as Switch } from '../components/all/Switch'
-import { LabTabs } from '../components/all/SmallTab'
-import { Button } from '@material-ui/core';
+import SwitchLabels from '../components/all/Switch'
+import LabTabs from '../components/all/SmallTab'
 
 
-export function SalesRegist() {
+export default function SalesRegist() {
 
   const tokenData = require('./../samplejson/SalesRegistPage.json');
-  const [state, setState] = React.useState({
-    sales: false,
-  });
-
-  const handleChange = (event) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.checked,
-    });
-    console.log(state.sales)
-  };
-
   return (
     <Container fixed>
       <Grid container>
@@ -34,9 +21,28 @@ export function SalesRegist() {
           { tokenData.owner }
           <br />
           <h3>{ tokenData.tokenName }</h3>
-          <Switch sales={state.sales} onChange={handleChange} name="sales"/>
-          <LabTabs />
-          <Button variant="contained">SAVE</Button>
+          <SwitchLabels
+            sales={Boolean(tokenData.sales)}
+            onChange={() => {
+              if (Boolean(tokenData.sales)){
+                tokenData.sales = ""
+              }else{
+                tokenData.sales = "1"
+              }
+            }}
+          />
+          <LabTabs 
+            price={tokenData.price}
+            onChange={(data)=>{
+              tokenData.price=data
+            }}
+          />
+          <Button 
+            variant="contained"
+            onClick={()=>{
+              console.log(tokenData)
+            }}
+          >SAVE</Button>
         </Grid>
       </Grid>
     </Container>
