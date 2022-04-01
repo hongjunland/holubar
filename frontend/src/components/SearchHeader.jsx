@@ -2,17 +2,22 @@ import styled from "@emotion/styled";
 import { Input, MenuItem } from "@mui/material";
 import { css } from "@emotion/react";
 import { Select } from "@mui/material";
-import { useState } from "react";
+import { useState} from "react";
 import SearchIcon from '@mui/icons-material/Search';
 
 const SearchHeader = ({items})=>{
     const [type, setType] = useState(0);
-    const [keyword, setKeyword] = useState("");
+    const [searchText, setSearchText] = useState("");
     const handleSortTypeOnChange = (event) => {
         setType(event.target.value);
-      };
-    const handleKeywordOnChange = (event) =>{
-        setKeyword(event.target.value);
+    };
+    const handlesearchTextOnChange = (e)=>{
+        setSearchText(e.target.value);
+    };
+    const handleSeachOnkeyPress = (e)=>{
+        if(e.key=='Enter'){
+            console.log(searchText +" 검색!");
+        } 
     }
     return(
         <Container>
@@ -33,14 +38,15 @@ const SearchHeader = ({items})=>{
                         width: 100%;
                     `}
                     placeholder="Seach items...."
-                    value={keyword}
-                    onChange={handleKeywordOnChange}
-                />
+                    value={searchText}
+                    onChange={handlesearchTextOnChange}
+                    onKeyPress={handleSeachOnkeyPress}
+                /> 
             </SearchBarContainer>
             <SelctContainer>
                 <Select
                     displayEmpty
-                    onChange={handleSortTypeOnChange}
+                    onChange={setType}
                     value={type}
                     css={css`
                         width:100%;
@@ -88,4 +94,7 @@ const Text = styled.div`
     font-size: 16px;
 `;
 
+function escapeRegExp(value) {
+    return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
 export default SearchHeader;

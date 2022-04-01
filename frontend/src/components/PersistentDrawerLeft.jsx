@@ -8,6 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { css } from '@emotion/react';
+import { AppBar ,Toolbar,Typography} from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -15,7 +16,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
 }));
@@ -33,9 +33,7 @@ export default function PersistentDrawerLeft() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}
-    >
-      <CssBaseline />
+    <Box position="fixed" sx={{ display: 'flex'}}>
       <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -43,7 +41,7 @@ export default function PersistentDrawerLeft() {
             edge="start"
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
-            <MenuIcon />
+            <ChevronRightIcon/>
       </IconButton>
       <Drawer
         sx={{
@@ -59,7 +57,6 @@ export default function PersistentDrawerLeft() {
         open={open}
       >
         <DrawerHeader
-          className='sdsd'
         >
           <IconButton onClick={handleDrawerClose}
           >

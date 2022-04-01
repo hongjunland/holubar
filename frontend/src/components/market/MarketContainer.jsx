@@ -7,7 +7,9 @@ import SearchHeader from "components/SearchHeader";
 const MarketContainer = ({items})=>{
     return (
     <Container>
-        <Drawer/>
+        <FilterContainer>
+            <Drawer/>
+        </FilterContainer>
         <MainContainer>
             <SearchHeader items={items}/>
             <SeachView>
@@ -25,6 +27,11 @@ const Container = styled.div`
         display: flex;
     }
 `
+const FilterContainer = styled.div`
+    width: 340px;
+    height: 100%;
+`;
+
 const MainContainer = styled.div`
     @media (min-width: 600px){
         flex: 1 0 0%;
@@ -36,7 +43,6 @@ const SeachView = styled.div`
         padding: 16px 0px;
     }
 `;
-
 
 // const FilterContainer = styled.div`
 //     margin: 0;
