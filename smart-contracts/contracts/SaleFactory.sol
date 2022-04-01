@@ -24,7 +24,7 @@ contract SaleFactory is Ownable {
     }
 
     /**
-     * @dev 반드시 구현해야하는 함수입니다. 
+     * @dev 반드시 구현해야하는 함수입니다.
      */
     function createSale(
         uint256 itemId,
@@ -101,13 +101,13 @@ contract Sale {
     }
 
     function purchase() public {
-        // TODO 
+        // TODO
     }
 
     function confirmItem() public {
-        // TODO 
+        // TODO
     }
-    
+
     function cancelSales() public {
         // TODO
     }
@@ -144,7 +144,7 @@ contract Sale {
         );
     }
 
-    function getHighestBid() public view returns(uint256){
+    function getHighestBid() public view returns (uint256) {
         return highestBid;
     }
 
@@ -157,7 +157,7 @@ contract Sale {
         return erc20Contract.balanceOf(msg.sender);
     }
 
-    // modifier를 사용하여 함수 동작 조건을 재사용하는 것을 권장합니다. 
+    // modifier를 사용하여 함수 동작 조건을 재사용하는 것을 권장합니다.
     modifier onlySeller() {
         require(msg.sender == seller, "Sale: You are not seller.");
         _;

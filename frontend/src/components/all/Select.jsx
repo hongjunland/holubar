@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Box, TextField, MenuItem} from '@mui/material'
 
-import { InputAdornments as PriceInput } from './PriceInput';
+import InputAdornments from './PriceInput';
 
 const currencies = [
   {
@@ -22,13 +22,13 @@ const currencies = [
   },
 ];
 
-export function SelectTextFields() {
-  const [currency, setCurrency] = React.useState('EUR');
+export default function SelectTextFields(props) {
+  const [currency, setCurrency] = React.useState('ETM');
 
   const handleChange = (event) => {
     setCurrency(event.target.value);
   };
-
+  const [price, setPrice] = React.useState(props.price)
   return (
     <Box
       component="form"
@@ -54,7 +54,13 @@ export function SelectTextFields() {
           ))}
         </TextField>
       </div>
-      <PriceInput />
+      <InputAdornments 
+        price={price}
+        onChange={(data)=>{
+          setPrice(data);
+          props.onChange(data);
+        }}
+      />
     </Box>
   );
 }

@@ -1,19 +1,27 @@
 import * as React from 'react';
 import {FormGroup, FormControlLabel, Switch} from '@mui/material'
 
-export function SwitchLabels(props) {
-
+export default function SwitchLabels(props) {
+  const [state, setState] = React.useState({
+    sales: props.sales
+  })
+  const handleChange = (event) => {
+    setState({
+      ...state,
+      sales: event.target.checked,
+    });
+    props.onChange();
+  };
   return (
     <FormGroup>
-      <FormControlLabel
+      <FormControlLabel 
         control={
           <Switch 
-            checked={props.sales}
-            onChange={props.onChange}
-            name="switch"
+            checked={state.sales}
+            onChange={handleChange}
           />
-        }
-        label="판매등록"
+        } 
+        label="판매등록" 
       />
     </FormGroup>
   );
