@@ -19,7 +19,6 @@ contract("NftCreator", (accounts) => {
             const address2 = "0xd85f12071b353b3d5451bc714cfa9740f9de395a";
             const tokenURI = "tempURI";
 
-
             let tokenId = (await token.create(address1, tokenURI, 5)).logs[0].args["tokenId"];
             let owner = (await token.ownerOf(tokenId)).toLowerCase();
 
