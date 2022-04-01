@@ -12,6 +12,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker build -t web:latest /var/jenkins_home/workspace/NFT/backend'
+                sh 'docker build -t contract:latest /var/jenkins_home/workspace/NFT/smart-contracts'
                 sh 'docker build -t server:latest /var/jenkins_home/workspace/NFT/frontend'
             }
         }
@@ -22,10 +23,14 @@ pipeline {
         | xargs --no-run-if-empty docker container stop'
                 sh 'docker ps -f name=server -q \
                 | xargs --no-run-if-empty docker container stop'
+                sh 'docker ps -f name=contract -q \
+                | xargs --no-run-if-empty docker container stop'
 
                 sh 'docker container ls -a -f name=web -q \
         | xargs -r docker container rm'
                 sh 'docker container ls -a -f name=server -q \
+        | xargs -r docker container rm'
+                sh 'docker container ls -a -f name=contract -q \
         | xargs -r docker container rm'
 
                 sh 'docker images -f dangling=true && \
@@ -38,6 +43,10 @@ pipeline {
                 -v /etc/localtime:/etc/localtime:ro \
                 --network nftnet \
                 web:latest'
+                sh 'docker run -d --name contract \
+                -p 7545:7545 \
+                -v /etc/localtime:/etc/localtime:ro \
+                --network nftnet contract:latest'
                 sh 'docker run -d --name server \
                 -v /etc/localtime:/etc/localtime:ro \
                 --network nftnet server:latest'
