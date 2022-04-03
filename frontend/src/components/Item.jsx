@@ -4,6 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea} from '@mui/material';
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { EthereumIcon } from './Icons';
 
 const Item = ({
     item
@@ -11,17 +12,8 @@ const Item = ({
 return (
     <Card sx={{ maxWidth: 345 }}>
         <CardActionArea>
-            <CardMedia
-                component="img"
-                height="289"
-                src={item.tokenImg}
-            />
-            <CardContent
-                css={css`
-                    display:flex;
-                    width: auto;
-                `}
-            >
+            <ItemImage src={item.tokenImg}/>
+            <ItemContent>
                 <CardContentLeft>
                     <LabelText>
                         {item.owner}
@@ -36,16 +28,11 @@ return (
                         Price
                     </LabelText>
                     <CardPrice>
-                        <img 
-                        alt="ETH" 
-                        src="https://openseauserdata.com/files/6f8e2979d428180222796ff4a33ab929.svg"
-                        width="14px"
-                        height="14px"
-                        />
+                        <EthereumIcon/>
                         <span>{item.price}</span>
                     </CardPrice>
                 </CardContentRight>
-            </CardContent>
+            </ItemContent>
         </CardActionArea>
     </Card>
 )
@@ -72,8 +59,27 @@ const CardPrice = styled.div`
 const CardContentLeft = styled.div`
     width: 60%;
 `;
+
 const CardContentRight = styled.div`
     width: 40%;
 `;
+
+const ItemImage = ({...props})=>{
+    return (
+        <CardMedia
+            component="img"
+            height="289"
+            src={props.src}
+        />
+    );
+}
+
+const ItemContent = ({children, ...props})=>{
+    return(
+        <CardContent css={css` display:flex;`} {...props}>
+            {children}
+        </CardContent>
+    );
+}
 
 export default Item;

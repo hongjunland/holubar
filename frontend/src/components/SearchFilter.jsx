@@ -7,8 +7,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import ToggleButtons from './ToggleButtons';
 import Select from "components/Select";
 import { useState } from 'react';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-
+import { EthereumIcon, USDIcon } from './Icons';
 
 const SearchFilter=()=>{
   const [currency, setCurrency] = useState("0");
@@ -51,29 +50,12 @@ const SearchFilter=()=>{
             onChange={handleCurrencyOnChange}
           >
             <MenuItem value="USD">
-              <img 
-                alt="USD" 
-                src="https://svgsilh.com/svg/1159943.svg"
-                width="14px"
-                height="14px"
-                css={css`
-                  margin-right: 10px;
-                  height: auto;
-                `}
-              />
+              <USDIcon />
                 United States Dollar (USD)
               </MenuItem>
             <MenuItem value="ETH">
-              <img 
-                alt="ETH" 
-                src="https://openseauserdata.com/files/6f8e2979d428180222796ff4a33ab929.svg"
-                width="14px"
-                height="14px"
-                css={css`
-                  margin-right: 10px;
-                  height: auto;
-                `}
-              />  Ether (ETH)
+            <EthereumIcon/>
+              Ether (ETH)
             </MenuItem>
           </CurrencySelect>
         </AccordionDetails>
@@ -84,6 +66,7 @@ const SearchFilter=()=>{
 
 export default SearchFilter;
 const CurrencySelect = props=> <Select {...props} onChange={props.onChange}/>;
+
 const FiterHeader = styled.div`
   display:flex;
   padding: 0px 16px;
