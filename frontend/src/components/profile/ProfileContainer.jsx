@@ -6,7 +6,6 @@ import Banner from 'components/Banner';
 import ProfileTab from './ProfileTab';
 import { useState } from 'react';
 import { css } from '@emotion/react';
-import Stack from 'components/Stack';
 import MarketContainer from 'components/market/MarketContainer';
 import itemList from "samplejson/ItemList.json";
 
@@ -22,7 +21,7 @@ const ProfileContainer = ()=>{
         return text.slice(0,5)+"..."+text.slice(-5);
     }
     return (
-        <Stack
+        <Container
         >
             <Banner imgURL={profileBackgroundImage}/>
             <DivContainer>
@@ -88,10 +87,13 @@ const ProfileContainer = ()=>{
             </MainContainer>
             <ProfileTab/>
             <MarketContainer items = {itemList}/>
-        </Stack>
+        </Container>
     );
 }
-
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
 
 const DivContainer = styled.div`
     display: flex;
@@ -150,4 +152,5 @@ const FlexEndBlock = styled.div`
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 `;
+
 export default ProfileContainer;
