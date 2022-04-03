@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 
+import RankingTitle from "./RankingTitle";
+
 // const Ranking = styled(Paper)(({ theme }) => ({
 //   backgroundColor: "blue",
 //   padding: theme.spacing(3),
@@ -64,8 +66,24 @@ const RankingContainer = () => {
     //     <Ranking>Rank 3</Ranking>
     //   </Stack>
     // </Box>
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+    <TableContainer
+      component={Paper}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <Table
+        sx={{
+          marginTop: 8,
+          width: "800px",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: 8,
+        }}
+        aria-label="customized table"
+      >
         <TableHead>
           <TableRow>
             <StyledTableCell>랭킹</StyledTableCell>

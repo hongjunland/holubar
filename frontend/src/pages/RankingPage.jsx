@@ -1,9 +1,9 @@
 import RankingContainer from "components/ranking/RankingContainer";
-
+import RankingTitle from "components/ranking/RankingTitle";
 const RankingPage = () => {
   return (
     <div>
-      <h1>RankingPage</h1>
+      <RankingTitle />
       <RankingContainer />
     </div>
   );
