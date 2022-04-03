@@ -4,8 +4,9 @@ import Tab from "@mui/material/Tab";
 import PhotoFilterIcon from '@mui/icons-material/PhotoFilter';
 import ImagesearchRollerIcon from '@mui/icons-material/ImagesearchRoller';
 import HistoryIcon from '@mui/icons-material/History';
-import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
+import { useSelector, useDispatch } from "react-redux";
+import { changeTabIndex } from "state/tabIndexSlice";
 
 const useTabStyles = makeStyles({
     root: {
@@ -22,8 +23,8 @@ const ProfileTab = ({
     children,
 })=>{
     const classes = useTabStyles();
-    const [value, setValue] = useState(0);
-    const handleChange = (event, newValue)=>{setValue(newValue)}
+    const index = useSelector((state)=>state.tabIndex.value);
+    const dispatch = useDispatch();
     return(
         <div
             css={css`
@@ -32,8 +33,8 @@ const ProfileTab = ({
         >
             <Tabs
                 classes={{ root: classes.root, scroller: classes.scroller }}
-                value={value}
-                onChange={handleChange}
+                value={index}
+                onChange={(e,newValue)=>dispatch(changeTabIndex(newValue))}
                 centered
                 css={css`
                     padding: 0px 8px;
