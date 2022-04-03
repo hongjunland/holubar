@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Input, MenuItem } from "@mui/material";
+import { MenuItem } from "@mui/material";
 import { useState} from "react";
 import Select from "components/Select";
 import SearchBar from "./SearchBar";
@@ -24,20 +24,20 @@ const SearchHeader = ({items})=>{
             <SearchBarContainer>
                 <SearchBar
                     className={SearchBarContainer}
-                    value={searchText}
+                    value={searchText || ''}
                     onChange={handlesearchTextOnChange}
                     onKeyPress={handleSeachOnkeyPress}
                 />
             </SearchBarContainer>
             <SelctContainer>
                 <SortTypeSelect
-                    type={sortType}
+                    type={sortType || ''}
                     onChange={handleSortTypeOnchange}
                 >
-                    <MenuItem value={0}>Recently</MenuItem>
-                    <MenuItem value={1}>Oldest</MenuItem>
-                    <MenuItem value={2}>Price: High to Low</MenuItem>
-                    <MenuItem value={3}>Price: Low to High</MenuItem>
+                    <MenuItem value={"0"}>Recently</MenuItem>
+                    <MenuItem value={"1"}>Oldest</MenuItem>
+                    <MenuItem value={"2"}>Price: High to Low</MenuItem>
+                    <MenuItem value={"3"}>Price: Low to High</MenuItem>
                 </SortTypeSelect>
             </SelctContainer>
         </Container>

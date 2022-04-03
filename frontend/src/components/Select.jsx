@@ -8,6 +8,7 @@ const SingleSelect = ({
 
     return (
         <Select
+            defaultValue={""}
             {...rest}
             displayEmpty
             css={css`

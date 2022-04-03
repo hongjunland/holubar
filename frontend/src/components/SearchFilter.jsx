@@ -6,30 +6,41 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ToggleButtons from './ToggleButtons';
 import Select from "components/Select";
-import { useState } from 'react';
 import { EthereumIcon, USDIcon } from './Icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeCurrency, changeFrom , changeTo} from 'state/priceRangeSlice';
+import { useEffect } from 'react';
 
 const SearchFilter=()=>{
-  const [currency, setCurrency] = useState("0");
-  const initPriceRange = {from:'', to:''};
-  const [priceRange, setPriceRange] = useState(initPriceRange);
-
-  const handleCurrencyOnChange = (e)=>{
-    setCurrency(e.target.value);
-  };
-  const handleChange = async(e)=>{
-    const {name, value} = e.target;
-    await setPriceRange({...priceRange, [name]: parseInt(value)});
-    handleValid();
-  }
+  const currency = useSelector((state)=>state.priceRange.currency);
+  const from = useSelector((state)=>state.priceRange.from);
+  const to = useSelector((state)=>state.priceRange.to);
+  const dispatch = useDispatch();
   const handleValid = ()=>{
-    if(priceRange.from==='' || priceRange.to==='') return false;
-    if(priceRange.from<=priceRange.to) return true;
+    if(from==='' || to==='') return false;
+    if(from<=to) return true;
     return false;
   }
   const onClickRange = ()=>{
       console.log('click!');
   }
+  const handleChangeCurrency = (e)=>{
+    dispatch(changeCurrency(e.target.value));
+  }
+  const handleChangeFrom = (e)=>{
+    dispatch(changeFrom(e.target.value));
+  }
+  const handleChangeTo = (e)=>{
+    dispatch(changeTo(e.target.value));
+  }
+  const init = ()=>{
+    dispatch(changeCurrency(""));
+    dispatch(changeFrom(""));
+    dispatch(changeTo(""));
+  }
+  useEffect(()=>{
+    init();
+  },[]);
 
   return (
     <>
@@ -63,22 +74,24 @@ const SearchFilter=()=>{
         </AccordionSummary>
         <AccordionDetails>
           <CurrencySelect
-            type={currency}
-            onChange={handleCurrencyOnChange}
+            type={currency || ''}
+            onChange={handleChangeCurrency}
           >
             <MenuItem value="USD">
               <USDIcon />
                 United States Dollar (USD)
               </MenuItem>
             <MenuItem value="ETH">
-            <EthereumIcon/>
-              Ether (ETH)
-            </MenuItem>
+              <EthereumIcon/>
+                Ether (ETH)
+              </MenuItem>
           </CurrencySelect>
           <PriceContent>
-            <TextField name="from" type='number' placeholder="Min" value={priceRange.from} onChange={handleChange}/>
+            <TextField name="from" type='number' placeholder="Min" value={from || ''} 
+            onChange={handleChangeFrom}/>
             <p>to</p>
-            <TextField name="to" type='number' placeholder="Max" value={priceRange.to} onChange={handleChange}/>
+            <TextField name="to" type='number' placeholder="Max" value={to || ''} 
+            onChange={handleChangeTo}/>
           </PriceContent>
           <Button variant="contained" disabled={!handleValid()} onClick={onClickRange}>Apply</Button>
         </AccordionDetails>
