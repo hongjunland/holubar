@@ -32,6 +32,10 @@ contract Market is Ownable {
         NFTAddress = _NFTAddress;
     }
 
+    function getNFTAddress() public view returns (address) {
+        return NFTAddress;
+    }
+
     function newSale(
         address seller,
         uint256 tokenId,
@@ -55,13 +59,23 @@ contract Market is Ownable {
 
     function trading(uint256 tokenId) public payable {
         address buyer = msg.sender;
-        address seller = sales[tokenId].seller;
-        address payable coinSend = payable(seller);
-        emit SendEther(coinSend, seller, sales[tokenId].price);
-        coinSend.transfer(sales[tokenId].price);
+        address payable seller = payable(sales[tokenId].seller);
+        emit SendEther(buyer, seller, sales[tokenId].price);
+        seller.transfer(sales[tokenId].price);
 
         DonateNFT(NFTAddress).transferFrom(address(this), buyer, tokenId);
 
         deleteSale(tokenId);
+    }
+
+    function donating(address donateGetter, string memory _tokenURI)
+        public
+        payable
+    {
+        address donatingAddress = msg.sender;
+        address payable getter = payable(donateGetter);
+        getter.transfer(msg.value);
+
+        DonateNFT(NFTAddress).create(donatingAddress, _tokenURI, msg.value);
     }
 }

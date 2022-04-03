@@ -14,6 +14,7 @@ contract DonateNFT is ERC721, Ownable {
     Tokens[] public tokens;
 
     struct Tokens {
+        address owner;
         uint256 tokenId;
         string tokenURI;
         uint256 donateAmmount;
@@ -25,24 +26,37 @@ contract DonateNFT is ERC721, Ownable {
         return _tokenIds;
     }
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        override
-        returns (string memory)
-    {
-        return tokens[tokenId].tokenURI;
+    function getTokenById(uint256 tokenId) public view returns (Tokens memory) {
+        return tokens[tokenId];
     }
 
     function create(
-        address to,
+        address owner,
         string memory _tokenURI,
         uint256 price
     ) public returns (uint256) {
-        uint256 tokenId = tokens.length;
-        tokens.push(Tokens(tokenId, _tokenURI, price));
-        _mint(to, tokenId);
+        _mint(owner, _tokenIds);
 
-        return tokenId;
+        tokens.push(Tokens(owner, _tokenIds, _tokenURI, price));
+        _tokenIds++;
+
+        return _tokenIds - 1;
+    }
+
+    function getTokensByWallet(address target)
+        public
+        view
+        returns (Tokens[] memory)
+    {
+        Tokens[] memory ret = new Tokens[](tokens.length);
+        uint256 j = 0;
+        for (uint256 i = 0; i < tokens.length; i++) {
+            if (tokens[i].owner == target) {
+                ret[j] = tokens[i];
+                j++;
+            }
+        }
+
+        return ret;
     }
 }
