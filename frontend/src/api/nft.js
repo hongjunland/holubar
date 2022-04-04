@@ -12,20 +12,20 @@ const createToken = async(asset, success, fail)=>{
 //토큰 조회
 const findToken = async(id, success, fail)=>{
     api.defaults.headers.common["accessToken"] = localStorage.getItem('accessToken');
-    await api.get(`${MAPPING_URL}/${id}`).then(success).catch(fail);
+    await api.get(MAPPING_URL+`/${id}`).then(success).catch(fail);
 }
 
 // 토큰 판매
 const registProduct = async(priceInfo, success, fail)=>{
     api.defaults.headers.common["accessToken"] = localStorage.getItem('accessToken');
-    await api.put(MAPPING_URL+"/trade/sell",priceInfo).then(success).catch(fail);
+    await api.put(MAPPING_URL+"/trade/sell",JSON.stringify(priceInfo)).then(success).catch(fail);
 }
 
 
 // 거래내역 저장
 const saveActivity = async(activity, success, fail)=>{
     api.defaults.headers.common["accessToken"] = localStorage.getItem('accessToken');
-    await api.post(MAPPING_URL+"/trade/save",activity).then(success).catch(fail);
+    await api.post(MAPPING_URL+"/trade/save",JSON.stringify(activity)).then(success).catch(fail);
 }
 
 const findAllActivities  = async(accessToken, success, fail)=>{
