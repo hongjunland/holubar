@@ -22,7 +22,7 @@ router.get('/images/:key', (req, res) => {
   readStream.pipe(res)
 })
 
-router.post('/images', upload.single('image'), async (req, res) => {
+router.post('/upload', upload.single('image'), async (req, res) => {
   const file = req.file
   console.log(file)
 
@@ -31,9 +31,9 @@ router.post('/images', upload.single('image'), async (req, res) => {
 
   const result = await uploadFile(file)
   await unlinkFile(file.path)
-  console.log(result)
-  const description = req.body.description
-  res.send({imagePath: `/images/${result.Key}`})
+  // console.log(result)
+  // const description = req.body.description
+  res.send({imageUrl: `https://holuba.s3.ap-northeast-2.amazonaws.com/${result.Key}`})
 })
 
 

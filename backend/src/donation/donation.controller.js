@@ -16,13 +16,16 @@ const authUtil =  require('../jwt/auth').checkToken;
  */
  router.post('/save', authUtil, async function (req, res) {
 
-    const userId = req.body.userId;
+    const token = req.get('accessToken');
+	var base64Payload = token.split('.')[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE 
+	var payload = Buffer.from(base64Payload, 'base64'); 
+	var result = JSON.parse(payload.toString()) 
+
+    const userId = result.userId;
 	const price = req.body.price;
-	const nickname = req.body.nickname;
-	const profileImageUrl = req.body.profileImageUrl;
 
 
-    const { statusCode, responseBody } = await donationService.save(userId, price, nickname, profileImageUrl);
+    const { statusCode, responseBody } = await donationService.save(userId, price);
 
 
 
@@ -38,7 +41,6 @@ router.get('/rank', authUtil, async function (req, res) {
 
 
     const { statusCode, responseBody } = await donationService.rank();
-
 
 
 	res.statusCode = statusCode;

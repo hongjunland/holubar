@@ -4,7 +4,9 @@ class NftRepository {
 
     createNFT(userId,assetName,assetDesc,assetImageUrl,tokenId){
 
-        connection.query( `INSERT INTO asset(user_id,asset_name,asset_desc,asset_image_url,token_id) VALUE (?,?,?,?,?)`,[userId,assetName,assetDesc,assetImageUrl,tokenId]);
+        var a = connection.query( `INSERT INTO asset(user_id,asset_name,asset_desc,asset_image_url,token_id) VALUE (?,?,?,?,?)`,[userId,assetName,assetDesc,assetImageUrl,tokenId]);
+        
+        return a;
     }
 
     sellNFT(assetId,price){
