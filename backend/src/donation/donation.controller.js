@@ -18,11 +18,9 @@ const authUtil =  require('../jwt/auth').checkToken;
 
     const userId = req.body.userId;
 	const price = req.body.price;
-	const nickname = req.body.nickname;
-	const profileImageUrl = req.body.profileImageUrl;
 
 
-    const { statusCode, responseBody } = await donationService.save(userId, price, nickname, profileImageUrl);
+    const { statusCode, responseBody } = await donationService.save(userId, price);
 
 
 

@@ -15,14 +15,14 @@ CREATE TABLE `donation` (
    `donation_id` int NOT NULL AUTO_INCREMENT COMMENT '기부번호',
    `user_id` int NOT NULL COMMENT '회원번호',
    `price` varchar(50) NOT NULL COMMENT '기부금액',
-   `nickname` varchar(10) COMMENT '닉네임',
-   `profile_image_url` varchar(200)  COMMENT '프로필이미지주소',
+--    `nickname` varchar(10) COMMENT '닉네임',
+--    `profile_image_url` varchar(200)  COMMENT '프로필이미지주소',
    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '기부 시간',
    
    -- foreign key (`user_id`,`nickname`,`profile_image_url`) references `user`(`user_id`,`nickname`,`profile_image_url`) ON DELETE CASCADE on update cascade,
    foreign key (`user_id`) references `user` (`user_id`) ON DELETE CASCADE on update cascade,
-   -- foreign key (`nickname`) references `user` (`nickname`) ON DELETE CASCADE on update cascade,
-   -- foreign key (`profile_image_url`) references `user` (`profile_image_url`) ON DELETE CASCADE on update cascade,
+  --  foreign key (`nickname`) references `user` (`nickname`) ON DELETE CASCADE on update cascade,
+--    foreign key (`profile_image_url`) references `user` (`profile_image_url`) ON DELETE CASCADE on update cascade,
    PRIMARY KEY (`donation_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='기부';
 
@@ -58,7 +58,7 @@ CREATE TABLE `trade_history` (
     `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '기부 시간',
     
 	foreign key (`asset_id`) references `asset` (`asset_id`) ON DELETE CASCADE on update cascade,
-    -- foreign key (`seller_id`) references `user` (`user_id`) ON DELETE CASCADE on update cascade,
-    -- foreign key (`buyer_id`) references `user` (`user_id`) ON DELETE CASCADE on update cascade,
+--     foreign key (`seller_id`) references `user` (`user_id`) ON DELETE CASCADE on update cascade,
+--     foreign key (`buyer_id`) references `user` (`user_id`) ON DELETE CASCADE on update cascade,
 	PRIMARY KEY (`trade_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='자산';

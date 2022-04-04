@@ -7,15 +7,15 @@ const connection = require('../../config/connection').promise();
 class DonationRepository{
 
     //기부내역 저장
-    save(userId, price, nickname, profileImageUrl){
+    save(userId, price){
 
-        connection.query( `INSERT INTO donation(user_id,price,nickname,profile_image_url) VALUE (?,?,?,?)`,[userId, price, nickname, profileImageUrl]);
+        connection.query( `INSERT INTO donation(user_id,price) VALUE (?,?,?,?)`,[userId, price]);
     }
 
     //기부랭킹 10등까지 가져오기
     async getRank(){
 
-        var a = await connection.query( `select profile_image_url,nickname, sum(price) from donation group by user_id order by sum(price) desc limit 10;`);
+        var a = await connection.query( `select user.profile_image_url, user.nickname, sum(price) from donation,user where donation.user_id = user.user_id group by user.user_id order by sum(price) desc limit 10;`);
         
         return a[0];
     }
