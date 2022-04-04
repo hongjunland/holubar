@@ -33,4 +33,5 @@ const findAllActivities  = async(accessToken, success, fail)=>{
     await api.post(MAPPING_URL+"/trade/history").then(success).catch(fail);
 }
 
+
 export {createToken, findToken,registProduct,saveActivity,findAllActivities};

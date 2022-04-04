@@ -1,4 +1,4 @@
-import { apiInstance } from "api";
+import { apiImgInstance, apiInstance } from "api";
 
 const api = apiInstance();
 const MAPPING_URL = "/user"
@@ -18,10 +18,4 @@ const editUser = async(user, success, fail)=>{
     await api.put(MAPPING_URL+"/profile/edit",JSON.stringify(user)).then(success).catch(fail);
 }
 
-//이미지 업로드
-async function uploadImage(formData, success, fail) {
-    await imgapi.post("/s3/upload", formData).then(success).catch(fail);
-}
-
-
-export {login, getMyInfo,editUser,uploadImage};
+export {login, getMyInfo,editUser};
