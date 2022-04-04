@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Box, Input, InputLabel, InputAdornment, FormControl} from '@mui/material';
+import { EthereumIcon } from '../Icons'
 
 export default function InputAdornments(props) {
   const [values, setValues] = React.useState({
@@ -30,7 +31,7 @@ export default function InputAdornments(props) {
           onChange={handleChange('amount')}
           // value={values.amount}
           // onChange={onChange}
-          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          startAdornment={<InputAdornment position="start"><EthereumIcon/></InputAdornment>}
         />
       </FormControl>
     </Box>
