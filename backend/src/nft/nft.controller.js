@@ -20,19 +20,22 @@ const { uploadFile, getFileStream } = require('../S3/s3')
 //nft 등록
 router.post('/create', authUtil, upload.single('image'), async function (req, res) {
 
-    var tempImageUrl = ''
-	//s3에 이미지 저장 후 url return
-	const file = req.file
-	const result = await uploadFile(file)
-	await unlinkFile(file.path)
-	// const description = req.body.description
-	tempImageUrl = `https://holuba.s3.ap-northeast-2.amazonaws.com/${result.Key}`
+    // var tempImageUrl = ''
+	// //s3에 이미지 저장 후 url return
+	// const file = req.file
+	// const result = await uploadFile(file)
+	// await unlinkFile(file.path)
+	// // const description = req.body.description
+	// tempImageUrl = `https://holuba.s3.ap-northeast-2.amazonaws.com/${result.Key}`
+    const token = req.get('accessToken');
+	var base64Payload = token.split('.')[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE 
+	var payload = Buffer.from(base64Payload, 'base64'); 
+	var result = JSON.parse(payload.toString()) 
 
-
-    const userId = req.body.userId;
+    const userId = result.userId;
     const assetName = req.body.assetName;
     const assetDesc = req.body.assetDesc;
-    const assetImageUrl = tempImageUrl;
+    const assetImageUrl = req.body.assetImageUrl;
     const tokenId = req.body.tokenId;
    
 
@@ -111,7 +114,7 @@ router.get('/:assetId',authUtil,  async function (req, res) {
     const assetId = req.params.assetId;
     const { statusCode, responseBody } = await nftService.getAssetDetails(assetId);
  
-
+  
 
 	res.statusCode = statusCode;
 	res.send(responseBody);

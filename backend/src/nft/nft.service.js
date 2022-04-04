@@ -7,8 +7,31 @@ class NftService {
 
     async createNFT(userId,assetName,assetDesc,assetImageUrl,tokenId) {
 
-        nftRepository.createNFT(userId,assetName,assetDesc,assetImageUrl,tokenId);
+      
 
+        try {
+            var re = await nftRepository.createNFT(userId,assetName,assetDesc,assetImageUrl,tokenId);
+   
+        } catch (err) {
+            if (err.code === 'ER_DUP_ENTRY') {
+               //handleHttpErrors(SYSTEM_ERRORS.USER_ALREADY_EXISTS);
+               console.log("nft token id dup error")
+                return {
+                    statusCode: 500,
+                    responseBody: {
+                        message: "dup error"
+                    }
+                };
+           } else {
+               //handleHttpErrors(err.message);
+               return {
+                statusCode: 500,
+                responseBody: {
+                    message: "error"
+                }
+            };
+            }
+        }
         return {
             statusCode: 201,
             responseBody: {
@@ -31,6 +54,8 @@ class NftService {
 
     async sellList(){
         var sellList = await nftRepository.sellList();
+
+        
 
         return {
             statusCode: 200,
@@ -67,10 +92,21 @@ class NftService {
     async getAssetDetails(assetId){
         var d = await nftRepository.getAssetDetails(assetId);
 
+        console.log(d[0].asset_id)
+
+
+
         return {
             statusCode: 200,
             responseBody: {
-                details : d[0]
+                "assetId": d[0].asset_id,
+                "userId": d[0].user_id,
+                "assetName": d[0].asset_name,
+                "assetDesc": d[0].asset_desc,
+                "assetImageUrl": d[0].asset_image_url,
+                "tokenId": d[0].token_id,
+                "marketStatus": d[0].market_status,
+                "price": d[0].price
             }
         };
     }

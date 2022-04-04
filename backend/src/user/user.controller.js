@@ -44,7 +44,31 @@ const { uploadFile, getFileStream } = require('../S3/s3')
 	responseBody.accessToken = jwtToken.token;
 
 	res.statusCode = statusCode;
+	res.send({accessToken : responseBody.accessToken});
+});
+
+
+
+/**
+ * 본인 프로필 조회 기능
+ * 
+ */
+ router.get('/profile/',authUtil, async function (req, res) {
+
+	const token = req.get('accessToken');
+	var base64Payload = token.split('.')[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE 
+	var payload = Buffer.from(base64Payload, 'base64'); 
+	var result = JSON.parse(payload.toString()) 
+	console.log(result.userId);
+
+
+
+
+
+	var { statusCode, responseBody } = await userService.getProfileWithUserId(result.userId);
+	res.statusCode = statusCode;
 	res.send(responseBody);
+	
 });
 
 
@@ -66,25 +90,31 @@ const { uploadFile, getFileStream } = require('../S3/s3')
  * 프로필 수정 기능
  * 
  */
- router.put('/profile/edit',authUtil, upload.single('image'),async function (req, res) {
+ router.put('/profile/edit',authUtil,async function (req, res) {
 
-	var tempImageUrl = ''
-	//s3에 이미지 저장 후 url return
-	const file = req.file
-	const result = await uploadFile(file)
-	await unlinkFile(file.path)
-	// const description = req.body.description
-	tempImageUrl = `https://holuba.s3.ap-northeast-2.amazonaws.com/${result.Key}`
+	// var tempImageUrl = ''
+	// //s3에 이미지 저장 후 url return
+	// const file = req.file
+	// const result = await uploadFile(file)
+	// await unlinkFile(file.path)
+	// // const description = req.body.description
+	// tempImageUrl = `https://holuba.s3.ap-northeast-2.amazonaws.com/${result.Key}`
 
+	const token = req.get('accessToken');
+	var base64Payload = token.split('.')[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE 
+	var payload = Buffer.from(base64Payload, 'base64'); 
+	var result = JSON.parse(payload.toString()) 
+
+	console.log(result.userId);
 
 	//
+	const userId = result.userId
 	const email = req.body.email;
-	const walletAddress = req.body.walletAddress;
 	const nickname = req.body.nickname;
-	const profileImageUrl = tempImageUrl;
+	const profileImageUrl = req.body.profileImageUrl;
 	const bio = req.body.bio;
 
-	const { statusCode, responseBody } = await userService.editProfile(email,walletAddress,nickname,profileImageUrl,bio);
+	const { statusCode, responseBody } = await userService.editProfile(userId,email,nickname,profileImageUrl,bio);
  
 	res.statusCode = statusCode;
 	res.send(responseBody);
