@@ -19,6 +19,7 @@ export const userSlice = createSlice({
         }
     },
     reducers: {
+        
         changeTabIndex: (state, action)=>{
             state.value = action.payload;
         },
