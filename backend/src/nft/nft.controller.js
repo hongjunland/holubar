@@ -63,13 +63,35 @@ router.put('/trade/sell',authUtil,  async function (req, res) {
 });
 
 
-//판매목록조회
 
+////조건판매목록조회
 router.get('/trade/sellList',authUtil,  async function (req, res) {
 
+    var marketStatus = req.query.status;
+    var min = req.query.min;
+    var max = req.query.max;
+    var condition = req.query.condition;
+    
+    
+    
+    
+    // if(!req.query.status){
+    //     var marketStatus = 0;
+    // }
+
+    // if(!req.query.min){
+    //     var min = '0';
+    // }
+    // if(!req.query.status){
+    //     var max = Number.MAX_SAFE_INTEGER;
+    // }
+    if(!req.query.condition){
+        var condition = '0';
+    }
   
 
-    const { statusCode, responseBody } = await nftService.sellList();
+    // console.log(marketStatus,min,max,condition);
+    const { statusCode, responseBody } = await nftService.testList(marketStatus,min,max,condition);
  
 
 
