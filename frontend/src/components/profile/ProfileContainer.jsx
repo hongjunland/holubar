@@ -6,10 +6,13 @@ import Banner from 'components/Banner';
 import ProfileTab from './ProfileTab';
 import { useState } from 'react';
 import { css } from '@emotion/react';
-import Stack from 'components/Stack';
+import MarketContainer from 'components/market/MarketContainer';
+import itemList from "samplejson/ItemList.json";
+import { useSelector, useDispatch } from "react-redux";
+import React from 'react';
 
 const ProfileContainer = ()=>{
-    
+    const tabIndex = useSelector((state)=>state.tabIndex.value);
     const [profileBackgroundImage,setProfileBackgroundImage] = useState("https://as1.ftcdn.net/v2/jpg/02/70/64/54/1000_F_270645457_FR4CBhmmKSNqn4hk0X21PPzu4FuXLGxR.jpg");
     const [profileImage,setProfileImage] = useState("assets/default_profile.jpg");
     const [nickname,setNickname] = useState("nickname");
@@ -19,76 +22,55 @@ const ProfileContainer = ()=>{
     const summarize = (text)=>{
         return text.slice(0,5)+"..."+text.slice(-5);
     }
+    const onClickSettingButton = ()=>{
+        alert("onClickSettingButton");
+    }
+    const onClickCopyButton = ()=>{
+        alert(walletAddress);
+    }
+    const handleChangeTabIndex = ()=>{
+
+    }
     return (
-        <Stack
+        <Container
         >
             <Banner imgURL={profileBackgroundImage}/>
             <DivContainer>
                 <FlexEndBlock>
-                    <IconButton
-                        css={css`
-                            padding: 12px;
-                            background-color: rgb(255, 255, 255);
-                            border: 1px solid rgb(229, 232, 235);
-                            border-radius: 15px;
-                        `}
-                    >
-                        <SettingsIcon/> 
-                    </IconButton>
+                    <SettingButton onClick={onClickSettingButton}/>
                 </FlexEndBlock>
             </DivContainer>
             <MainContainer>
                 <ProfileImage>
-                    <Avatar 
-                        css={css`
-                            width:100%;
-                            height:100%;
-                        `}
-                    src={profileImage}/>
+                    <ProfileAvartar src={profileImage} />
                 </ProfileImage>
-                <Typography
-                    css={css`
-                        margin-top: 12px;
-                        max-width: 80vw;
-                        align-items: center;
-                        font-size: 30px;
-                        font-weight: 600;
-                        min-height: 40px;
-                        margin-bottom: 0px;
-                    `}
-                >
+                <NicknameText>
                     {nickname}
-                </Typography>
-                <IconButton
-                    css={css`
-                        padding: 4px 8px;
-                        border: 1px solid rgb(229, 232, 235);
-                        border-radius: 16px;
-                    `}
-                >
+                </NicknameText>
+                <CopyButton onClick={onClickCopyButton}>
                     <ContentCopyIcon fontSize="small"/>
-                    <TextAddress
-                        css={css`
-                            align-items: center;
-                            display: flex;
-                            min-height: 18px;
-                            margin-top: 8px;
-                        `}
-                    >{summarize(walletAddress)}</TextAddress>          
-                </IconButton>
-                <TextField
-                    disabled="true"
+                    <TextAddress>
+                        {summarize(walletAddress)}
+                    </TextAddress>          
+                </CopyButton>
+                <BioTextField
+                    disabled={true}
                     value={bio}
-                    css={css`
-                        margin-top: 12px;
-                    `}
                 />
             </MainContainer>
-            <ProfileTab/>
-        </Stack>
+            <ProfileTab onClick={handleChangeTabIndex}/>
+            {tabIndex==0 ? <MarketContainer items = {itemList}/>:
+                <></>
+            }
+        </Container>
     );
 }
 
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
 
 const DivContainer = styled.div`
     display: flex;
@@ -137,6 +119,10 @@ const TextAddress = styled.div`
     font-weight: 500;
     font-size: 16px;
     margin-right: 8px;
+    align-items: center;
+    display: flex;
+    min-height: 18px;
+    margin-top: 8px;
 `;
 const FlexEndBlock = styled.div`
     justify-content: flex-end;
@@ -147,4 +133,63 @@ const FlexEndBlock = styled.div`
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 `;
+
+const SettingButton = props => (
+    <IconButton
+        onClick={props.onClick}
+        css={css`
+            padding: 12px;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(229, 232, 235);
+            border-radius: 15px;
+        `}
+    >
+        <SettingsIcon/> 
+    </IconButton>
+);
+
+const ProfileAvartar = props => (
+    <Avatar 
+    css={css`
+        width:100%;
+        height:100%;
+    `}
+    src={props.src}/>
+);
+
+const NicknameText = ({children})=>(
+    <Typography
+        css={css`
+        margin-top: 12px;
+        max-width: 80vw;
+        align-items: center;
+        font-size: 30px;
+        font-weight: 600;
+        min-height: 40px;
+        margin-bottom: 0px;
+    `}
+    >
+        {children}
+    </Typography>
+)
+
+const CopyButton = ({children,...props})=>(
+    <IconButton
+        css={css`
+        padding: 4px 8px;
+        border: 1px solid rgb(229, 232, 235);
+        border-radius: 16px;
+    `}
+    {...props}
+    >
+        {children}
+    </IconButton>
+)
+const BioTextField = ({children,...props}) => (
+    <TextField
+        {...props}
+        css={css`
+        margin-top: 12px;
+    `}
+    />);
 export default ProfileContainer;

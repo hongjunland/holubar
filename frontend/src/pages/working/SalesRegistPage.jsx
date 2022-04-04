@@ -8,7 +8,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import SwipeableViews from 'react-swipeable-views';
+// import SwipeableViews from 'react-swipeable-views';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -27,9 +27,9 @@ function TabPanel(props) {
   );
 }
 
-export function SalesRegist() {
+export default function SalesRegist() {
   
-  const tokenData = require('./../samplejson/SalesRegistPage.json');
+  const tokenData = require('samplejson/SalesRegistPage.json');
   // const [tokenData, settokenData] = require('./../samplejson/SalesRegistPage.json');
   // const handleChange = (event) => {
   //   settokenData({
@@ -75,7 +75,7 @@ export function SalesRegist() {
               <Tab label="Auction"  />
             </Tabs>
           </AppBar>
-          <SwipeableViews
+          {/* <SwipeableViews
             index={0}
           >
             <TabPanel value={0} index={0} dir={1111111}>
@@ -87,7 +87,7 @@ export function SalesRegist() {
             <TabPanel value={2} index={2} dir={333333}>
               Item Three
             </TabPanel>
-          </SwipeableViews>
+          </SwipeableViews> */}
         </Grid>
       </Grid>
     </Container>
