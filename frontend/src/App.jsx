@@ -5,7 +5,6 @@ import Main from 'components/common/Main';
 import Routes from 'routes';
 import {BrowserRouter as Router} from "react-router-dom";
 import Header from 'components/common/Header';
-// import { Header } from 'components/common/Header';
 
 function App() {
   return (
