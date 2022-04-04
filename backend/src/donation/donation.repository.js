@@ -9,7 +9,7 @@ class DonationRepository{
     //기부내역 저장
     save(userId, price){
 
-        connection.query( `INSERT INTO donation(user_id,price) VALUE (?,?,?,?)`,[userId, price]);
+        connection.query( `INSERT INTO donation(user_id,price) VALUE (?,?)`,[userId, price]);
     }
 
     //기부랭킹 10등까지 가져오기
