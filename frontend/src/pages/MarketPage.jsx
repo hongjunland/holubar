@@ -1,7 +1,10 @@
+import MarketContainer from "components/market/MarketContainer";
+import itemList from "samplejson/ItemList.json";
+
 const MarketPage = () => {
     return (
         <div>
-            <h1>MarketPage</h1>
+            <MarketContainer items = {itemList}/>
         </div>
     );
 }
