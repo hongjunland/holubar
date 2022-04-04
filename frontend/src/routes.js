@@ -5,7 +5,7 @@ import DonatePage from "pages/DonatePage";
 import MarketPage from "pages/MarketPage";
 import RankingPage from "pages/RankingPage";
 import ItemDetail from "pages/ItemDetailpage";
-import SalesRegist from "pages/working/SalesRegistPage";
+import SalesRegist from "pages/SalesRegistPage";
 
 export default function routes(){
     return (

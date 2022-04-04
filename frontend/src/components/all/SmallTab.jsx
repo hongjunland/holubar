@@ -2,14 +2,15 @@ import * as React from 'react';
 import {Box, Tab} from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
-import { SelectTextFields } from './Select';
+import SelectTextFields from './Select';
 
-export function LabTabs() {
+export default function LabTabs(props) {
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const [price, setPrice] = React.useState(props.price)
 
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -21,7 +22,13 @@ export function LabTabs() {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <SelectTextFields />
+          <SelectTextFields
+            price={price}
+            onChange={(data)=>{
+              setPrice(data);
+              props.onChange(data)
+            }}
+          />
         </TabPanel>
         <TabPanel value="2">Item Two</TabPanel>
       </TabContext>

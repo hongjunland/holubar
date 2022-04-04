@@ -5,8 +5,12 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const cors = require('cors');
 
-const itemsRouter = require('./src/items/items.controller');
+// const itemsRouter = require('./src/items/items.controller');
 const salesRouter = require('./src/sales/sales.controller');
+const s3Router = require('./src/S3/server.js');
+const userRouter = require('./src/user/user.controller');
+const donationRouter = require('./src/donation/donation.controller');
+const nftRouter = require('./src/nft/nft.controller');
 
 const app = express();
 
@@ -17,8 +21,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/items', itemsRouter);
+// app.use('/items', itemsRouter);
 app.use('/sales', salesRouter);
+app.use('/user', userRouter);
+app.use('/donation', donationRouter);
+app.use('/s3', s3Router);
+app.use('/nft', nftRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res) {
