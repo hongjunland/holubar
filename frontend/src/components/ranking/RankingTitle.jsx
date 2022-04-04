@@ -10,7 +10,7 @@ const RankingTitle = () => {
     >
       <h1>Top 10 Rankings</h1>
       <h3>
-        The top NFTs on Holuba, ranked by volume, floor price and other
+        The top Donators in Holuba, ranked by volume, floor price and other
         statistics.
       </h3>
     </Container>
