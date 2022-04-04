@@ -21,6 +21,69 @@ class NftRepository {
     }
 
 
+    async testList(arr){
+
+        var str = 'SELECT * FROM asset';
+        
+        var cnt = arr.length;
+        console.log(cnt)
+        if(arr[0] || arr[1] || arr[2] ){
+            str += ' WHERE '
+        }
+        
+
+        //market status
+        if(arr[0]){
+            str += ' market_status = ';
+            str += arr[0];
+        }
+        
+        //min
+        if(arr[1]){
+
+            if(arr[0]){
+                str += ' and '
+            }
+
+            str += ' price >= ';
+            str += arr[1];
+        }
+        
+
+        //max
+        if(arr[2]){
+
+            if(arr[0] || arr[1]){
+                str += ' and '
+            }
+
+            str += ' price <= ';
+            str += arr[2];
+        }
+
+        //condition
+        if(arr[3]){
+            str += ' ORDER BY ';
+            if(arr[3] == '1'){ //오래된 순
+                str += ' date ASC ';
+            }else if(arr[3] == '2'){ //높은 가격순
+                str += ' price DESC ';
+            }else if(arr[3] == '3'){ // 낮은 가격순
+                str += ' price ASC ';
+            }else{ //최신순 정렬
+                str += ' date DESC ';
+            }
+        }
+        console.log(str)
+       
+
+
+        var a = await connection.query(str);
+        // console.log(a[0])
+        return a[0];
+    }
+
+
 
     saveTradeHistory(assetId, price, sellerId, buyerId){
         //거래내역저장
@@ -39,9 +102,6 @@ class NftRepository {
     async  getAssetDetails(assetId){
         var a = await connection.query(`SELECT * FROM asset WHERE asset_id = ?`,assetId);
         return a[0];
-
-
-
 
     }
 

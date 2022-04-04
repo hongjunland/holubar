@@ -65,6 +65,28 @@ class NftService {
         };
     }
 
+    async testList(marketStatus,min,max,condition){
+
+        let arr = [];
+        arr.push(marketStatus);
+        arr.push(min);
+        arr.push(max);
+        arr.push(condition);
+
+        console.log(arr);
+
+        var sellList = await nftRepository.testList(arr);
+
+        
+
+        return {
+            statusCode: 200,
+            responseBody: {
+                sellList
+            }
+        };
+    }
+
     async saveTradeHistory(assetId, price, sellerId, buyerId){
         nftRepository.saveTradeHistory(assetId, price, sellerId, buyerId);
 
