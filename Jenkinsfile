@@ -8,10 +8,21 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Docker build') {
+        stage('Docker Compose Run') {
             agent any
             steps {
-                sh 'docker build -t server:latest /var/jenkins_home/workspace/NFT/backend'
+                sh sh 'docker ps -f name=server -q \
+                | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -f name=server -q \
+                | xargs -r docker container rm'
+                sh 'docker rmi -f server'
+
+                sh 'docker compose up'
+            }
+        }
+        stage('Frontend build') {
+            agent any
+            steps {
                 sh 'docker build -t web:latest /var/jenkins_home/workspace/NFT/frontend'
             }
         }
@@ -20,16 +31,11 @@ pipeline {
             steps {
                 sh 'docker ps -f name=web -q \
         | xargs --no-run-if-empty docker container stop'
-                sh 'docker ps -f name=server -q \
-                | xargs --no-run-if-empty docker container stop'
 
                 sh 'docker container ls -a -f name=web -q \
         | xargs -r docker container rm'
-                sh 'docker container ls -a -f name=server -q \
-        | xargs -r docker container rm'
 
-                sh 'docker images -f dangling=true && \
-                docker rmi $(docker images -f dangling=true -q)'
+                sh 'docker rmi -f web'
 
                 sh 'docker run -d --name web \
                 -p 80:80 \
@@ -38,9 +44,6 @@ pipeline {
                 -v /etc/localtime:/etc/localtime:ro \
                 --network nftnet \
                 web:latest'
-                sh 'docker run -d --name server \
-                -v /etc/localtime:/etc/localtime:ro \
-                --network nftnet server:latest'
             }
         }
     }
