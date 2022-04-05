@@ -1,11 +1,6 @@
 pipeline {
     agent none
     options { skipDefaultCheckout(false) }
-
-    environment {
-        PATH = "$PATH:/usr/local/bin"
-    }
-    
     stages {
         stage('git pull') {
             agent any
