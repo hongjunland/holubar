@@ -19,7 +19,7 @@ class NftService {
                 return {
                     statusCode: 500,
                     responseBody: {
-                        message: "dup error"
+                        message: "nft token id dup error"
                     }
                 };
            } else {
@@ -52,7 +52,7 @@ class NftService {
         };
     }
     //판매취소
-    async cancel(assetId,price) {
+    async cancel(assetId) {
 
         nftRepository.cancel(assetId);
 

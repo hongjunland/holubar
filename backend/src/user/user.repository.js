@@ -17,8 +17,9 @@
      * 
      */
     signUp(walletAddress){
-
-        connection.query( `INSERT INTO user(wallet_address) VALUE (?)`,walletAddress);
+        
+        var a = connection.query( `INSERT INTO user(wallet_address) VALUE (?)`,walletAddress);
+        return a;
     }
   
 
