@@ -3,6 +3,9 @@ const express = require('express');
  const NftService = require('./nft.service');
  const nftService = new NftService();
 
+ const DonationService = require('../donation/donation.service');
+ const donationService = new DonationService();
+
   //jwt
   const jwt = require('../jwt/jwt');
   const authUtil =  require('../jwt/auth').checkToken;
@@ -37,8 +40,11 @@ router.post('/create', authUtil, upload.single('image'), async function (req, re
     const assetDesc = req.body.assetDesc;
     const assetImageUrl = req.body.assetImageUrl;
     const tokenId = req.body.tokenId;
-   
+    const price = req.body.price;
 
+
+
+    donationService.save(userId, price);
     const { statusCode, responseBody } = await nftService.createNFT(userId,assetName,assetDesc,assetImageUrl,tokenId);
  
 
@@ -55,6 +61,19 @@ router.put('/trade/sell',authUtil,  async function (req, res) {
     const price = req.body.price;
 
     const { statusCode, responseBody } = await nftService.sellNFT(assetId,price);
+ 
+
+
+	res.statusCode = statusCode;
+	res.send(responseBody);
+});
+
+router.put('/trade/cancel',authUtil,  async function (req, res) {
+
+    const assetId = req.body.assetId;
+
+
+    const { statusCode, responseBody } = await nftService.cancel(assetId);
  
 
 
