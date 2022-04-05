@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: server
+    ports:
+      - "5050:3000"
+    container_name: server
+    restart: always
+    links:
+      - mysql-container
+    depends_on: 
+      - mysql-container
+    env_file: ./backend/.env
+    networks:
+      - backend-connect
+  
+  mysql-container:
+    image: mysql:latest
+    hostname: "mysql-container"
+    environment:
+      MYSQL_USER: ssafy
+      MYSQL_DATABASE: holuba_db
+      MYSQL_PASSWORD: ssafy
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
+    container_name: mysql-container
+    networks:
+      - backend-connect
+
+networks:
+  backend-connect:
+    driver: bridge
+
