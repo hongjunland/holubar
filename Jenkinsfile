@@ -11,7 +11,7 @@ pipeline {
         stage('Docker Compose Run') {
             agent any
             steps {
-                sh sh 'docker ps -f name=server -q \
+                sh 'docker ps -f name=server -q \
                 | xargs --no-run-if-empty docker container stop'
                 sh 'docker container ls -a -f name=server -q \
                 | xargs -r docker container rm'
