@@ -13,6 +13,10 @@ class NftRepository {
         connection.query( `UPDATE asset SET market_status = 1, price = (?) WHERE asset_id =?`,[price,assetId]);
     }
 
+    cancel(assetId){
+        connection.query( `UPDATE asset SET market_status = 0 WHERE asset_id =?`,assetId);
+    }
+
     async sellList(){
 
         var a = await connection.query(`SELECT * FROM asset WHERE market_status = 1`);

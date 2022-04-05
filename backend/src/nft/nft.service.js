@@ -51,6 +51,18 @@ class NftService {
             }
         };
     }
+    //판매취소
+    async cancel(assetId,price) {
+
+        nftRepository.cancel(assetId);
+
+        return {
+            statusCode: 200,
+            responseBody: {
+                message: "success"
+            }
+        };
+    }
 
     async sellList(){
         var sellList = await nftRepository.sellList();
