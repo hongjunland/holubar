@@ -59,6 +59,14 @@ router.put('/trade/sell',authUtil,  async function (req, res) {
 
     const assetId = req.body.assetId;
     const price = req.body.price;
+    if(assetId == null){
+		return res.send({err : "assetId null err"});
+	}
+    if(price == null){
+		return res.send({err : "price null err"});
+	}
+
+
 
     const { statusCode, responseBody } = await nftService.sellNFT(assetId,price);
  
@@ -71,7 +79,9 @@ router.put('/trade/sell',authUtil,  async function (req, res) {
 router.put('/trade/cancel',authUtil,  async function (req, res) {
 
     const assetId = req.body.assetId;
-
+    if(assetId == null){
+		return res.send({err : "assetId null err"});
+	}
 
     const { statusCode, responseBody } = await nftService.cancel(assetId);
  
@@ -128,6 +138,19 @@ router.post('/trade/save',authUtil,  async function (req, res) {
     const sellerId = req.body.sellerId;
     const buyerId = req.body.buyerId;
     
+    if(assetId == null){
+		return res.send({err : "assetId null err"});
+	}
+    if(assetId == null){
+		return res.send({err : "price null err"});
+	}
+    if(assetId == null){
+		return res.send({err : "sellerId null err"});
+	}
+    if(assetId == null){
+		return res.send({err : "buyerId null err"});
+	}
+    
 
 
     const { statusCode, responseBody } = await nftService.saveTradeHistory(assetId, price, sellerId, buyerId);
@@ -153,6 +176,9 @@ router.get('/trade/history',authUtil,  async function (req, res) {
 router.get('/:assetId',authUtil,  async function (req, res) {
     
     const assetId = req.params.assetId;
+    if(assetId == null){
+		return res.send({err : "assetId null err"});
+	}
     const { statusCode, responseBody } = await nftService.getAssetDetails(assetId);
  
   
