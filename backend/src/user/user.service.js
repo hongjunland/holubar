@@ -11,15 +11,12 @@
 	 * 프로필 조회    서비스
 	 */
     async signUp(walletAddress) {
+        
 
-        userRepository.signUp(walletAddress);
+        
+        var q = await userRepository.signUp(walletAddress);
 
-        return {
-            statusCode: 201,
-            responseBody: {
-                message: "success"
-            }
-        };
+        return q;
     }
 
     /**

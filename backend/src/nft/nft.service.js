@@ -19,7 +19,7 @@ class NftService {
                 return {
                     statusCode: 500,
                     responseBody: {
-                        message: "dup error"
+                        message: "nft token id dup error"
                     }
                 };
            } else {
@@ -51,9 +51,43 @@ class NftService {
             }
         };
     }
+    //판매취소
+    async cancel(assetId) {
+
+        nftRepository.cancel(assetId);
+
+        return {
+            statusCode: 200,
+            responseBody: {
+                message: "success"
+            }
+        };
+    }
 
     async sellList(){
         var sellList = await nftRepository.sellList();
+
+        
+
+        return {
+            statusCode: 200,
+            responseBody: {
+                sellList
+            }
+        };
+    }
+
+    async testList(marketStatus,min,max,condition){
+
+        let arr = [];
+        arr.push(marketStatus);
+        arr.push(min);
+        arr.push(max);
+        arr.push(condition);
+
+        console.log(arr);
+
+        var sellList = await nftRepository.testList(arr);
 
         
 

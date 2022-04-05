@@ -24,9 +24,42 @@ const { uploadFile, getFileStream } = require('../S3/s3')
  * 로그인 기능
  * 최초 로그인이면 지갑주소로 insert
  */
- router.post('/login', async function (req, res) {
+
+
+
+/**
+ * @swagger
+ * /user/login:
+ *  post:
+ *    tags: [Users]
+ *    summary: "로그인"
+ *    description: "지갑주소 전송하면 accessToken 반환"
+ *    parameters:
+ *      - in: body
+ *        name: body
+ *        schema:
+ *          type: object
+ *          properties:
+ *            walletAddress:
+ *              type: string
+ *    responses:
+ *      "200":
+ *        description: "로그인 결과"
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                accessToken:
+ *                  type: string
+ */
+router.post('/login', async function (req, res) {
 	
 	const walletAddress = req.body.walletAddress;
+
+	if(walletAddress == null){
+		return res.send({err : "walletAddress null err"});
+	}
 
 	var { statusCode, responseBody } = await userService.getProfileWithWalletAddress(walletAddress);
 	
@@ -49,9 +82,37 @@ const { uploadFile, getFileStream } = require('../S3/s3')
 
 
 
+
 /**
  * 본인 프로필 조회 기능
  * 
+ */
+
+/**
+ * @swagger
+ * /user/profile/:
+ *  post:
+ *    tags: [Users]
+ *    summary: "본인 프로필 조회"
+ *    description: "본인 프로필 조회"
+ *    parameters:
+ *      - in: header
+ *        name: X-Request-ID
+ *        schema:
+ *          type: object
+ *          properties:
+ *            accessToken:
+ *              type: string
+ *    responses:
+ *      "200":
+ *        description: "로그인 결과"
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                accessToken:
+ *                  type: string
  */
  router.get('/profile/',authUtil, async function (req, res) {
 
