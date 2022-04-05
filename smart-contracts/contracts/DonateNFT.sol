@@ -3,6 +3,7 @@ pragma solidity ^0.8.4;
 
 import "./token/ERC721/ERC721.sol";
 import "./access/Ownable.sol";
+import "./Market.sol";
 
 /**
  * PJT Ⅰ - 과제 2) NFT Creator 구현
@@ -10,17 +11,28 @@ import "./access/Ownable.sol";
  */
 contract DonateNFT is ERC721, Ownable {
     uint256 private _tokenIds;
+    address public MarketAddress;
     mapping(uint256 => string) tokenURIs;
     Tokens[] public tokens;
 
     struct Tokens {
         address owner;
+        string assetName;
+        string assetDesc;
         uint256 tokenId;
         string tokenURI;
         uint256 donateAmmount;
     }
 
     constructor() ERC721("DonateNFT", "Donation") {}
+
+    function setMarketAddress(address _MarketAddress) public {
+        MarketAddress = _MarketAddress;
+    }
+
+    function getMarketAddress() public view returns (address) {
+        return MarketAddress;
+    }
 
     function current() public view returns (uint256) {
         return _tokenIds;
@@ -32,15 +44,19 @@ contract DonateNFT is ERC721, Ownable {
 
     function create(
         address owner,
+        string memory assetName,
+        string memory assetDesc,
         string memory _tokenURI,
         uint256 price
-    ) public returns (uint256) {
+    ) public returns (Tokens memory) {
         _mint(owner, _tokenIds);
 
-        tokens.push(Tokens(owner, _tokenIds, _tokenURI, price));
+        tokens.push(
+            Tokens(owner, assetName, assetDesc, _tokenIds, _tokenURI, price)
+        );
         _tokenIds++;
 
-        return _tokenIds - 1;
+        return tokens[_tokenIds - 1];
     }
 
     function getTokensByWallet(address target)
@@ -58,5 +74,10 @@ contract DonateNFT is ERC721, Ownable {
         }
 
         return ret;
+    }
+
+    function newSale(uint256 tokenId, uint256 price) public {
+        transferFrom(msg.sender, MarketAddress, tokenId);
+        Market(MarketAddress).newSale(msg.sender, tokenId, price);
     }
 }
