@@ -17,7 +17,7 @@ pipeline {
                 | xargs -r docker container rm'
                 sh 'docker rmi -f server'
 
-                sh 'sudo /usr/local/bin/docker-compose up'
+                sh '/usr/local/bin/docker-compose up'
             }
         }
         stage('Frontend build') {
