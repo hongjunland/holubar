@@ -5,9 +5,10 @@ import Main from 'components/common/Main';
 import Routes from 'routes';
 import {BrowserRouter as Router} from "react-router-dom";
 import Header from 'components/common/Header';
-import { init, tokenMint, newSale, trading } from './web3/Web3Client';
+import { init, tokenMint, newSale, trading, getTokenById, getTokensByWallet } from './web3/Web3Client';
 import { useWeb3React } from "@web3-react/core";
 import { injected } from 'web3/connectors';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 function App() {
   const {
@@ -24,8 +25,8 @@ function App() {
   useEffect(() => {
     if (active) {
       init(
-        "0x3C8927a822eF9eB871Fb1687787c673D31a39820", // NFT Address
-        "0x209C47817fb0872F2Eac6637d54122dA89011077", // Market Address
+        "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
+        "0x2dDd4CfE699BceC05cdbd32888598A5A5142325e", // Market Address
         "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
         account
       );
@@ -40,8 +41,8 @@ function App() {
     });
 
     init(
-      "0x3C8927a822eF9eB871Fb1687787c673D31a39820", // NFT Address
-      "0x209C47817fb0872F2Eac6637d54122dA89011077", // Market Address
+      "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
+      "0x2dDd4CfE699BceC05cdbd32888598A5A5142325e", // Market Address
       "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
       account
     );
@@ -62,12 +63,14 @@ function App() {
       });
   }
 
-  const _newSale = (tokenId, price) => {
-    newSale(tokenId, price);
+  const _newSale = async (tokenId) => {
+    await newSale(tokenId);
+    console.log(await getTokenById(tokenId));
+    console.log(await getTokensByWallet(account));
   }
 
-  const buying = (tokenId, price) => {
-    trading(tokenId, price);
+  const buying = async (tokenId, price) => {
+    await trading(tokenId, price);
   }
 
   let accountButton;
@@ -100,7 +103,7 @@ function App() {
       {!minted ? (
         <button onClick={() => mint("name", "desc", "temp", "0.05")}>Mint!</button>
       ) : (
-        <button onClick={() => _newSale(tokenId, 0.05)}>Now Sale!</button>
+        <button onClick={() => _newSale(tokenId)}>Now Sale!</button>
       )}
       <br/>
       <button onClick={() => buying(tokenId, 0.05)}>Buy!</button>

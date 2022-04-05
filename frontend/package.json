@@ -28,7 +28,6 @@
     "@web3-react/injected-connector": "^6.0.7",
     "antd": "^4.19.3",
     "axios": "^0.26.1",
-    "contracts": "file:../smart-contracts/build/contracts",
     "customize-cra": "^1.0.0",
     "emotion-normalize": "^11.0.1",
     "env-cmd": "^10.1.0",

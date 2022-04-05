@@ -5,10 +5,6 @@ import "./token/ERC721/ERC721.sol";
 import "./access/Ownable.sol";
 import "./Market.sol";
 
-/**
- * PJT Ⅰ - 과제 2) NFT Creator 구현
- * 상태 변수나 함수의 시그니처는 구현에 따라 변경할 수 있습니다.
- */
 contract DonateNFT is ERC721, Ownable {
     uint256 private _tokenIds;
     address public MarketAddress;
@@ -64,7 +60,15 @@ contract DonateNFT is ERC721, Ownable {
         view
         returns (Tokens[] memory)
     {
-        Tokens[] memory ret = new Tokens[](tokens.length);
+        uint256 nowLength = 0;
+
+        for (uint256 i = 0; i < tokens.length; i++) {
+            if (tokens[i].owner == target) {
+                nowLength++;
+            }
+        }
+
+        Tokens[] memory ret = new Tokens[](nowLength);
         uint256 j = 0;
         for (uint256 i = 0; i < tokens.length; i++) {
             if (tokens[i].owner == target) {
@@ -76,8 +80,8 @@ contract DonateNFT is ERC721, Ownable {
         return ret;
     }
 
-    function newSale(uint256 tokenId, uint256 price) public {
+    function newSale(uint256 tokenId) public returns (bool) {
         transferFrom(msg.sender, MarketAddress, tokenId);
-        Market(MarketAddress).newSale(msg.sender, tokenId, price);
+        return Market(MarketAddress).newSale(msg.sender, tokenId);
     }
 }

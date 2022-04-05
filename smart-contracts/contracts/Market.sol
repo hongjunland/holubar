@@ -14,7 +14,6 @@ contract Market is Ownable {
 
     struct Sales {
         address seller;
-        uint256 price;
     }
 
     event SendEther(
@@ -36,17 +35,14 @@ contract Market is Ownable {
         return NFTAddress;
     }
 
-    function newSale(
-        address seller,
-        uint256 tokenId,
-        uint256 price
-    ) public {
-        // DonateNFT(NFTAddress).transferFrom(msg.sender, address(this), tokenId);
-        sales[tokenId] = Sales(seller, price);
+    function newSale(address seller, uint256 tokenId) public returns (bool) {
+        sales[tokenId] = Sales(seller);
+        return true;
     }
 
-    function deleteSale(uint256 tokenId) public {
+    function deleteSale(uint256 tokenId) public returns (bool) {
         delete sales[tokenId];
+        return true;
     }
 
     function getSales(uint256 tokenId) public view returns (Sales memory) {
@@ -57,15 +53,17 @@ contract Market is Ownable {
         return admin;
     }
 
-    function trading(uint256 tokenId) public payable {
+    function trading(uint256 tokenId) public payable returns (bool) {
         address buyer = msg.sender;
         address payable seller = payable(sales[tokenId].seller);
-        emit SendEther(buyer, seller, sales[tokenId].price);
-        seller.transfer(sales[tokenId].price);
+        emit SendEther(buyer, seller, msg.value);
+        seller.transfer(msg.value);
 
         DonateNFT(NFTAddress).transferFrom(address(this), buyer, tokenId);
 
         deleteSale(tokenId);
+
+        return true;
     }
 
     function donating(

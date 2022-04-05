@@ -7,10 +7,11 @@ let donateContract;
 let marketContract;
 let donateGetterAddress;
 let account;
+let library;
 const ether = 1000000000000000000;
 
 export const init = async (donateNFTAddress, marketAddress, _donateGetter, _account) => {
-    const library = new Web3Provider(window.ethereum);
+    library = new Web3Provider(window.ethereum);
     account = _account;
     
     donateGetterAddress = _donateGetter.toLowerCase();
@@ -35,22 +36,33 @@ export const tokenMint = async (name, desc, tokenURI, price) => {
             from: account,
             value: (price * ether).toString()
         })
-        .then((result) => console.log(result))
     
     const nowId = await donateContract.current({ from: account });
     
-    return nowId-1;
+    return nowId;
 }
 
-export const newSale = async (tokenId, price) => {
+export const getTokenById = async (tokenId) => {
+    return await donateContract.getTokenById(tokenId);
+}
+
+export const getTokensByWallet = async (account) => {
+    return await donateContract.getTokensByWallet(account);
+}
+
+export const newSale = async (tokenId) => {
     await donateContract
-        .newSale(tokenId, (price * ether).toString(), { from: account })
-        .then((result) => console.log(result))
+        .newSale(tokenId, { from: account })
+}
+
+export const cancelSale = async (tokenId) => {
+    await donateContract
+        .deleteSale(tokenId, { from: account })
 }
 
 export const trading = async (tokenId, price) => {
     await marketContract.trading(tokenId, {
         from: account,
         value: (price * ether).toString()
-    }).then((result) => console.log(result))
+    })
 }
