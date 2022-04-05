@@ -65,8 +65,6 @@ function App() {
 
   const _newSale = async (tokenId) => {
     await newSale(tokenId);
-    console.log(await getTokenById(tokenId));
-    console.log(await getTokensByWallet(account));
   }
 
   const buying = async (tokenId, price) => {
