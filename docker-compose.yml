@@ -11,16 +11,16 @@ services:
     container_name: server
     restart: always
     links:
-      - mysql-container
+      - holuba_db
     depends_on: 
-      - mysql-container
+      - holuba_db
     env_file: ./backend/.env
     networks:
       - backend-connect
   
-  mysql-container:
+  holuba_db:
     image: mysql:latest
-    hostname: "mysql-container"
+    hostname: "holuba_db"
     environment:
       MYSQL_USER: ssafy
       MYSQL_DATABASE: holuba_db
@@ -28,7 +28,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - "3306:3306"
-    container_name: mysql-container
+    container_name: holuba_db
     networks:
       - backend-connect
 
