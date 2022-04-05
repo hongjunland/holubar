@@ -57,6 +57,10 @@ router.post('/login', async function (req, res) {
 	
 	const walletAddress = req.body.walletAddress;
 
+	if(walletAddress == null){
+		return res.send({err : "walletAddress null err"});
+	}
+
 	var { statusCode, responseBody } = await userService.getProfileWithWalletAddress(walletAddress);
 	
 	// 첫 로그인 responseBody 가 null  signup실행
@@ -78,9 +82,37 @@ router.post('/login', async function (req, res) {
 
 
 
+
 /**
  * 본인 프로필 조회 기능
  * 
+ */
+
+/**
+ * @swagger
+ * /user/profile/:
+ *  post:
+ *    tags: [Users]
+ *    summary: "본인 프로필 조회"
+ *    description: "본인 프로필 조회"
+ *    parameters:
+ *      - in: header
+ *        name: X-Request-ID
+ *        schema:
+ *          type: object
+ *          properties:
+ *            accessToken:
+ *              type: string
+ *    responses:
+ *      "200":
+ *        description: "로그인 결과"
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                accessToken:
+ *                  type: string
  */
  router.get('/profile/',authUtil, async function (req, res) {
 
