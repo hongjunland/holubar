@@ -1,6 +1,11 @@
 pipeline {
     agent none
     options { skipDefaultCheckout(false) }
+
+    environment {
+        PATH = "$PATH:/usr/local/bin"
+    }
+    
     stages {
         stage('git pull') {
             agent any
@@ -17,7 +22,7 @@ pipeline {
                 | xargs -r docker container rm'
                 sh 'docker rmi -f server'
 
-                sh '/usr/local/bin/docker-compose up'
+                sh 'docker-compose up'
             }
         }
         stage('Frontend build') {
