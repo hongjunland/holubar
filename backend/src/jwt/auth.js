@@ -1,7 +1,5 @@
 const jwt = require('./jwt');
-// const MSG = require('../modules/responseMessage');
-// const CODE = require('../modules/statusCode');
-// const util = require('../modules/util');
+
 const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
 

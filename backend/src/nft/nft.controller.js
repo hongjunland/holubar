@@ -23,13 +23,7 @@ const { uploadFile, getFileStream } = require('../S3/s3')
 //nft 등록
 router.post('/create', authUtil, upload.single('image'), async function (req, res) {
 
-    // var tempImageUrl = ''
-	// //s3에 이미지 저장 후 url return
-	// const file = req.file
-	// const result = await uploadFile(file)
-	// await unlinkFile(file.path)
-	// // const description = req.body.description
-	// tempImageUrl = `https://holuba.s3.ap-northeast-2.amazonaws.com/${result.Key}`
+ 
     const token = req.get('accessToken');
 	var base64Payload = token.split('.')[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE 
 	var payload = Buffer.from(base64Payload, 'base64'); 
@@ -93,7 +87,7 @@ router.put('/trade/cancel',authUtil,  async function (req, res) {
 
 
 
-////조건판매목록조회
+//조건판매목록조회
 router.get('/trade/sellList',authUtil,  async function (req, res) {
 
     var marketStatus = req.query.status;
@@ -101,25 +95,12 @@ router.get('/trade/sellList',authUtil,  async function (req, res) {
     var max = req.query.max;
     var condition = req.query.condition;
     
-    
-    
-    
-    // if(!req.query.status){
-    //     var marketStatus = 0;
-    // }
-
-    // if(!req.query.min){
-    //     var min = '0';
-    // }
-    // if(!req.query.status){
-    //     var max = Number.MAX_SAFE_INTEGER;
-    // }
+  
     if(!req.query.condition){
         var condition = '0';
     }
   
 
-    // console.log(marketStatus,min,max,condition);
     const { statusCode, responseBody } = await nftService.testList(marketStatus,min,max,condition);
  
 
