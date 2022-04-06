@@ -13,30 +13,6 @@ import {
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 
-const Rankings = () => {
-  useEffect(() => {
-    axios
-      .get("http://3.35.173.223:5050/donation/rank", {
-        headers: {
-          accesstoken: `${localStorage.getItem("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      });
-  }, []);
-};
-
-// axios
-//   .get("http://3.35.173.223:5050/donation/rank", {
-//     headers: {
-//       accesstoken: `${localStorage.getItem("accessToken")}`,
-//     },
-//   })
-//   .then((res) => {
-//     console.log(res);
-//   });
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -57,29 +33,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(rankId, nickname, amount) {
-  return { rankId, nickname, amount };
-}
-
-const rows = [
-  createData("1", "aaa", "1,000,000"),
-  createData("2", "ccc", "100,000"),
-  createData("3", "bbb", "100,000"),
-  createData("4", "ddd", "100,000"),
-  createData("5", "eee", "100,000"),
-  createData("6", "fff", "100,000"),
-  createData("7", "ggg", "100,000"),
-  createData("8", "hhh", "100,000"),
-  createData("9", "iii", "100,000"),
-  createData("10", "jjj", "100,000"),
-];
-
 const RankingContainer = () => {
   const [rankings, setRankings] = useState([]);
-
-  // const RankingList = rankings.map((ranking, index) => (
-  //   <li key={index}>{ranking}</li>
-  // ));
 
   useEffect(() => {
     axios
@@ -90,15 +45,12 @@ const RankingContainer = () => {
       })
       .then((res) => {
         setRankings(res.data.rankList);
-        console.log(res.data);
-        // console.log(res.data[0].nickname);
+        // console.log(res.data);
       });
   }, []);
 
   return (
     <div>
-      {/* {rankings[1].rankId} */}
-      {/* {rankings} */}
       <TableContainer
         component={Paper}
         sx={{
@@ -121,17 +73,18 @@ const RankingContainer = () => {
             <TableRow>
               <StyledTableCell>랭킹</StyledTableCell>
               <StyledTableCell align="right">닉네임</StyledTableCell>
-              <StyledTableCell align="right">기부금액&nbsp;(₩)</StyledTableCell>
+              {/* <StyledTableCell align="right">기부금액&nbsp;(₩)</StyledTableCell> */}
+              <StyledTableCell align="right">기부금액(ETH))</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.rankId}>
+            {rankings.map((rank, idx) => (
+              <StyledTableRow key={idx}>
                 <StyledTableCell component="th" scope="row">
-                  {row.rankId}
+                  {idx + 1}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.nickname}</StyledTableCell>
-                <StyledTableCell align="right">{row.amount}</StyledTableCell>
+                <StyledTableCell align="right">{rank.nickname}</StyledTableCell>
+                <StyledTableCell align="right">{rank.amount}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
