@@ -85,6 +85,20 @@ function App() {
     console.log(await trading(tokenId, price));
   }
 
+  const getToken = async (tokenId) => {
+    const nowToken = await getTokenById(tokenId);
+    console.log(nowToken);
+
+    return nowToken;
+  }
+
+  const getTokenList = async (account) => {
+    const myTokenList = await getTokensByWallet(account);
+    console.log(myTokenList)
+
+    return myTokenList;
+  }
+
   let accountButton;
   if (active)
     accountButton = <button onClick={disconnectMetamask}>Logout</button>;
@@ -123,6 +137,10 @@ function App() {
       <button onClick={() => buying(tokenId, 0.05)}>Buy!</button>
       <br/>
       <button onClick={() => _cancelSale(tokenId)}>Cancel sale</button>
+      <br/>
+      <button onClick={() => getToken(tokenId)}>Get Token</button>
+      <br/>
+      <button onClick={() => getTokenList(account)}>Get my Tokens</button>
     </div>
   );
 }
