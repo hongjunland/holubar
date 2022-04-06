@@ -17,17 +17,6 @@ export default function Nav() {
 
   return (
     <div className="header">
-      {/* <div className="Navbar--left"><div><Link to="/">Holubar</Link></div></div>
-            <ul className="Navbar--containerList">
-                <div>
-                    <li><Link to="/donate">Donate</Link></li>
-                    <li><Link to="/market">Market</Link></li>
-                    <li><Link to="/ranking">Rankings</Link></li>
-                </div>
-                <div>
-                    <li><Link to="/profile">Profile</Link></li>
-                </div>
-            </ul> */}
       <div className="container">
         <Link to="/">
           <div className="logo">
@@ -71,7 +60,7 @@ export default function Nav() {
                 <Link to="/profile" style={{ textDecoration: "none" }}>
                   <MenuItem>Profile</MenuItem>
                 </Link>
-                <MenuItem onClick={handleClose}>LogIn</MenuItem>
+                <MenuItem>LogIn</MenuItem>
               </Menu>
             </div>
           </li>
