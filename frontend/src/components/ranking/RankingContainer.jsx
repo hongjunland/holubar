@@ -35,15 +35,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-axios
-  .get("http://3.35.173.223:5050/donation/rank", {
-    headers: {
-      accesstoken: `${localStorage.getItem("accessToken")}`,
-    },
-  })
-  .then((res) => {
-    console.log(res);
-  });
+// axios
+//   .get("http://3.35.173.223:5050/donation/rank", {
+//     headers: {
+//       accesstoken: `${localStorage.getItem("accessToken")}`,
+//     },
+//   })
+//   .then((res) => {
+//     console.log(res);
+//   });
 
 function createData(rank, nickname, amount) {
   return { rank, nickname, amount };
