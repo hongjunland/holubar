@@ -17,29 +17,23 @@ export default function Nav() {
             </ul> */}
       <div className="container">
         <Link to="/">
-          <a className="logo">
+          <div className="logo">
             <img
               src="/logo.png"
               style={{ display: "flex", width: "40px", margin: "25px" }}
             ></img>
             <span>Holubar</span>
-          </a>
+          </div>
         </Link>
         <ul className="nav">
           <li>
-            <Link to="/donate">
-              <a>Donate</a>
-            </Link>
+            <Link to="/donate">Donate</Link>
           </li>
           <li>
-            <Link to="/Market">
-              <a>Market</a>
-            </Link>
+            <Link to="/Market">Market</Link>
           </li>
           <li>
-            <Link to="/Ranking">
-              <a>Rankings</a>
-            </Link>
+            <Link to="/Ranking">Rankings</Link>
           </li>
           <li>
             <Link to="/profile">

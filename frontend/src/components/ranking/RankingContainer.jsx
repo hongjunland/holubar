@@ -12,7 +12,6 @@ import {
   TableRow,
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import RankingList from "./RankingList";
 
 const Rankings = () => {
   useEffect(() => {
@@ -78,6 +77,10 @@ const rows = [
 const RankingContainer = () => {
   const [rankings, setRankings] = useState([]);
 
+  // const RankingList = rankings.map((ranking, index) => (
+  //   <li key={index}>{ranking}</li>
+  // ));
+
   useEffect(() => {
     axios
       .get("http://3.35.173.223:5050/donation/rank", {
@@ -87,15 +90,15 @@ const RankingContainer = () => {
       })
       .then((res) => {
         setRankings(res.data.rankList);
-        console.log(res.data.rankList);
+        console.log(res.data);
         // console.log(res.data[0].nickname);
       });
   }, []);
 
   return (
     <div>
-      <RankingList rankings={rankings} />
-
+      {/* {rankings[1].rankId} */}
+      {/* {rankings} */}
       <TableContainer
         component={Paper}
         sx={{
