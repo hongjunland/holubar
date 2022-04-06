@@ -37,12 +37,18 @@ contract Market is Ownable {
 
     function newSale(address seller, uint256 tokenId) public returns (bool) {
         sales[tokenId] = Sales(seller);
-        return true;
     }
 
-    function deleteSale(uint256 tokenId) public returns (bool) {
+    function deleteSale(uint256 tokenId, bool isCancel) public returns (bool) {
+        if (isCancel) {
+            DonateNFT(NFTAddress).transferFrom(
+                address(this),
+                sales[tokenId].seller,
+                tokenId
+            );
+        }
+
         delete sales[tokenId];
-        return true;
     }
 
     function getSales(uint256 tokenId) public view returns (Sales memory) {
@@ -61,9 +67,7 @@ contract Market is Ownable {
 
         DonateNFT(NFTAddress).transferFrom(address(this), buyer, tokenId);
 
-        deleteSale(tokenId);
-
-        return true;
+        deleteSale(tokenId, false);
     }
 
     function donating(
