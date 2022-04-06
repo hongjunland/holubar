@@ -3,6 +3,8 @@ import styled from "styled-components";
 import HomeButton from "./HomeButton";
 import { useScrollFadeIn } from "../../hooks";
 
+import { Link } from "react-router-dom";
+
 const S = {
   Wrapper: styled.section`
     width: 100%;
@@ -41,9 +43,11 @@ const HomeBanner = () => {
         <br />
       </S.Title>
       <div {...animatedItem[2]}>
-        <HomeButton fill="solid" type="button">
-          기부하기
-        </HomeButton>
+        <Link to="/donate">
+          <HomeButton fill="solid" type="button">
+            기부하기
+          </HomeButton>
+        </Link>
       </div>
     </S.Wrapper>
   );
