@@ -57,7 +57,7 @@ function App() {
       url: "http://3.35.173.223:5050/user/login",
       method: "post",
       data: {
-        walletAddress: "address",
+        walletAddress: address,
       },
     }).then((res) => {
       localStorage.setItem("accessToken", res.data.accessToken);
