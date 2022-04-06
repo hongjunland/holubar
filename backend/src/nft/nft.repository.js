@@ -4,17 +4,87 @@ class NftRepository {
 
     createNFT(userId,assetName,assetDesc,assetImageUrl,tokenId){
 
-        connection.query( `INSERT INTO asset(user_id,asset_name,asset_desc,asset_image_url,token_id) VALUE (?,?,?,?,?)`,[userId,assetName,assetDesc,assetImageUrl,tokenId]);
+        var a = connection.query( `INSERT INTO asset(user_id,asset_name,asset_desc,asset_image_url,token_id) VALUE (?,?,?,?,?)`,[userId,assetName,assetDesc,assetImageUrl,tokenId]);
+        
+        return a;
     }
 
     sellNFT(assetId,price){
         connection.query( `UPDATE asset SET market_status = 1, price = (?) WHERE asset_id =?`,[price,assetId]);
+    }
+    
+    //판매취소
+    cancel(assetId){
+        connection.query( `UPDATE asset SET market_status = 0 WHERE asset_id =?`,assetId);
     }
 
     async sellList(){
 
         var a = await connection.query(`SELECT * FROM asset WHERE market_status = 1`);
         console.log(a[0])
+        return a[0];
+    }
+
+
+    async testList(arr){
+
+        var str = 'SELECT * FROM asset';
+        
+        var cnt = arr.length;
+        console.log(cnt)
+        if(arr[0] || arr[1] || arr[2] ){
+            str += ' WHERE '
+        }
+        
+
+        //market status
+        if(arr[0]){
+            str += ' market_status = ';
+            str += arr[0];
+        }
+        
+        //min
+        if(arr[1]){
+
+            if(arr[0]){
+                str += ' and '
+            }
+
+            str += ' price >= ';
+            str += arr[1];
+        }
+        
+
+        //max
+        if(arr[2]){
+
+            if(arr[0] || arr[1]){
+                str += ' and '
+            }
+
+            str += ' price <= ';
+            str += arr[2];
+        }
+
+        //condition
+        if(arr[3]){
+            str += ' ORDER BY ';
+            if(arr[3] == '1'){ //오래된 순
+                str += ' date ASC ';
+            }else if(arr[3] == '2'){ //높은 가격순
+                str += ' price DESC ';
+            }else if(arr[3] == '3'){ // 낮은 가격순
+                str += ' price ASC ';
+            }else{ //최신순 정렬
+                str += ' date DESC ';
+            }
+        }
+        console.log(str)
+       
+
+
+        var a = await connection.query(str);
+        // console.log(a[0])
         return a[0];
     }
 
@@ -38,12 +108,7 @@ class NftRepository {
         var a = await connection.query(`SELECT * FROM asset WHERE asset_id = ?`,assetId);
         return a[0];
 
-
-
-
     }
-
-
 
 }
 

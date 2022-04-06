@@ -11,15 +11,12 @@
 	 * 프로필 조회    서비스
 	 */
     async signUp(walletAddress) {
+        
 
-        userRepository.signUp(walletAddress);
+        
+        var q = await userRepository.signUp(walletAddress);
 
-        return {
-            statusCode: 201,
-            responseBody: {
-                message: "success"
-            }
-        };
+        return q;
     }
 
     /**
@@ -88,15 +85,15 @@
     /**
 	 * 프로필 수정    서비스
 	 */
-     async editProfile(email,walletAddress,nickname,profileImageUrl,bio) {
+     async editProfile(userId,email,nickname,profileImageUrl,bio) {
 
         try {
-            var q = await userRepository.editProfileByWalletAddress(email,walletAddress,nickname,profileImageUrl,bio);
-            console.log(q)
+            var q = await userRepository.editProfileByUserId(userId,email,nickname,profileImageUrl,bio);
+   
         } catch (err) {
             if (err.code === 'ER_DUP_ENTRY') {
                //handleHttpErrors(SYSTEM_ERRORS.USER_ALREADY_EXISTS);
-               console.log("dup error시작")
+               console.log("dup error")
                 return {
                     statusCode: 500,
                     responseBody: {

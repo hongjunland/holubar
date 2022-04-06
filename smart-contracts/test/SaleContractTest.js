@@ -10,7 +10,7 @@ contract("Sale Contract Testing", (accounts) => {
 
     beforeEach(async function () {
         token = await DonateNFT.new();
-        market = await Market.new(token.address);
+        market = await Market.new();
     })
     
     describe("포지티브 케이스 1: 마켓 동작 점검", () => {
@@ -18,14 +18,19 @@ contract("Sale Contract Testing", (accounts) => {
             const address1 = accounts[0];
             const address2 = accounts[1];
             const tokenURI = "tempURI";
+
+            market.setNFTAddress(token.address);
+            token.setMarketAddress(market.address);
             
-            let tokenId = (await token.create(address1, tokenURI, 5)).logs[0].args["tokenId"];
+            let tokenId = (await token.create(address1, "name", "desc", tokenURI, 5)).logs[0].args["tokenId"];
+            tokenId = (await token.create(address1, "name", "desc", tokenURI, 5)).logs[0].args["tokenId"];
             let owner = (await token.ownerOf(tokenId));
-            
+            console.log(await token.tokenURI(tokenId));
+
             assert.equal(address1, owner, "NFT Mint Failed");
             
-            await token.approve(market.address, tokenId);
-            await market.newSale(address1, tokenId, 50);
+            // await token.approve(market.address, tokenId);
+            await token.newSale(tokenId, 50);
 
             await market.trading(tokenId, {
                 from: address2,
@@ -33,9 +38,11 @@ contract("Sale Contract Testing", (accounts) => {
             });
             
             owner = (await token.ownerOf(tokenId));
-            assert.equal(address2, owner, "NFT Transfer Failed.");
 
-            assert.equal(tokenURI, await token.tokenURI(tokenId), "Wrong Token Id or URI.")
+            assert.equal(address2, owner, "NFT Transfer Failed.");
+            console.log(await web3.eth.getBalance(market.address));
+
+            assert.equal(tokenURI, (await token.getTokenById(tokenId)).tokenURI, "Wrong Token Id or URI.")
         })
     });
 });

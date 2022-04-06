@@ -15,32 +15,22 @@ CREATE TABLE `donation` (
    `donation_id` int NOT NULL AUTO_INCREMENT COMMENT '기부번호',
    `user_id` int NOT NULL COMMENT '회원번호',
    `price` varchar(50) NOT NULL COMMENT '기부금액',
---    `nickname` varchar(10) COMMENT '닉네임',
---    `profile_image_url` varchar(200)  COMMENT '프로필이미지주소',
    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '기부 시간',
-   
-   -- foreign key (`user_id`,`nickname`,`profile_image_url`) references `user`(`user_id`,`nickname`,`profile_image_url`) ON DELETE CASCADE on update cascade,
    foreign key (`user_id`) references `user` (`user_id`) ON DELETE CASCADE on update cascade,
-  --  foreign key (`nickname`) references `user` (`nickname`) ON DELETE CASCADE on update cascade,
---    foreign key (`profile_image_url`) references `user` (`profile_image_url`) ON DELETE CASCADE on update cascade,
    PRIMARY KEY (`donation_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='기부';
 
 
 CREATE TABLE `asset` (
    `asset_id` int NOT NULL AUTO_INCREMENT COMMENT '자산번호',
-   `user_id` int NOT NULL COMMENT '보유회원번호',
-   
+   `user_id` int NOT NULL COMMENT '보유회원번호',  
    `asset_name` varchar(100) COMMENT 'NFT 이름',
    `asset_desc` varchar(500) COMMENT '설명',
-   `asset_image_url` varchar(200)  COMMENT '자산이미지주소',
-   
-   `token_id` varchar(100) NOT NULL COMMENT 'nft토큰아이디',
-   
+   `asset_image_url` varchar(200)  COMMENT '자산이미지주소' ,  
+   `token_id` varchar(100) NOT NULL COMMENT 'nft토큰아이디'unique,  
    `market_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '판매등록 여부, 1판매중 ',
    `price` int NOT NULL DEFAULT 0 COMMENT '판매가격',
-   
-   
+   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 시간',   
    foreign key (`user_id`) references `user` (`user_id`) ON DELETE CASCADE on update cascade,
    PRIMARY KEY (`asset_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='자산';
@@ -52,13 +42,8 @@ CREATE TABLE `trade_history` (
     `price` varchar(50) NOT NULL COMMENT '거래금액',
     `seller_id` int NOT NULL COMMENT '판매자 번호',
     `buyer_id` int NOT NULL COMMENT '구매자번호',
-    
-	
-	
-    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '기부 시간',
+    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '거래 시간',
     
 	foreign key (`asset_id`) references `asset` (`asset_id`) ON DELETE CASCADE on update cascade,
---     foreign key (`seller_id`) references `user` (`user_id`) ON DELETE CASCADE on update cascade,
---     foreign key (`buyer_id`) references `user` (`user_id`) ON DELETE CASCADE on update cascade,
 	PRIMARY KEY (`trade_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='자산';

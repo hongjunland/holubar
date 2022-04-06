@@ -6,19 +6,14 @@
 
  class UserRepository {
 
-
-
-
-
-
-
      /**
      * 회원가입 기능
      * 
      */
     signUp(walletAddress){
-
-        connection.query( `INSERT INTO user(wallet_address) VALUE (?)`,walletAddress);
+        
+        var a = connection.query( `INSERT INTO user(wallet_address) VALUE (?)`,walletAddress);
+        return a;
     }
   
 
@@ -45,8 +40,8 @@
      * 프로필 수정 기능
      * 
      */
-    editProfileByWalletAddress(email,walletAddress,nickname,profileImageUrl,bio){
-        var a = connection.query( `UPDATE user SET email = (?), nickname = (?), profile_image_url = (?), bio = (?) WHERE wallet_address =?`,[email,nickname,profileImageUrl,bio,walletAddress]);
+    editProfileByUserId(userId,email,nickname,profileImageUrl,bio){
+        var a = connection.query( `UPDATE user SET email = (?), nickname = (?), profile_image_url = (?), bio = (?) WHERE user_id =?`,[email,nickname,profileImageUrl,bio,userId]);
         return a;
     }
 }
