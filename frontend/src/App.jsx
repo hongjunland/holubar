@@ -7,10 +7,9 @@ import {BrowserRouter as Router} from "react-router-dom";
 import Header from 'components/common/Header';
 import { init, tokenMint, newSale, trading, getTokenById, getTokensByWallet, cancelSale } from './web3/Web3Client';
 import { useWeb3React } from "@web3-react/core";
-import { injected } from "web3/connectors";
-import { ConstructionOutlined } from "@mui/icons-material";
-
-import axios from "axios";
+import { injected } from 'web3/connectors';
+import { ConstructionOutlined } from '@mui/icons-material';
+import axios from 'axios'
 
 function App() {
   const { chainId, account, active, activate, deactivate } = useWeb3React();
@@ -60,13 +59,37 @@ function App() {
 
   const disconnectMetamask = async () => {
     await deactivate();
-  };
+    localStorage.removeItem("accessToken")
+  }
 
   const mint = async (name, desc, url, price) => {
     await tokenMint(name, desc, url, price)
       .then((tx) => {
         setTokenId(tx.toString());
         setMinted(true);
+      })
+      .then(() => {
+        console.log(tokenId.toString())
+        axios({
+          url: 'http://3.35.173.223:5050/nft/create',
+          method: 'post',
+          headers: {
+            "accessToken": localStorage.getItem("accessToken")
+          },
+          data: {
+            "assetName":name,
+            "assetDesc": desc,
+            "assetImageUrl":url,
+            "tokenId": tokenId,
+            "price" : price
+          }
+        })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) =>{
+          console.log(err)
+        })
       })
       .catch((err) => {
         console.log(err);
@@ -103,8 +126,19 @@ function App() {
   if (active)
     accountButton = <button onClick={disconnectMetamask}>Logout</button>;
   else
-    accountButton = <button onClick={connectMetamask}>MetaMask Login</button>;
-
+    accountButton = <button onClick={()=>{
+      // connectMetamask
+      axios({
+          url: `http://3.35.173.223:5050/user/login`,
+          method: 'post',
+          data: {
+            "walletAddress": "0x22e16d492112a5987907b338e8c6297762Be4a54"
+          }
+      }).then((res) =>{
+        localStorage.setItem("accessToken", res.data.accessToken)
+      }).then(connectMetamask)
+    }}>MetaMask Login</button>
+  
   return (
     <div className="app">
       <Router>
@@ -112,7 +146,21 @@ function App() {
           <Nav />
         </Header>
         <Main>
-          <Routes />
+          <Routes
+            chainId={chainId}
+            account={account}
+            active={active}
+            activate={activate}
+            deactivate={deactivate}
+            minted={minted}
+            tokenId={tokenId}
+            connectMetamask={connectMetamask}
+            disconnectMetamask={disconnectMetamask}
+            mint={mint}
+            _newSale={_newSale}
+            buying={buying}
+            accountButton={accountButton}
+          />
         </Main>
         <Footer />
       </Router>

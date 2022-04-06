@@ -3,6 +3,7 @@ import {Box, Tab} from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 import SelectTextFields from './Select';
+import InputAdornments from './PriceInput';
 
 export default function LabTabs(props) {
   const [value, setValue] = React.useState('1');
@@ -22,7 +23,14 @@ export default function LabTabs(props) {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <SelectTextFields
+          {/* <SelectTextFields
+            price={price}
+            onChange={(data)=>{
+              setPrice(data);
+              props.onChange(data)
+            }}
+          /> */}
+          <InputAdornments
             price={price}
             onChange={(data)=>{
               setPrice(data);

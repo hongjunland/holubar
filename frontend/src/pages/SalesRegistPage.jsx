@@ -1,4 +1,6 @@
 import React from 'react'
+import axios from 'axios'
+import { useParams } from 'react-router-dom'
 import {Grid, Container, Button} from '@mui/material'
 
 import SwitchLabels from '../components/all/Switch'
@@ -8,6 +10,19 @@ import LabTabs from '../components/all/SmallTab'
 export default function SalesRegist() {
 
   const tokenData = require('./../samplejson/SalesRegistPage.json');
+  const params = useParams();
+  // console.log(params.itemId);
+  // axios({
+  //   url: `/${params.itemId}`,
+  //   headers:{
+  //     "accessToken": localStorage.getItem("accessToken")
+  //   }
+  // }).then((res) => {
+  //   const tokenData = JSON.parse(res)
+  //   console.log(res)
+  // }).catch((err) => {
+  //   console.log(err)
+  // })
   return (
     <Container fixed>
       <Grid container>
@@ -41,6 +56,17 @@ export default function SalesRegist() {
             variant="contained"
             onClick={()=>{
               console.log(tokenData)
+              // axios({
+              //   url: '/trade/sell',
+              //   method: 'post',
+              //   headers: {
+              //     "accessToken": localStorage.getItem("accessToken")
+              //   },
+              //   data: {
+              //     "assetId": tokenData.assetId,
+              //     "price": tokenData.price
+              //   }
+              // })
             }}
           >SAVE</Button>
         </Grid>
