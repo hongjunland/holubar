@@ -73,7 +73,7 @@ router.get('/donatetarget/:id', authUtil, async function (req, res) {
 
  
     const donateTargetId = req.params.id;
-    if(id == null){
+    if(donateTargetId == null){
 		return res.send({err : "id null err"});
 	}
     const { statusCode, responseBody } = await addressService.getTargetAddress(donateTargetId);

@@ -29,7 +29,7 @@ class AddressRepository{
     async getTargetAddress(donateTargetId){
 
         var a = await connection.query( `select donate_address from donate_target where donate_target_id = ?`,donateTargetId);
-        console.log(a)
+      
         return a[0];
     }
 
