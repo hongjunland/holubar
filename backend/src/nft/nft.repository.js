@@ -12,7 +12,8 @@ class NftRepository {
     sellNFT(assetId,price){
         connection.query( `UPDATE asset SET market_status = 1, price = (?) WHERE asset_id =?`,[price,assetId]);
     }
-
+    
+    //판매취소
     cancel(assetId){
         connection.query( `UPDATE asset SET market_status = 0 WHERE asset_id =?`,assetId);
     }
@@ -108,8 +109,6 @@ class NftRepository {
         return a[0];
 
     }
-
-
 
 }
 

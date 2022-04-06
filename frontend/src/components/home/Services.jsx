@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useScrollFadeIn } from "../../hooks";
+import HomeButtom from "./HomeButton";
+import { Link } from "react-router-dom";
 
 const S = {
   Wrapper: styled.section`
@@ -64,16 +66,19 @@ const SERVICES_ITEMS = [
     description:
       "우크라이나에 기부해보세요. 클릭해 기부하면 NFT를 받을 수 있습니다!",
     button: "기부하기",
+    link: "/donate",
   },
   {
     title: "Market",
     description: "이더리움을 통해서 의미있는 토큰을 교환할 수 있습니다!",
     button: "교환하기",
+    link: "/market",
   },
   {
     title: "Ranking",
-    description: "기부자 랭킹 Top 10에 도전하세요!",
+    description: "많은 기부를 통해 기부자 랭킹 Top 10에 도전하세요!",
     button: "랭킹보기",
+    link: "/ranking",
   },
 ];
 
@@ -87,7 +92,7 @@ const Services = () => {
   return (
     <S.Wrapper>
       <S.Label>Our Services</S.Label>
-      <S.Title>Houlba</S.Title>
+      <S.Title>Holuba</S.Title>
       <S.ItemWrapper>
         {SERVICES_ITEMS.map((item, index) => (
           <S.ItemBox key={item.title} {...animatedItem[index]}>
@@ -96,7 +101,10 @@ const Services = () => {
             <br />
             <S.ItemDescription>{item.description}</S.ItemDescription>
             <br />
-            <S.ItemButton>{item.button}</S.ItemButton>
+
+            <Link to={item.link}>
+              <HomeButtom>{item.button}</HomeButtom>
+            </Link>
           </S.ItemBox>
         ))}
       </S.ItemWrapper>

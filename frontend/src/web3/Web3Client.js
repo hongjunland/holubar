@@ -31,15 +31,22 @@ export const init = async (donateNFTAddress, marketAddress, _donateGetter, _acco
 }
 
 export const tokenMint = async (name, desc, tokenURI, price) => {
-    await marketContract
+    const tx = await marketContract
         .donating(donateGetterAddress, name, desc, tokenURI, {
             from: account,
             value: (price * ether).toString()
         })
     
-    const nowId = await donateContract.current({ from: account });
+    let nowId;
+
+    await tx.wait()
+        .then(async (receipt) => {
+            if (receipt.status === 1) {
+                nowId = await donateContract.current({ from: account });
+            }
+        })
     
-    return nowId;
+    return nowId-1;
 }
 
 export const getTokenById = async (tokenId) => {
@@ -51,18 +58,39 @@ export const getTokensByWallet = async (account) => {
 }
 
 export const newSale = async (tokenId) => {
-    await donateContract
-        .newSale(tokenId, { from: account })
+    const tx = await donateContract
+        .newSale(tokenId, { from: account });
+    
+    const receipt = await tx.wait();
+
+    if (receipt.status === 1)
+        return true;
+    else
+        return false;
 }
 
 export const cancelSale = async (tokenId) => {
-    await donateContract
-        .deleteSale(tokenId, true, { from: account })
+    const tx = await marketContract
+        .deleteSale(tokenId, true, { from: account });
+    
+    const receipt = await tx.wait();
+
+    if (receipt.status === 1)
+        return true;
+    else
+        return false;
 }
 
 export const trading = async (tokenId, price) => {
-    await marketContract.trading(tokenId, {
+    const tx = await marketContract.trading(tokenId, {
         from: account,
         value: (price * ether).toString()
-    })
+    });
+
+    const receipt = await tx.wait();
+
+    if (receipt.status === 1)
+        return true;
+    else
+        return false;
 }

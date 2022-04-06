@@ -2,7 +2,6 @@ const NftRepository = require('./nft.repository');
 const nftRepository = new NftRepository();
 
 
- 
 class NftService {
 
     async createNFT(userId,assetName,assetDesc,assetImageUrl,tokenId) {
@@ -14,7 +13,7 @@ class NftService {
    
         } catch (err) {
             if (err.code === 'ER_DUP_ENTRY') {
-               //handleHttpErrors(SYSTEM_ERRORS.USER_ALREADY_EXISTS);
+             
                console.log("nft token id dup error")
                 return {
                     statusCode: 500,
@@ -23,7 +22,7 @@ class NftService {
                     }
                 };
            } else {
-               //handleHttpErrors(err.message);
+               
                return {
                 statusCode: 500,
                 responseBody: {

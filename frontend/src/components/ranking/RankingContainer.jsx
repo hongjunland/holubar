@@ -2,6 +2,8 @@ import * as React from "react";
 import { Box, Paper, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
+import axios from "axios";
+
 import {
   Table,
   TableBody,
@@ -12,13 +14,6 @@ import {
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 
 import RankingTitle from "./RankingTitle";
-
-// const Ranking = styled(Paper)(({ theme }) => ({
-//   backgroundColor: "blue",
-//   padding: theme.spacing(3),
-//   textAlign: "center",
-//   color: "white",
-// }));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,6 +34,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+
+axios
+  .get("http://3.35.173.223:5050/donation/rank", {
+    headers: {
+      accesstoken: `${localStorage.getItem("accessToken")}`,
+    },
+  })
+  .then((res) => {
+    console.log(res);
+  });
 
 function createData(rank, nickname, amount) {
   return { rank, nickname, amount };

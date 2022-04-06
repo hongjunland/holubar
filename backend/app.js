@@ -6,8 +6,8 @@ const logger = require('morgan');
 const cors = require('cors');
 
 const { swaggerUi, specs } = require('./src/swagger');
-// const itemsRouter = require('./src/items/items.controller');
-const salesRouter = require('./src/sales/sales.controller');
+
+
 const s3Router = require('./src/S3/server.js');
 const userRouter = require('./src/user/user.controller');
 const donationRouter = require('./src/donation/donation.controller');
@@ -27,8 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-// app.use('/items', itemsRouter);
-app.use('/sales', salesRouter);
+
 app.use('/user', userRouter);
 app.use('/donation', donationRouter);
 app.use('/s3', s3Router);
