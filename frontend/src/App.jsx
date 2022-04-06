@@ -159,6 +159,7 @@ function App() {
             mint={mint}
             _newSale={_newSale}
             buying={buying}
+            getToken={getToken}
             accountButton={accountButton}
           />
         </Main>

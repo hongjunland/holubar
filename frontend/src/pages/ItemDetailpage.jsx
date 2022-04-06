@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import {Grid,Container,Button} from "@mui/material"
@@ -8,46 +8,58 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { EthereumIcon } from '../components/Icons'
 
 
-export default function ItemDetail() {
-  axios({
-    url: `http://3.35.173.223:5050/user/login`,
-    method: 'post',
-    data: {
-      "walletAddress": "0x22e16d492112a5987907b338e8c6297762Be4a54"
-    }
-  }).then((res) =>{
-    localStorage.setItem("accessToken", res.data.accessToken)
-  })
-
-  // 샘플데이터
+export default function ItemDetail(props) {
+  const [tokenData, setTokenData] = useState(require('./../samplejson/ItemDetailPage.json'))
+  const [tokenDetail, setTokenDetail] = useState(require('./../samplejson/sampleUser.json'))
+  const [userData, setUserData] = useState()
   const params = useParams();
-  // const tokenData = require('./../samplejson/ItemDetailPage.json');
-  let tokenData;
-  axios.get(`http://3.35.173.223:5050/nft/${params.itemId}`)
-    .then((res) => {
-      tokenData = res.data
-      // console.log(res.data)
-      if (tokenData === "no token error"){
-        console.log(111111111111111111111111111111)
+  useEffect(() => {
+    axios.get(`http://3.35.173.223:5050/nft/${params.itemId}`, {
+      headers: {
+        accessToken: `${localStorage.getItem("accessToken")}`,
       }
-    }).catch((err) => {
+    }).then((res)=>{
+      setTokenData(res.data)
+      console.log(tokenData)
+    }).then(()=>{
+      axios.get(`http://3.35.173.223:5050/user/profile/${tokenData.userId}`, {
+        headers: {
+          accessToken: `${localStorage.getItem("accessToken")}`,
+        }
+      }).then((res) =>{
+        setUserData(res.data)
+      })
+    }).catch((err)=>{
       console.log(err)
     })
+  },[])
+
+
 
   return (
     <Container fixed>
+      <Button
+        onClick={()=>{
+          // setTokenDetail(props.props.getToken(tokenData.tokenId))
+          // console.log(tokenDetail)
+          // console.log(userData)
+        }}
+      >버어튼</Button>
       <Grid container>
         <Grid item xs={6}>
-          <img src={ tokenData.tokenImg } width="100%" />
+          <img src={ tokenData.assetImageUrl } width="100%" />
+          {/* {tokenImg} */}
         </Grid>
         <Grid item xs={5} style={{ margin: '1em' }}>
-          <a href="/profile/{tokenData.owner}"
+          <a href="/profile/{userData.userId}"
+          // <a href="/profile"
             style={{textDecoration:"none", textColor:"blue"}}
           >
-            { tokenData.owner }
+            dsfsdf
+            {/* { userData.nickname } */}
           </a>
           <br />
-          <h1>{ tokenData.tokenName }</h1>
+          <h1>{ tokenData.assetName }</h1>
           <div 
             style={
               { border: '1px solid lightGray', 
@@ -67,7 +79,14 @@ export default function ItemDetail() {
             </span>
             <span style={{fontSize:"30px", fontWeight:"bold"}}>  { tokenData.price }</span>
             <br />
-            <Button variant="contained" color="primary" style={{width:"132px", height:"42px"}}>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              style={{width:"132px", height:"42px"}}
+              onClick={()=>{
+                props.props.buying(tokenData.tokenId, tokenData.price)
+              }}
+            >
               구매하기
             </Button>
           </div>
@@ -83,7 +102,8 @@ export default function ItemDetail() {
             defaultExpandIcon={<ChevronRightIcon />}
           >
             <TreeItem nodeId='1' label="Description">
-              <TreeItem nodeId='2' label="created by :{}" />
+              {tokenData.assetDesc}
+              {/* <TreeItem nodeId='2' label="created by :{}">sdgdfgfd</TreeItem> */}
             </TreeItem>
           </TreeView>
           <TreeView 
@@ -98,12 +118,9 @@ export default function ItemDetail() {
             defaultExpandIcon={<ChevronRightIcon />}
           >
             <TreeItem nodeId="1" label="detail">
-              <TreeItem 
-              nodeId="2" 
-              label="ContractAddr" 
-              />
-              <TreeItem nodeId="3" label="Token ID" />
-              <TreeItem nodeId="4" label="Blockchain" />
+              {/* 사실 토큰 주소가 아니라 소유자 지갑 주소임;; */}
+              Contract Address : {tokenDetail.owner} <br />
+              기부금 : {tokenDetail.donateAmmount} <br />
             </TreeItem>
           </TreeView>
         </Grid>
@@ -111,14 +128,3 @@ export default function ItemDetail() {
     </Container>
   )
 }
-
-// {
-//   "assetId": 1,
-//   "userId": 1,
-//   "assetName": "asset",
-//   "assetDesc": "desc",
-//   "assetImageUrl": "www.tm1.com",
-//   "tokenId": "41323",
-//   "marketStatus": 0,
-//   "price": 0
-//   }
