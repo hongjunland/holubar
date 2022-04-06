@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Box, Paper, Stack } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import axios from "axios";
@@ -12,8 +12,6 @@ import {
   TableRow,
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-
-import RankingTitle from "./RankingTitle";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,6 +33,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+<<<<<<< HEAD
 // axios
 //   .get("http://3.35.173.223:5050/donation/rank", {
 //     headers: {
@@ -48,67 +47,66 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function createData(rank, nickname, amount) {
   return { rank, nickname, amount };
 }
-
-const rows = [
-  createData("1", "aaa", "1,000,000"),
-  createData("3", "ccc", "100,000"),
-  createData("2", "bbb", "100,000"),
-  createData("4", "ddd", "100,000"),
-  createData("5", "eee", "100,000"),
-  createData("6", "fff", "100,000"),
-  createData("7", "ggg", "100,000"),
-  createData("8", "hhh", "100,000"),
-  createData("9", "iii", "100,000"),
-  createData("10", "jjj", "100,000"),
-];
-
+=======
 const RankingContainer = () => {
+  const [rankings, setRankings] = useState([]);
+>>>>>>> feature/ranking_event_273
+
+  useEffect(() => {
+    axios
+      .get("http://3.35.173.223:5050/donation/rank", {
+        headers: {
+          accessToken: `${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        setRankings(res.data.rankList);
+        // console.log(res.data);
+      });
+  }, []);
+
   return (
-    // <Box sx={{ width: "100%" }}>
-    //   <Stack spacing={4}>
-    //     <Ranking>Rank 1</Ranking>
-    //     <Ranking>Rank 2</Ranking>
-    //     <Ranking>Rank 3</Ranking>
-    //   </Stack>
-    // </Box>
-    <TableContainer
-      component={Paper}
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <Table
+    <div>
+      <TableContainer
+        component={Paper}
         sx={{
-          marginTop: 8,
-          width: "800px",
-          flexDirection: "column",
-          alignItems: "center",
+          display: "flex",
           justifyContent: "center",
-          marginBottom: 8,
         }}
-        aria-label="customized table"
       >
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>랭킹</StyledTableCell>
-            <StyledTableCell align="right">닉네임</StyledTableCell>
-            <StyledTableCell align="right">기부금액&nbsp;(₩)</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.rank}>
-              <StyledTableCell component="th" scope="row">
-                {row.rank}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.nickname}</StyledTableCell>
-              <StyledTableCell align="right">{row.amount}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        <Table
+          sx={{
+            marginTop: 8,
+            width: "800px",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 8,
+          }}
+          aria-label="customized table"
+        >
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>랭킹</StyledTableCell>
+              <StyledTableCell align="right">닉네임</StyledTableCell>
+              {/* <StyledTableCell align="right">기부금액&nbsp;(₩)</StyledTableCell> */}
+              <StyledTableCell align="right">기부금액(ETH))</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rankings.map((rank, idx) => (
+              <StyledTableRow key={idx}>
+                <StyledTableCell component="th" scope="row">
+                  {idx + 1}
+                </StyledTableCell>
+                <StyledTableCell align="right">{rank.nickname}</StyledTableCell>
+                <StyledTableCell align="right">{rank.amount}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 

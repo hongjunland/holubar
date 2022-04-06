@@ -50,7 +50,11 @@ function App() {
       account
     );
 
+<<<<<<< HEAD
     login();
+=======
+    // login();
+>>>>>>> feature/ranking_event_273
   };
 
   // console.log(account);
@@ -137,14 +141,22 @@ function App() {
   };
 
   let accountButton;
+<<<<<<< HEAD
   if (active)
+=======
+  if (active) {
+>>>>>>> feature/ranking_event_273
     accountButton = (
       <div>
         <button onClick={disconnectMetamask}>Logout</button>;
         <div>{login(account)}</div>
       </div>
     );
+<<<<<<< HEAD
   else
+=======
+  } else
+>>>>>>> feature/ranking_event_273
     accountButton = <button onClick={connectMetamask}>MetaMask Login</button>;
   // accountButton = (
   //   <button
