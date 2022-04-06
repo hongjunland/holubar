@@ -33,24 +33,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-<<<<<<< HEAD
-// axios
-//   .get("http://3.35.173.223:5050/donation/rank", {
-//     headers: {
-//       accesstoken: `${localStorage.getItem("accessToken")}`,
-//     },
-//   })
-//   .then((res) => {
-//     console.log(res);
-//   });
-
-function createData(rank, nickname, amount) {
-  return { rank, nickname, amount };
-}
-=======
 const RankingContainer = () => {
   const [rankings, setRankings] = useState([]);
->>>>>>> feature/ranking_event_273
 
   useEffect(() => {
     axios

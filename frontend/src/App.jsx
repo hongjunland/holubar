@@ -49,12 +49,6 @@ function App() {
       "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
       account
     );
-
-<<<<<<< HEAD
-    login();
-=======
-    // login();
->>>>>>> feature/ranking_event_273
   };
 
   // console.log(account);
@@ -141,22 +135,14 @@ function App() {
   };
 
   let accountButton;
-<<<<<<< HEAD
-  if (active)
-=======
   if (active) {
->>>>>>> feature/ranking_event_273
     accountButton = (
       <div>
         <button onClick={disconnectMetamask}>Logout</button>;
         <div>{login(account)}</div>
       </div>
     );
-<<<<<<< HEAD
-  else
-=======
   } else
->>>>>>> feature/ranking_event_273
     accountButton = <button onClick={connectMetamask}>MetaMask Login</button>;
   // accountButton = (
   //   <button
