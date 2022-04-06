@@ -61,7 +61,7 @@ function App() {
       },
     }).then((res) => {
       localStorage.setItem("accessToken", res.data.accessToken);
-      console.log("success");
+      console.log("get Token success");
     });
   };
 
