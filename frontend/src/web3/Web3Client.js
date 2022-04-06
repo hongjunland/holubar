@@ -57,7 +57,7 @@ export const newSale = async (tokenId) => {
 
 export const cancelSale = async (tokenId) => {
     await donateContract
-        .deleteSale(tokenId, { from: account })
+        .deleteSale(tokenId, true, { from: account })
 }
 
 export const trading = async (tokenId, price) => {

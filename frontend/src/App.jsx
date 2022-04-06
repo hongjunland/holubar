@@ -26,7 +26,7 @@ function App() {
     if (active) {
       init(
         "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
-        "0x2dDd4CfE699BceC05cdbd32888598A5A5142325e", // Market Address
+        "0x37Bb8a406244dA78Db4B2028CdE8ee9319Bc2E00", // Market Address
         "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
         account
       );
@@ -42,7 +42,7 @@ function App() {
 
     init(
       "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
-      "0x2dDd4CfE699BceC05cdbd32888598A5A5142325e", // Market Address
+      "0x37Bb8a406244dA78Db4B2028CdE8ee9319Bc2E00", // Market Address
       "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
       account
     );
