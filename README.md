@@ -16,7 +16,7 @@ NFT를 기반으로 기부자가 기부를 할 수 있는 플랫폼 제작
   * Frontend: React.js
   * Backend: Node.js
   * DB: MySQL / AWS S3
-  * Contracts: Solidity
+  * Contracts: Solidity / Truffle
   * 배포: Docker / Jenkins
 
 
