@@ -26,17 +26,12 @@ router.post('/upload', upload.single('image'), async (req, res) => {
   const file = req.file
   console.log(file)
 
-  // apply filter
-  // resize 
 
   const result = await uploadFile(file)
   await unlinkFile(file.path)
-  // console.log(result)
-  // const description = req.body.description
+
   res.send({imageUrl: `https://holuba.s3.ap-northeast-2.amazonaws.com/${result.Key}`})
 })
 
-
-// router.listen(8080, () => console.log("listening on port 8080"))
 
 module.exports = router;
