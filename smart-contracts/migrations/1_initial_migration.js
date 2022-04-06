@@ -10,6 +10,6 @@ const Market = artifacts.require("Market");
  * 가 배포되어야 합니다. 
  */
 module.exports = function (deployer) {
-  deployer.deploy(DonateNFT);
+  // deployer.deploy(DonateNFT);
   deployer.deploy(Market);
 };

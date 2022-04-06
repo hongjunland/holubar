@@ -41,6 +41,11 @@ contract Market is Ownable {
 
     function deleteSale(uint256 tokenId, bool isCancel) public returns (bool) {
         if (isCancel) {
+            require(
+                sales[tokenId].seller == msg.sender,
+                "You are not owner!! Only owner can cancel the sale!"
+            );
+
             DonateNFT(NFTAddress).transferFrom(
                 address(this),
                 sales[tokenId].seller,

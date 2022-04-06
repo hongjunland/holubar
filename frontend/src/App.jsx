@@ -5,7 +5,7 @@ import Main from 'components/common/Main';
 import Routes from 'routes';
 import {BrowserRouter as Router} from "react-router-dom";
 import Header from 'components/common/Header';
-import { init, tokenMint, newSale, trading, getTokenById, getTokensByWallet } from './web3/Web3Client';
+import { init, tokenMint, newSale, trading, getTokenById, getTokensByWallet, cancelSale } from './web3/Web3Client';
 import { useWeb3React } from "@web3-react/core";
 import { injected } from 'web3/connectors';
 import { ConstructionOutlined } from '@mui/icons-material';
@@ -26,7 +26,7 @@ function App() {
     if (active) {
       init(
         "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
-        "0x37Bb8a406244dA78Db4B2028CdE8ee9319Bc2E00", // Market Address
+        "0x62dB9AB6FAc6f1D74891D6be930b2e3CeB824B5C", // Market Address
         "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
         account
       );
@@ -42,7 +42,7 @@ function App() {
 
     init(
       "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
-      "0x37Bb8a406244dA78Db4B2028CdE8ee9319Bc2E00", // Market Address
+      "0x62dB9AB6FAc6f1D74891D6be930b2e3CeB824B5C", // Market Address
       "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
       account
     );
@@ -55,7 +55,7 @@ function App() {
   const mint = async (name, desc, url, price) => {
     await tokenMint(name, desc, url, price)
       .then((tx) => {
-        setTokenId(tx);
+        setTokenId(tx.toString());
         setMinted(true);
       })
       .catch((err) => {
@@ -64,11 +64,15 @@ function App() {
   }
 
   const _newSale = async (tokenId) => {
-    await newSale(tokenId);
+    console.log(await newSale(tokenId));
+  }
+
+  const _cancelSale = async (tokenId) => {
+    console.log(await cancelSale(tokenId));
   }
 
   const buying = async (tokenId, price) => {
-    await trading(tokenId, price);
+    console.log(await trading(tokenId, price));
   }
 
   let accountButton;
@@ -105,6 +109,8 @@ function App() {
       )}
       <br/>
       <button onClick={() => buying(tokenId, 0.05)}>Buy!</button>
+      <br/>
+      <button onClick={() => _cancelSale(tokenId)}>Cancel sale</button>
     </div>
   );
 }
