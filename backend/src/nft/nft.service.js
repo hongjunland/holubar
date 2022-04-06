@@ -125,8 +125,15 @@ class NftService {
     async getAssetDetails(assetId){
         var d = await nftRepository.getAssetDetails(assetId);
 
-        console.log(d[0].asset_id)
-
+       
+        if(!d[0]){
+            return {
+                statusCode: 500,
+                responseBody:{
+                    err: "asset null"
+                }
+            };
+        }
 
 
         return {
