@@ -12,7 +12,7 @@ const s3Router = require('./src/S3/server.js');
 const userRouter = require('./src/user/user.controller');
 const donationRouter = require('./src/donation/donation.controller');
 const nftRouter = require('./src/nft/nft.controller');
-
+const addressRouter = require('./src/address/address.controller');
 
 
 const app = express();
@@ -32,7 +32,7 @@ app.use('/user', userRouter);
 app.use('/donation', donationRouter);
 app.use('/s3', s3Router);
 app.use('/nft', nftRouter);
-
+app.use('/address', addressRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res) {
