@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { donation } from "../../assets";
 import HomeButton from "./HomeButton";
 
+import { Link } from "react-router-dom";
+
 const S = {
   Background: styled.section`
     position: absolute;
@@ -43,9 +45,11 @@ const TopBanner = () => {
           <br />
           1번 클릭시 1개의 토큰을 얻을 수 있습니다. 여러분의 손길을 기다립니다.
         </S.Description>
-        <HomeButton fill="solid" type="button">
-          기부하기
-        </HomeButton>
+        <Link to="/donate">
+          <HomeButton fill="solid" type="button">
+            기부하기
+          </HomeButton>
+        </Link>
       </S.Wrapper>
     </S.Background>
   );
