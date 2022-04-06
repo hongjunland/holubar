@@ -14,19 +14,19 @@ import {
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import RankingList from "./RankingList";
 
-// const Rankings = () => {
-//   useEffect(() => {
-//     axios
-//       .get("http://3.35.173.223:5050/donation/rank", {
-//         headers: {
-//           accesstoken: `${localStorage.getItem("accessToken")}`,
-//         },
-//       })
-//       .then((res) => {
-//         console.log(res);
-//       });
-//   }, []);
-// };
+const Rankings = () => {
+  useEffect(() => {
+    axios
+      .get("http://3.35.173.223:5050/donation/rank", {
+        headers: {
+          accesstoken: `${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  }, []);
+};
 
 // axios
 //   .get("http://3.35.173.223:5050/donation/rank", {
@@ -58,8 +58,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(rank, nickname, amount) {
-  return { rank, nickname, amount };
+function createData(rankId, nickname, amount) {
+  return { rankId, nickname, amount };
 }
 
 const rows = [
@@ -95,46 +95,46 @@ const RankingContainer = () => {
   return (
     <div>
       <RankingList rankings={rankings} />
-    </div>
 
-    // <TableContainer
-    //   component={Paper}
-    //   sx={{
-    //     display: "flex",
-    //     justifyContent: "center",
-    //   }}
-    // >
-    //   <Table
-    //     sx={{
-    //       marginTop: 8,
-    //       width: "800px",
-    //       flexDirection: "column",
-    //       alignItems: "center",
-    //       justifyContent: "center",
-    //       marginBottom: 8,
-    //     }}
-    //     aria-label="customized table"
-    //   >
-    //     <TableHead>
-    //       <TableRow>
-    //         <StyledTableCell>랭킹</StyledTableCell>
-    //         <StyledTableCell align="right">닉네임</StyledTableCell>
-    //         <StyledTableCell align="right">기부금액&nbsp;(₩)</StyledTableCell>
-    //       </TableRow>
-    //     </TableHead>
-    //     <TableBody>
-    //       {rows.map((row) => (
-    //         <StyledTableRow key={row.rank}>
-    //           <StyledTableCell component="th" scope="row">
-    //             {row.rank}
-    //           </StyledTableCell>
-    //           <StyledTableCell align="right">{row.nickname}</StyledTableCell>
-    //           <StyledTableCell align="right">{row.amount}</StyledTableCell>
-    //         </StyledTableRow>
-    //       ))}
-    //     </TableBody>
-    //   </Table>
-    // </TableContainer>
+      <TableContainer
+        component={Paper}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Table
+          sx={{
+            marginTop: 8,
+            width: "800px",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 8,
+          }}
+          aria-label="customized table"
+        >
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>랭킹</StyledTableCell>
+              <StyledTableCell align="right">닉네임</StyledTableCell>
+              <StyledTableCell align="right">기부금액&nbsp;(₩)</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <StyledTableRow key={row.rankId}>
+                <StyledTableCell component="th" scope="row">
+                  {row.rankId}
+                </StyledTableCell>
+                <StyledTableCell align="right">{row.nickname}</StyledTableCell>
+                <StyledTableCell align="right">{row.amount}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 
