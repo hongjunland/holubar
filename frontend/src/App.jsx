@@ -51,8 +51,6 @@ function App() {
     );
   };
 
-  // console.log(account);
-
   const login = (address) => {
     if (localStorage.getItem("accessToken")) {
       return;
@@ -185,6 +183,7 @@ function App() {
             disconnectMetamask={disconnectMetamask}
             mint={mint}
             _newSale={_newSale}
+            _cancelSale={_cancelSale}
             buying={buying}
             accountButton={accountButton}
           />
