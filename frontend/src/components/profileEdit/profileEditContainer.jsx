@@ -38,7 +38,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-function profileEditContainer() {
+function ProfileEditContainer() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -59,7 +59,8 @@ function profileEditContainer() {
         {
           email: email,
           nickname: nickname,
-          profileImageUrl: "URLtest",
+          profileImageUrl:
+            "https://holuba.s3.ap-northeast-2.amazonaws.com/default.png",
           bio: bio,
         },
         {
@@ -171,4 +172,4 @@ function profileEditContainer() {
   );
 }
 
-export default profileEditContainer;
+export default ProfileEditContainer;

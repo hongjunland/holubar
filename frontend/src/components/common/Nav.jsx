@@ -58,10 +58,32 @@ export default function Nav() {
       // console.log(res.data.accessToken);
       // console.log(address);
       console.log("get Token success");
-      navigate("/profileEdit");
+      getNickname();
+      // navigate("/profileEdit");
       // console.log(dispatch(setToken(res.data.accessToken)));
     });
+
+    // if (1) {
+    //   console.log("yes");
+    // }
   };
+
+  function getNickname() {
+    axios
+      .get("http://3.35.173.223:5050/user/profile", {
+        headers: {
+          accessToken: `${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.nickname);
+        if (res.data.nickname === null) {
+          navigate("/profileEdit");
+        } else {
+          navigate("/");
+        }
+      });
+  }
 
   const disconnectMetamask = async () => {
     await deactivate();

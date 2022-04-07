@@ -1,4 +1,4 @@
-import ProfileEditContainer from "../components/profileEdit/profileEditContainer";
+import ProfileEditContainer from "../components/profileEdit/ProfileEditContainer";
 
 const ProfileEditPage = () => {
   return (
