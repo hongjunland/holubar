@@ -119,7 +119,7 @@ function ProfileEditContainer() {
             />
             {show && (
               <Alert severity="error">
-                닉네임 중복! - 다른 닉네임을 사용해주세요.
+                닉네임 중복 - 다른 닉네임을 사용해주세요.
               </Alert>
             )}
 
