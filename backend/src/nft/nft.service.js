@@ -111,8 +111,18 @@ class NftService {
 
 
 
-    async getTradeHistory(assetId){
-        var List = await nftRepository.getTradeHistory(assetId);
+    async getTradeHistory(userId){
+        var List = await nftRepository.getTradeHistory(userId);
+
+        if(!List[0]){
+            return {
+                statusCode: 200,
+                responseBody: {
+                    message: "trade history null"
+                }
+            };
+        }
+
 
         return {
             statusCode: 200,
