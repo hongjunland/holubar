@@ -109,12 +109,16 @@ class NftRepository {
 
         for(var i in b){
 
+            var realassetname = await connection.query(`select asset_name from asset where asset_id = ?`,b[i].assetId)
             var realfrom = await connection.query(`select nickname from user where user_id = ?`,b[i].from)
 
             var realto = await connection.query(`select nickname from user where user_id = ?`,b[i].to)
 
+
+            b[i].assetName = realassetname[0][0].asset_name
             b[i].from = realfrom[0][0].nickname
             b[i].to = realto[0][0].nickname
+
 
         }
 
