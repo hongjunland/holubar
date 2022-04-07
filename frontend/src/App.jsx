@@ -187,8 +187,9 @@ function App() {
             accountButton={accountButton}
           />
         </Main>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
+      {/* 
       <div>
         <div>
           <p>Account: {account}</p>
@@ -196,8 +197,12 @@ function App() {
         </div>
         <div>
           {accountButton}
-          {/* <button type="button" onClick={handleConnect}>{active?'Logout':'MetaMask Login'}</button> */}
-        </div>
+          */}
+      {/* <button type="button" onClick={handleConnect}>{active?'Logout':'MetaMask Login'}</button> */}
+
+      {/* 
+    </div>
+    
       </div>
       {!minted ? (
         <button onClick={() => mint("name", "desc", "temp", "0.05")}>
@@ -214,6 +219,7 @@ function App() {
       <button onClick={() => getToken(tokenId)}>Get Token</button>
       <br />
       <button onClick={() => getTokenList(account)}>Get my Tokens</button>
+      */}
     </div>
   );
 }
