@@ -51,8 +51,6 @@ function App() {
     );
   };
 
-  // console.log(account);
-
   const login = (address) => {
     if (localStorage.getItem("accessToken")) {
       return;
