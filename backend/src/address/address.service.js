@@ -33,7 +33,7 @@ class AddressService {
         return {
             statusCode: 200,
             responseBody: {
-                contractName : a[0].contract_address
+                contractAddress : a[0].contract_address
             }
         };
     }
