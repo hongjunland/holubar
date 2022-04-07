@@ -1,11 +1,76 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import "./Nav.css";
 import { Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
 import { Button, Menu, MenuItem } from "@mui/material";
 
+import { useWeb3React } from "@web3-react/core";
+import { injected } from "web3/connectors";
+import { init } from "../../web3/Web3Client";
+
+import axios from "axios";
+
 export default function Nav() {
+  const { chainId, account, active, activate, deactivate } = useWeb3React();
+
+  useEffect(() => {
+    if (active) {
+      init(
+        "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
+        "0x62dB9AB6FAc6f1D74891D6be930b2e3CeB824B5C", // Market Address
+        "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
+        account
+      );
+    }
+  }, []);
+
+  const connectMetamask = async () => {
+    await activate(injected, (error) => {
+      if ("/No Ethereum provider was found on window.ethereum/".test(error)) {
+        window.open("https://metamask.io/download.html");
+      }
+    });
+
+    init(
+      "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
+      "0x62dB9AB6FAc6f1D74891D6be930b2e3CeB824B5C", // Market Address
+      "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
+      account
+    );
+  };
+
+  const login = (address) => {
+    if (localStorage.getItem("accessToken")) {
+      return;
+    }
+    axios({
+      url: "http://3.35.173.223:5050/user/login",
+      method: "post",
+      data: {
+        walletAddress: address,
+      },
+    }).then((res) => {
+      localStorage.setItem("accessToken", res.data.accessToken);
+      console.log("get Token success");
+    });
+  };
+
+  const disconnectMetamask = async () => {
+    await deactivate();
+    localStorage.removeItem("accessToken");
+  };
+
+  let accountButton;
+  if (active) {
+    accountButton = (
+      <div>
+        <Button onClick={disconnectMetamask}>Logout</Button>
+        <div>{login(account)}</div>
+      </div>
+    );
+  } else
+    accountButton = <Button onClick={connectMetamask}>MetaMask Login</Button>;
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -58,9 +123,11 @@ export default function Nav() {
                 }}
               >
                 <Link to="/profile" style={{ textDecoration: "none" }}>
-                  <MenuItem>Profile</MenuItem>
+                  <MenuItem>
+                    <Button>My Profile</Button>
+                  </MenuItem>
                 </Link>
-                <MenuItem>LogIn</MenuItem>
+                <MenuItem>{accountButton}</MenuItem>
               </Menu>
             </div>
           </li>
