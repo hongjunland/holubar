@@ -29,7 +29,7 @@ CREATE TABLE `asset` (
    `asset_image_url` varchar(200)  COMMENT '자산이미지주소' ,  
    `token_id` varchar(100) NOT NULL COMMENT 'nft토큰아이디'unique,  
    `market_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '판매등록 여부, 1판매중 ',
-   `price` int NOT NULL DEFAULT 0 COMMENT '판매가격',
+   `price` varchar(50) NOT NULL DEFAULT 0 COMMENT '판매가격',
    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 시간',   
    foreign key (`user_id`) references `user` (`user_id`) ON DELETE CASCADE on update cascade,
    PRIMARY KEY (`asset_id`)
@@ -47,3 +47,16 @@ CREATE TABLE `trade_history` (
 	foreign key (`asset_id`) references `asset` (`asset_id`) ON DELETE CASCADE on update cascade,
 	PRIMARY KEY (`trade_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='자산';
+
+CREATE TABLE `contracts` (
+   `contracts_id` int NOT NULL AUTO_INCREMENT COMMENT '컨트랙트 번호',
+   `contract_address` varchar(100) NOT NULL COMMENT '컨트랙트 주소',
+   `contract_name` varchar(50) NOT NULL COMMENT '컨트랙트 이름',
+   PRIMARY KEY (`contracts_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='컨트랙트';
+
+CREATE TABLE `donate_target` (
+   `donate_target_id` int NOT NULL AUTO_INCREMENT COMMENT '기부 수령자 번호',
+   `donate_address` varchar(100) NOT NULL COMMENT '기부 수령자 주소',
+   PRIMARY KEY (`donate_target_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='기부 수령자';
