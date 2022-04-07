@@ -171,10 +171,10 @@ function App() {
           */}
       {/* <button type="button" onClick={handleConnect}>{active?'Logout':'MetaMask Login'}</button> */}
 
-      {/* 
-    </div>
+      
+    {/* </div> */}
     
-      </div>
+      {/* </div> */}
       {!minted ? (
         <button onClick={() => mint("name", "desc", "temp", "0.05")}>
           Mint!
@@ -187,10 +187,10 @@ function App() {
       <br />
       <button onClick={() => _cancelSale(tokenId)}>Cancel sale</button>
       <br />
-      <button onClick={() => getToken(tokenId)}>Get Token</button>
+      <button onClick={() => getToken(58)}>Get Token</button>
       <br />
       <button onClick={() => getTokenList(account)}>Get my Tokens</button>
-      */}
+
     </div>
   );
 }
