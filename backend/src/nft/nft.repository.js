@@ -94,8 +94,8 @@ class NftRepository {
         //거래내역저장
         connection.query(`INSERT INTO trade_history(asset_id,price,seller_id,buyer_id) VALUE (?,?,?,?)`,[assetId, price, sellerId, buyerId]);
         
-        // 판매상태 0으로 변경
-        connection.query(`UPDATE asset SET market_status = 0 WHERE asset_id = ?`,assetId);
+        // 소유자 변경, 판매상태 0으로 변경
+        connection.query(`UPDATE asset SET market_status = 0, user_id = ? WHERE asset_id = ?`,[buyerId,assetId]);
 
 
     }
