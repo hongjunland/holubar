@@ -26,8 +26,8 @@ function App() {
   let tokenId;
 
   useEffect(() => {
-    if (active) {
-      // init(account);
+    if (localStorage.getItem("accessToken")) {
+      connectMetamask();
     }
   }, []);
 
@@ -37,17 +37,14 @@ function App() {
         window.open("https://metamask.io/download.html");
       }
     });
-
-    // init(account);
   };
 
   const login = (address) => {
+    init(address);
+
     if (localStorage.getItem("accessToken")) {
       return;
     }
-
-    console.log(address);
-    init(address);
 
     axios({
       url: "http://3.35.173.223:5050/user/login",

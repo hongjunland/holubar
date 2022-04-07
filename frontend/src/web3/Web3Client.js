@@ -17,6 +17,8 @@ const MarketName = "Market";
 const DonateGetterId = 1;
 
 export const init = async (_account) => {
+    if (account === _account)
+        return;
     library = new Web3Provider(window.ethereum);
     account = _account;
     
