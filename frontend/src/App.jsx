@@ -23,16 +23,11 @@ function App() {
   const { chainId, account, active, activate, deactivate } = useWeb3React();
 
   const [minted, setMinted] = useState(false);
-  const [tokenId, setTokenId] = useState();
+  let tokenId;
 
   useEffect(() => {
     if (active) {
-      init(
-        "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
-        "0x62dB9AB6FAc6f1D74891D6be930b2e3CeB824B5C", // Market Address
-        "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
-        account
-      );
+      init(account);
     }
   }, []);
 
@@ -43,12 +38,7 @@ function App() {
       }
     });
 
-    init(
-      "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
-      "0x62dB9AB6FAc6f1D74891D6be930b2e3CeB824B5C", // Market Address
-      "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
-      account
-    );
+    init(account);
   };
 
   const login = (address) => {
@@ -75,12 +65,12 @@ function App() {
   const mint = async (name, desc, url, price) => {
     await tokenMint(name, desc, url, price)
       .then((tx) => {
-        setTokenId(tx.toString());
+        console.log(tx);
+        tokenId = tx;
         setMinted(true);
       })
       .then(() => {
-        setTimeout(500)
-        console.log(tokenId.toString());
+        console.log(tokenId);
         axios({
           url: "http://3.35.173.223:5050/nft/create",
           method: "post",
@@ -143,27 +133,6 @@ function App() {
     );
   } else
     accountButton = <button onClick={connectMetamask}>MetaMask Login</button>;
-  // accountButton = (
-  //   <button
-  //     onClick={() => {
-  //       // connectMetamask
-  //       axios({
-  //         url: `http://3.35.173.223:5050/user/login`,
-  //         method: "post",
-  //         data: {
-  //           walletAddress: "account",
-  //         },
-  //       })
-  //         .then((res) => {
-  //           localStorage.setItem("accessToken", res.data.accessToken);
-  //           console.log(account);
-  //         })
-  //         .then(connectMetamask);
-  //     }}
-  //   >
-  //     MetaMask Login
-  //   </button>
-  // );
 
   return (
     <div className="app">
@@ -190,8 +159,9 @@ function App() {
             accountButton={accountButton}
           />
         </Main>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
+      {/* 
       <div>
         <div>
           <p>Account: {account}</p>
@@ -199,8 +169,12 @@ function App() {
         </div>
         <div>
           {accountButton}
-          {/* <button type="button" onClick={handleConnect}>{active?'Logout':'MetaMask Login'}</button> */}
-        </div>
+          */}
+      {/* <button type="button" onClick={handleConnect}>{active?'Logout':'MetaMask Login'}</button> */}
+
+      {/* 
+    </div>
+    
       </div>
       {!minted ? (
         <button onClick={() => mint("name", "desc", "temp", "0.05")}>
@@ -217,6 +191,7 @@ function App() {
       <button onClick={() => getToken(tokenId)}>Get Token</button>
       <br />
       <button onClick={() => getTokenList(account)}>Get my Tokens</button>
+      */}
     </div>
   );
 }

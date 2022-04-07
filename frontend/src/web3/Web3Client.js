@@ -7,6 +7,8 @@ import axios from 'axios'
 
 let donateContract;
 let marketContract;
+let donateNFTAddress;
+let marketAddress;
 let donateGetterAddress;
 let account;
 let library;
@@ -15,7 +17,7 @@ const NFTName = "DonateNFT";
 const MarketName = "Market";
 const DonateGetterId = 1;
 
-export const init = async (donateNFTAddress, marketAddress, _donateGetter, _account) => {
+export const init = async (_account) => {
     library = new Web3Provider(window.ethereum);
     account = _account;
     
@@ -26,7 +28,8 @@ export const init = async (donateNFTAddress, marketAddress, _donateGetter, _acco
             accessToken: localStorage.getItem("accessToken")
         }
     }).then((res) => {
-        donateContract = new Contract(res.data.contractAddress, DonateNFTBuild.abi, signer);
+        donateNFTAddress = res.data.contractAddress;
+        donateContract = new Contract(donateNFTAddress, DonateNFTBuild.abi, signer);
     });
 
     await axios.get(`http://3.35.173.223:5050/address/contract/${MarketName}`, {
@@ -34,14 +37,9 @@ export const init = async (donateNFTAddress, marketAddress, _donateGetter, _acco
             accessToken: localStorage.getItem("accessToken")
         }
     }).then((res) => {
-        marketContract = new Contract(res.data.contractAddress, MarketBuild.abi, signer);
+        marketAddress = res.data.contractAddress;
+        marketContract = new Contract(marketAddress, MarketBuild.abi, signer);
     });
-
-    // await axios.get("http://3.35.173.223:5050/donatetarget/", {
-    //     params: {
-    //         donateTargetId: DonateGetterId
-    //     }
-    // })
 
     await axios.get(`http://3.35.173.223:5050/address/donatetarget/${DonateGetterId}`, {
         headers: {
@@ -68,13 +66,13 @@ export const tokenMint = async (name, desc, tokenURI, price) => {
             value: (price * ether).toString()
         })
     
-    let nowId;
+    let nowId = null;
 
     await tx.wait()
         .then(async (receipt) => {
             if (receipt.status === 1) {
-                // setNowId(await donateContract.current({ from: account }));
-                nowId = await donateContract.current({ from: account });
+                while(nowId === null)
+                    nowId = await donateContract.current({ from: account });
             }
         })
     
