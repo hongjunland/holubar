@@ -26,15 +26,15 @@ const ProfileContainer = ()=>{
     const filterInfo = useSelector((state)=>state.filter.info);
     
     useEffect(()=>{
-        if(loading) 
-        getUserInfo(initialize());
+        if(loading) dispatch(initialize());
+        getUserInfo();
     },[index, filterInfo])
 
     const getUserInfo = async()=>{
         await getMyInfo((res)=>{
             dispatch(updateUserInfo(res.data));
             setLoading(false);
-            getCollections(res.data, filterInfo);
+            getCollections(user, filterInfo);
         })
     }
 
@@ -95,7 +95,7 @@ const ProfileContainer = ()=>{
                 />
             </MainContainer>
             <ProfileTab/>
-            {tabIndex==0 ? <MarketContainer items = {assets? assets: itemList}/> :
+            {tabIndex==0 ? <MarketContainer items = {assets? assets: itemList} page={"profile"}/> :
                 <></>
             }
             </div>

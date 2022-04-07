@@ -42,7 +42,7 @@ const SearchFilter=()=>{
   }
   
   useEffect(()=>{
-    initialize();
+    dispatch(initialize()); 
   },[]);
 
   return (

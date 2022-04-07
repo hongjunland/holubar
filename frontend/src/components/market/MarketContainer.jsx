@@ -8,11 +8,12 @@ import { findAllProducts } from "api/nft";
 import { updateItems } from "state/assetsSlice";
 import { initialize } from "state/filterSlice";
 
-const MarketContainer = ()=>{
+const MarketContainer = ({page})=>{
     const dispatch = useDispatch();
     const filterInfo = useSelector((state)=>state.filter.info);
     const assets = useSelector((state)=>state.assets.items);
     const [loading, setLoading] = useState(true);
+
     useEffect(()=>{
         if(loading) dispatch(initialize());
         getCollections(filterInfo);
@@ -38,7 +39,7 @@ const MarketContainer = ()=>{
         <MainContainer>
             <SearchHeader items={assets}/>
             <SeachView>
-                <List items={assets}/>
+                <List items={assets} page={page}/>
             </SeachView>
         </MainContainer>
         }

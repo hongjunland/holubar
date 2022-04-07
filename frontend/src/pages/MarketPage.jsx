@@ -4,7 +4,7 @@ import MarketContainer from "components/market/MarketContainer";
 const MarketPage = () => {
     return (
         <div>
-            <MarketContainer/>
+            <MarketContainer page={"market"}/>
         </div>
     );
 }
