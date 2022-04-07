@@ -2,8 +2,8 @@
   "name": "ssafy-sample-pjt-backend",
   "version": "1.0.0",
   "private": true,
-  "author": "Noncelab",
-  "license": "Noncelab",
+  "author": "Holuba",
+  "license": "Holuba",
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www"

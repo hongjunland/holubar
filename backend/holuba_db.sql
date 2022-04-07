@@ -29,7 +29,7 @@ CREATE TABLE `asset` (
    `asset_image_url` varchar(200)  COMMENT '자산이미지주소' ,  
    `token_id` varchar(100) NOT NULL COMMENT 'nft토큰아이디'unique,  
    `market_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '판매등록 여부, 1판매중 ',
-   `price` int NOT NULL DEFAULT 0 COMMENT '판매가격',
+   `price` varchar(50) NOT NULL DEFAULT 0 COMMENT '판매가격',
    `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 시간',   
    foreign key (`user_id`) references `user` (`user_id`) ON DELETE CASCADE on update cascade,
    PRIMARY KEY (`asset_id`)
