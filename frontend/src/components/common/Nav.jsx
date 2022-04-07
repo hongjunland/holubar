@@ -7,7 +7,7 @@ import { holuba } from "../../assets";
 
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "web3/connectors";
-import { init } from "../../web3/Web3Client";
+import { deleteContracts, init } from "../../web3/Web3Client";
 
 import axios from "axios";
 import { color } from "@mui/system";
@@ -30,6 +30,9 @@ export default function Nav() {
   };
 
   const login = (address) => {
+    if (!active)
+      return;
+    
     const nowAddress = localStorage.getItem("walletAddress");
     if (nowAddress && nowAddress !== address) {
       disconnectMetamask();
@@ -38,7 +41,7 @@ export default function Nav() {
     localStorage.setItem("walletAddress", address);
     
     if (localStorage.getItem("accessToken")) {
-      init(address);
+      init();
       return;
     }
 
@@ -57,6 +60,7 @@ export default function Nav() {
 
   const disconnectMetamask = async () => {
     await deactivate();
+    deleteContracts();
     localStorage.removeItem("accessToken");
     localStorage.removeItem("walletAddress");
   };
