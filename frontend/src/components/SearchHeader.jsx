@@ -4,7 +4,6 @@ import { useState} from "react";
 import Select from "components/Select";
 import SearchBar from "./SearchBar";
 import { useDispatch } from "react-redux";
-import { updateItems } from "state/assetsSlice";
 import { changeMsg , changeSort} from "state/filterSlice";
 import React from "react";
 
