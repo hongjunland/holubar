@@ -143,10 +143,10 @@ router.post('/trade/save',authUtil,  async function (req, res) {
 });
 
 //거래내역 조회
-router.get('/trade/history/:assetId',authUtil,  async function (req, res) {
+router.get('/trade/history/:userId',authUtil,  async function (req, res) {
     
-    const assetId = req.params.assetId;
-    const { statusCode, responseBody } = await nftService.getTradeHistory(assetId);
+    const userId = req.params.userId;
+    const { statusCode, responseBody } = await nftService.getTradeHistory(userId);
  
 
 

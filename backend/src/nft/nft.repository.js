@@ -100,8 +100,8 @@ class NftRepository {
 
     }
 
-    async getTradeHistory(assetId){
-        var a = await connection.query(`SELECT * FROM trade_history where asset_id = ?`,assetId);
+    async getTradeHistory(userId){
+        var a = await connection.query(`SELECT asset_id as assetId, price, seller_id as \`from\`, buyer_id as \`to\`, date FROM trade_history where seller_id = ? or buyer_id =?`,[userId,userId]);
         return a[0];
     }
     async  getAssetDetails(assetId){
