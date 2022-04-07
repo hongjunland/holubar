@@ -56,6 +56,7 @@ const S = {
     ${(props) => props.theme.typography.heading};
     color: ${(props) => props.theme.palette.black};
     margin-bottom: 0.75rem;
+    text-align: center;
   `,
   ItemLabel: styled.p`
     ${(props) => props.theme.typography.caption};
@@ -78,20 +79,20 @@ const S = {
 
 const WORKS_ITEMS = [
   {
-    image: image1,
-    title: "Title1",
+    image: image3,
+    title: "투명한 거래가 보장됩니다.",
     label: "Apr 5th, 2022",
     description: "Cotent1",
   },
   {
     image: image2,
-    title: "Title2",
+    title: "익명이 보장됩니다.",
     label: "Apr 6th, 2022",
     description: "Cotent2",
   },
   {
-    image: image3,
-    title: "Title3",
+    image: image1,
+    title: "신뢰할 수 있습니다.",
     label: "Apr 7th, 2022",
     description: "Cotent3",
   },
@@ -107,22 +108,22 @@ const Works = () => {
   return (
     <S.Wrapper>
       <S.Label>More feature</S.Label>
-      <S.Title>Holuba</S.Title>
-      <S.Description>블록체인 기반 기부 플랫폼</S.Description>
+      <S.Title> </S.Title>
+      <S.Description> </S.Description>
       <S.List>
         {WORKS_ITEMS.map((item, index) => (
           <S.ListItem key={item.title} {...animatedItem[index]}>
             <S.ItemImage image={item.image} />
             <S.TextContainer>
               <S.ItemTitle>{item.title}</S.ItemTitle>
-              <S.ItemLabel>{item.label}</S.ItemLabel>
-              <S.ItemDesciption>{item.description}</S.ItemDesciption>
-              <S.TextButton>Read more</S.TextButton>
+              {/* <S.ItemLabel>{item.label}</S.ItemLabel> */}
+              {/* <S.ItemDesciption>{item.description}</S.ItemDesciption> */}
+              {/* <S.TextButton>Read more</S.TextButton> */}
             </S.TextContainer>
           </S.ListItem>
         ))}
       </S.List>
-      <HomeButton fill="outline">View More</HomeButton>
+      {/* <HomeButton fill="outline">View More</HomeButton> */}
     </S.Wrapper>
   );
 };
