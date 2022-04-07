@@ -81,7 +81,16 @@ contract DonateNFT is ERC721, Ownable {
     }
 
     function newSale(uint256 tokenId) public returns (bool) {
-        transferFrom(msg.sender, MarketAddress, tokenId);
+        _transferFrom(msg.sender, MarketAddress, tokenId);
         return Market(MarketAddress).newSale(msg.sender, tokenId);
+    }
+
+    function _transferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) public {
+        transferFrom(from, to, tokenId);
+        tokens[tokenId].owner = to;
     }
 }

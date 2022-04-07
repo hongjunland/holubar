@@ -58,7 +58,6 @@ export const init = async (_account) => {
     }
 }
 
-// const [nowId, setNowId] = useState();
 export const tokenMint = async (name, desc, tokenURI, price) => {
     const tx = await marketContract
         .donating(donateGetterAddress, name, desc, tokenURI, {
