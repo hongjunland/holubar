@@ -39,7 +39,7 @@ const ProfileContainer = ()=>{
     }
 
     const getCollections = (userData, info)=>{
-        if(index==0){
+        if(index===0){
             const query = `status=${info.status}&max=${info.to}&min=${info.from}&condition=${info.sort}`;
             console.log(query);
             console.log(info);
@@ -52,7 +52,7 @@ const ProfileContainer = ()=>{
             })
         }
         else{
-
+            
         }
     }
     const summarize = (text)=>{

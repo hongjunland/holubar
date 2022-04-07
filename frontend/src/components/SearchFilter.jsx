@@ -10,7 +10,7 @@ import { EthereumIcon, USDIcon } from './Icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeCurrency, changeFrom , changeTo} from 'state/filterSlice';
 import { useEffect,useState } from 'react';
-
+import { initialize } from 'state/filterSlice';
 
 const SearchFilter=()=>{
 
@@ -40,13 +40,9 @@ const SearchFilter=()=>{
   const handleChangeTo = (e)=>{
     setTo(e.target.value);
   }
-  const init = ()=>{
-    dispatch(changeCurrency(""));
-    dispatch(changeFrom(""));
-    dispatch(changeTo(""));
-  }
+  
   useEffect(()=>{
-    init();
+    initialize();
   },[]);
 
   return (

@@ -17,10 +17,9 @@ const MarketContainer = ()=>{
         if(loading) dispatch(initialize());
         getCollections(filterInfo);
     },[filterInfo]);
+    
     const getCollections = (info)=>{
         const query = `status=${info.status}&max=${info.to}&min=${info.from}&condition=${info.sort}`;
-        console.log(query);
-        console.log(info);
         findAllProducts(query,(res)=>{
             // filterInfo
             const mySellList = res.data.sellList
