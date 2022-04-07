@@ -107,7 +107,14 @@ class NftRepository {
         var a = await connection.query(`SELECT asset_id as assetId, price, seller_id as \`from\`, buyer_id as \`to\`, date FROM trade_history where seller_id = ? or buyer_id =?`,[userId,userId]);
         var b = a[0]
 
+
+
+
         for(var i in b){
+
+            if(!b[i].assetId || !b[i].from || !b[i].to){
+                return ;
+            }
 
             var realassetname = await connection.query(`select asset_name from asset where asset_id = ?`,b[i].assetId)
             var realfrom = await connection.query(`select nickname from user where user_id = ?`,b[i].from)
