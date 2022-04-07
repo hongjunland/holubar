@@ -47,3 +47,16 @@ CREATE TABLE `trade_history` (
 	foreign key (`asset_id`) references `asset` (`asset_id`) ON DELETE CASCADE on update cascade,
 	PRIMARY KEY (`trade_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='자산';
+
+CREATE TABLE `contracts` (
+   `contracts_id` int NOT NULL AUTO_INCREMENT COMMENT '컨트랙트 번호',
+   `contract_address` varchar(100) NOT NULL COMMENT '컨트랙트 주소',
+   `contract_name` varchar(50) NOT NULL COMMENT '컨트랙트 이름',
+   PRIMARY KEY (`contracts_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='컨트랙트';
+
+CREATE TABLE `donate_target` (
+   `donate_target_id` int NOT NULL AUTO_INCREMENT COMMENT '기부 수령자 번호',
+   `donate_address` varchar(100) NOT NULL COMMENT '기부 수령자 주소',
+   PRIMARY KEY (`donate_target_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='기부 수령자';

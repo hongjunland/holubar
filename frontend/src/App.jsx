@@ -49,11 +49,7 @@ function App() {
       "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
       account
     );
-
-    login();
   };
-
-  // console.log(account);
 
   const login = (address) => {
     if (localStorage.getItem("accessToken")) {
@@ -137,14 +133,14 @@ function App() {
   };
 
   let accountButton;
-  if (active)
+  if (active) {
     accountButton = (
       <div>
         <button onClick={disconnectMetamask}>Logout</button>;
         <div>{login(account)}</div>
       </div>
     );
-  else
+  } else
     accountButton = <button onClick={connectMetamask}>MetaMask Login</button>;
   // accountButton = (
   //   <button
