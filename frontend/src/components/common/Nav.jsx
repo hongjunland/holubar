@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./Nav.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { holuba } from "../../assets";
@@ -13,6 +13,8 @@ import axios from "axios";
 import { color } from "@mui/system";
 
 export default function Nav() {
+  let navigate = useNavigate();
+
   const { chainId, account, active, activate, deactivate } = useWeb3React();
 
   useEffect(() => {
@@ -53,9 +55,10 @@ export default function Nav() {
       },
     }).then((res) => {
       localStorage.setItem("accessToken", res.data.accessToken);
-      console.log(res.data.accessToken);
-      console.log(address);
+      // console.log(res.data.accessToken);
+      // console.log(address);
       console.log("get Token success");
+      navigate("/profileEdit");
       // console.log(dispatch(setToken(res.data.accessToken)));
     });
   };
