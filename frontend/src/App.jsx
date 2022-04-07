@@ -187,6 +187,7 @@ function App() {
             disconnectMetamask={disconnectMetamask}
             mint={mint}
             _newSale={_newSale}
+            _cancelSale={_cancelSale}
             buying={buying}
             accountButton={accountButton}
           />
