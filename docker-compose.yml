@@ -43,7 +43,7 @@ services:
       # - "/etc/letsencrypt/:/etc/letsencrypt/"
       # - "/etc/ssl/:/etc/ssl/"
     ports:
-      - "5080:80"
+      - "80:80"
     environment:
       - NODE_ENV=development
     restart: always
