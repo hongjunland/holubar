@@ -16,21 +16,26 @@ const NFTName = "DonateNFT";
 const MarketName = "Market";
 const DonateGetterId = 1;
 
-export const init = async (_account) => {
-    if (account === _account)
+export const init = async () => {
+    const _account = localStorage.getItem("walletAddress");
+
+    if (_account && account === _account)
         return;
+    
+    account = _account;
+    
     if (donateContract && marketContract)
         return;
     library = new Web3Provider(window.ethereum);
-    account = _account;
     
-    const signer = library.getSigner(account).connectUnchecked();
+    const signer = library.getSigner(_account).connectUnchecked();
 
     await axios.get(`http://3.35.173.223:5050/address/contract/${NFTName}`, {
         headers: {
             accessToken: localStorage.getItem("accessToken")
         }
     }).then((res) => {
+        console.log(res);
         donateNFTAddress = res.data.contractAddress;
         donateContract = new Contract(donateNFTAddress, DonateNFTBuild.abi, signer);
     });
@@ -53,18 +58,18 @@ export const init = async (_account) => {
     });
 
     if (donateNFTAddress !== await marketContract.getNFTAddress()) {
-        await marketContract.setNFTAddress(donateNFTAddress, { from: account });
+        await marketContract.setNFTAddress(donateNFTAddress, { from: localStorage.getItem("walletAddress") });
     }
 
     if (marketAddress !== await donateContract.getMarketAddress()) {
-        await donateContract.setMarketAddress(marketAddress, { from: account });
+        await donateContract.setMarketAddress(marketAddress, { from: localStorage.getItem("walletAddress") });
     }
 }
 
 export const tokenMint = async (name, desc, tokenURI, price) => {
     const tx = await marketContract
         .donating(donateGetterAddress, name, desc, tokenURI, {
-            from: account,
+            from: localStorage.getItem("walletAddress"),
             value: (price * ether).toString()
         })
     
@@ -74,7 +79,7 @@ export const tokenMint = async (name, desc, tokenURI, price) => {
         .then(async (receipt) => {
             if (receipt.status === 1) {
                 while(nowId === null)
-                    nowId = await donateContract.current({ from: account });
+                    nowId = await donateContract.current({ from: localStorage.getItem("walletAddress") });
             }
         })
     
@@ -91,7 +96,7 @@ export const getTokensByWallet = async (account) => {
 
 export const newSale = async (tokenId) => {
     const tx = await donateContract
-        .newSale(tokenId, { from: account });
+        .newSale(tokenId, { from: localStorage.getItem("walletAddress") });
     
     const receipt = await tx.wait();
 
@@ -103,7 +108,7 @@ export const newSale = async (tokenId) => {
 
 export const cancelSale = async (tokenId) => {
     const tx = await marketContract
-        .deleteSale(tokenId, true, { from: account });
+        .deleteSale(tokenId, true, { from: localStorage.getItem("walletAddress") });
     
     const receipt = await tx.wait();
 
@@ -115,7 +120,7 @@ export const cancelSale = async (tokenId) => {
 
 export const trading = async (tokenId, price) => {
     const tx = await marketContract.trading(tokenId, {
-        from: account,
+        from: localStorage.getItem("walletAddress"),
         value: (price * ether).toString()
     });
 
@@ -125,4 +130,9 @@ export const trading = async (tokenId, price) => {
         return true;
     else
         return false;
+}
+
+export const deleteContracts = () => {
+    donateContract = null;
+    marketContract = null;
 }
