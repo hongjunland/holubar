@@ -8,7 +8,7 @@
 
 ### ERD
 
-* https://www.erdcloud.com/d/8WvoeXgA37LzR8nZh
+* https://liberating-spice-3f8.notion.site/ERD-abef046f87964d5e86fc018505a507c2
 
 ### API 설계
 
@@ -21,3 +21,7 @@
 ### 시스템 구성도
 
 * https://liberating-spice-3f8.notion.site/b11818e3b4224312920cfe2020fc4e77
+
+### 기타 자료
+
+* https://liberating-spice-3f8.notion.site/NFT-74872c6bc67a4bc3a95975df665c9ef0

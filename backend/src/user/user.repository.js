@@ -11,9 +11,8 @@
      * 
      */
     signUp(walletAddress){
-        
-        var a = connection.query( `INSERT INTO user(wallet_address) VALUE (?)`,walletAddress);
-        return a;
+        const defaultimg = 'https://holuba.s3.ap-northeast-2.amazonaws.com/default.png'
+        connection.query( `INSERT INTO user(wallet_address,profile_image_url) VALUE (?,?)`,[walletAddress,defaultimg]);
     }
   
 

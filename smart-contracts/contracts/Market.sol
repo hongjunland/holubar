@@ -35,18 +35,18 @@ contract Market is Ownable {
         return NFTAddress;
     }
 
-    function newSale(address seller, uint256 tokenId) public returns (bool) {
+    function newSale(address seller, uint256 tokenId) public {
         sales[tokenId] = Sales(seller);
     }
 
-    function deleteSale(uint256 tokenId, bool isCancel) public returns (bool) {
+    function deleteSale(uint256 tokenId, bool isCancel) public {
         if (isCancel) {
             require(
                 sales[tokenId].seller == msg.sender,
                 "You are not owner!! Only owner can cancel the sale!"
             );
 
-            DonateNFT(NFTAddress).transferFrom(
+            DonateNFT(NFTAddress)._transferFrom(
                 address(this),
                 sales[tokenId].seller,
                 tokenId
@@ -64,13 +64,13 @@ contract Market is Ownable {
         return admin;
     }
 
-    function trading(uint256 tokenId) public payable returns (bool) {
+    function trading(uint256 tokenId) public payable {
         address buyer = msg.sender;
         address payable seller = payable(sales[tokenId].seller);
         emit SendEther(buyer, seller, msg.value);
         seller.transfer(msg.value);
 
-        DonateNFT(NFTAddress).transferFrom(address(this), buyer, tokenId);
+        DonateNFT(NFTAddress)._transferFrom(address(this), buyer, tokenId);
 
         deleteSale(tokenId, false);
     }
@@ -80,18 +80,17 @@ contract Market is Ownable {
         string memory assetName,
         string memory assetDesc,
         string memory assetImageUrl
-    ) public payable returns (DonateNFT.Tokens memory) {
+    ) public payable {
         address donatingAddress = msg.sender;
         address payable getter = payable(donateGetter);
         getter.transfer(msg.value);
 
-        return
-            DonateNFT(NFTAddress).create(
-                donatingAddress,
-                assetName,
-                assetDesc,
-                assetImageUrl,
-                msg.value
-            );
+        DonateNFT(NFTAddress).create(
+            donatingAddress,
+            assetName,
+            assetDesc,
+            assetImageUrl,
+            msg.value
+        );
     }
 }

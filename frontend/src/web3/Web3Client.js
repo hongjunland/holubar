@@ -2,25 +2,52 @@ import DonateNFTBuild from 'contracts/DonateNFT.json';
 import MarketBuild from 'contracts/Market.json';
 import { Contract } from '@ethersproject/contracts'
 import { Web3Provider } from '@ethersproject/providers';
+import axios from 'axios'
 
 let donateContract;
 let marketContract;
+let donateNFTAddress;
+let marketAddress;
 let donateGetterAddress;
 let account;
 let library;
 const ether = 1000000000000000000;
+const NFTName = "DonateNFT";
+const MarketName = "Market";
+const DonateGetterId = 1;
 
-export const init = async (donateNFTAddress, marketAddress, _donateGetter, _account) => {
+export const init = async (_account) => {
     library = new Web3Provider(window.ethereum);
     account = _account;
     
-    donateGetterAddress = _donateGetter.toLowerCase();
-
     const signer = library.getSigner(account).connectUnchecked();
-    
-    donateContract = new Contract(donateNFTAddress, DonateNFTBuild.abi, signer);
-    marketContract = new Contract(marketAddress, MarketBuild.abi, signer);
-    
+
+    await axios.get(`http://3.35.173.223:5050/address/contract/${NFTName}`, {
+        headers: {
+            accessToken: localStorage.getItem("accessToken")
+        }
+    }).then((res) => {
+        donateNFTAddress = res.data.contractAddress;
+        donateContract = new Contract(donateNFTAddress, DonateNFTBuild.abi, signer);
+    });
+
+    await axios.get(`http://3.35.173.223:5050/address/contract/${MarketName}`, {
+        headers: {
+            accessToken: localStorage.getItem("accessToken")
+        }
+    }).then((res) => {
+        marketAddress = res.data.contractAddress;
+        marketContract = new Contract(marketAddress, MarketBuild.abi, signer);
+    });
+
+    await axios.get(`http://3.35.173.223:5050/address/donatetarget/${DonateGetterId}`, {
+        headers: {
+            accessToken: localStorage.getItem("accessToken")
+        }
+    }).then((res) => {
+        donateGetterAddress = res.data.donateAddress.toLowerCase();
+    });
+
     if (donateNFTAddress !== await marketContract.getNFTAddress()) {
         await marketContract.setNFTAddress(donateNFTAddress, { from: account });
     }
@@ -37,12 +64,13 @@ export const tokenMint = async (name, desc, tokenURI, price) => {
             value: (price * ether).toString()
         })
     
-    let nowId;
+    let nowId = null;
 
     await tx.wait()
         .then(async (receipt) => {
             if (receipt.status === 1) {
-                nowId = await donateContract.current({ from: account });
+                while(nowId === null)
+                    nowId = await donateContract.current({ from: account });
             }
         })
     

@@ -44,15 +44,13 @@ contract DonateNFT is ERC721, Ownable {
         string memory assetDesc,
         string memory _tokenURI,
         uint256 price
-    ) public returns (Tokens memory) {
+    ) public {
         _mint(owner, _tokenIds);
 
         tokens.push(
             Tokens(owner, assetName, assetDesc, _tokenIds, _tokenURI, price)
         );
         _tokenIds++;
-
-        return tokens[_tokenIds - 1];
     }
 
     function getTokensByWallet(address target)
@@ -80,8 +78,17 @@ contract DonateNFT is ERC721, Ownable {
         return ret;
     }
 
-    function newSale(uint256 tokenId) public returns (bool) {
-        transferFrom(msg.sender, MarketAddress, tokenId);
-        return Market(MarketAddress).newSale(msg.sender, tokenId);
+    function newSale(uint256 tokenId) public {
+        _transferFrom(msg.sender, MarketAddress, tokenId);
+        Market(MarketAddress).newSale(msg.sender, tokenId);
+    }
+
+    function _transferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) public {
+        transferFrom(from, to, tokenId);
+        tokens[tokenId].owner = ownerOf(tokenId);
     }
 }

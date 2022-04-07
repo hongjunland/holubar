@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const S = {
   Background: styled.section`
     position: absolute;
-    top: 50px;
+    top: 81px;
     width: 100%;
     height: 700px;
     background: no-repeat center/cover url(${donation});

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import {Grid, Container, Button} from '@mui/material'
@@ -7,43 +7,107 @@ import SwitchLabels from '../components/all/Switch'
 import LabTabs from '../components/all/SmallTab'
 
 
-export default function SalesRegist() {
+export default function SalesRegist(props) {
 
-  const tokenData = require('./../samplejson/SalesRegistPage.json');
+  const [tokenData, setTokenData] = useState(require('./../samplejson/ItemDetailPage.json'))
+  const [userData, setUserData] = useState(require('./../samplejson/sampleUser.json'))
+  
   const params = useParams();
-  // console.log(params.itemId);
-  // axios({
-  //   url: `/${params.itemId}`,
-  //   headers:{
-  //     "accessToken": localStorage.getItem("accessToken")
-  //   }
-  // }).then((res) => {
-  //   const tokenData = JSON.parse(res)
-  //   console.log(res)
-  // }).catch((err) => {
-  //   console.log(err)
-  // })
+  useEffect(()=>{
+    axios.get(`http://3.35.173.223:5050/nft/${params.itemId}`,{
+      headers: {
+        "accessToken": localStorage.getItem("accessToken")
+      }
+    }).then((res) => {
+      setTokenData(res.data)
+    }).then(() => {
+      axios.get(`http://3.35.173.223:5050/user/profile/${tokenData.userId}`,{
+        headers: {
+          "accessToken": localStorage.getItem("accessToken")
+        }
+      }).then((res) => {
+        setUserData(res.data)
+      })
+    })
+  },[])
+
+  let salesRegistbtn;
+  if (Boolean(tokenData.marketStatus))
+    salesRegistbtn = (
+      <Button
+        variant="contained"
+        onClick={()=>{
+          props.props._newSale(tokenData.tokenId)
+          axios({
+            url: 'http://3.35.173.223:5050/nft/trade/sell',
+            method: 'put',
+            headers: {
+              "accessToken": localStorage.getItem("accessToken")
+            },
+            data: {
+              "assetId": tokenData.assetId,
+              "price": tokenData.price
+            }
+          }).then((res) =>{
+            console.log(res)
+          }).catch((err)=>{
+            console.log(err)
+          })
+        }}
+        >SAVE</Button>
+    )
+  else
+    salesRegistbtn = (
+      <Button
+        variant="contained"
+        onClick={()=>{
+          props.props._cancelSale(tokenData.tokenId)
+          axios({
+            url: 'http://3.35.173.223:5050/nft/trade/cancel',
+            method: 'put',
+            headers: {
+              "accessToken": localStorage.getItem("accessToken")
+            },
+            data: {
+              "assetId": tokenData.assetId,
+            }
+          }).then((res) =>{
+            console.log(res)
+          }).catch((err)=>{
+            console.log(err)
+          })
+        }}
+      >SAVE</Button>
+    )
+
   return (
     <Container fixed>
       <Grid container>
         <Grid item xs={5}>
           <img
-            src={ tokenData.tokenImg }
+            src={ tokenData.assetImageUrl }
             width="100%"
           />
         </Grid>
         <Grid item xs={5} style={{margin:'1em'}}>
-          { tokenData.owner }
+          { userData.nickname }
           <br />
-          <h3>{ tokenData.tokenName }</h3>
+          <h3>{ tokenData.assetName }</h3>
           <SwitchLabels
-            sales={Boolean(tokenData.sales)}
+            sales={Boolean(tokenData.marketStatus)}
             onChange={() => {
-              if (Boolean(tokenData.sales)){
-                tokenData.sales = ""
+              if (Boolean(tokenData.marketStatus)){
+                setTokenData({
+                  ...tokenData,
+                  marketStatus: ""
+                })
               }else{
-                tokenData.sales = "1"
+                setTokenData({
+                  ...tokenData,
+                  marketStatus: "1"
+                })
               }
+              console.log(tokenData.marketStatus)
             }}
           />
           <LabTabs 
@@ -52,23 +116,7 @@ export default function SalesRegist() {
               tokenData.price=data
             }}
           />
-          <Button 
-            variant="contained"
-            onClick={()=>{
-              console.log(tokenData)
-              // axios({
-              //   url: '/trade/sell',
-              //   method: 'post',
-              //   headers: {
-              //     "accessToken": localStorage.getItem("accessToken")
-              //   },
-              //   data: {
-              //     "assetId": tokenData.assetId,
-              //     "price": tokenData.price
-              //   }
-              // })
-            }}
-          >SAVE</Button>
+          {salesRegistbtn}
         </Grid>
       </Grid>
     </Container>
