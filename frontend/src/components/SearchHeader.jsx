@@ -3,13 +3,20 @@ import { MenuItem } from "@mui/material";
 import { useState} from "react";
 import Select from "components/Select";
 import SearchBar from "./SearchBar";
+import { useDispatch } from "react-redux";
+import { updateItems } from "state/assetsSlice";
+import { changeMsg , changeSort} from "state/filterSlice";
+import React from "react";
 
 const SearchHeader = ({items})=>{
+    const dispatch = useDispatch();
     const [searchText, setSearchText] = useState("");
     const [sortType, setSortType] = useState("Recently");
+
     const handleSeachOnkeyPress = (e)=>{
         if(e.key =='Enter'){
             console.log(searchText +" 검색!");
+            dispatch(changeMsg(searchText));
         } 
     }
     const handlesearchTextOnChange = (e)=>{
@@ -17,6 +24,7 @@ const SearchHeader = ({items})=>{
     };
     const handleSortTypeOnchange= event=>{
         setSortType(event.target.value);
+        dispatch(changeSort(event.target.value));
     }
     return(
         <Container>

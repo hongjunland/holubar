@@ -12,14 +12,14 @@ const Item = ({
 return (
     <Card sx={{ maxWidth: 345 }}>
         <CardActionArea>
-            <ItemImage src={item.tokenImg}/>
+            <ItemImage src={item.asset_image_url}/>
             <ItemContent>
                 <CardContentLeft>
                     <LabelText>
-                        {item.owner}
+                        {item.token_id}
                     </LabelText>
                     <CardTitle>
-                        {item.tokenName}
+                        {item.asset_name}
                     </CardTitle>
                 </CardContentLeft>
                 <CardContentRight>

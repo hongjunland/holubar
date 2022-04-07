@@ -4,37 +4,73 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Banner from 'components/Banner';
 import ProfileTab from './ProfileTab';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import MarketContainer from 'components/market/MarketContainer';
 import itemList from "samplejson/ItemList.json";
 import { useSelector, useDispatch } from "react-redux";
+import { getMyInfo } from 'api/user';
+import { findAllProducts } from 'api/nft';
 import React from 'react';
+import {updateItems} from 'state/assetsSlice'
+import {updateUserInfo} from 'state/userSlice';
+import { initialize } from 'state/filterSlice';
 
 const ProfileContainer = ()=>{
+    const dispatch = useDispatch();
     const tabIndex = useSelector((state)=>state.tabIndex.value);
-    const [profileBackgroundImage,setProfileBackgroundImage] = useState("https://as1.ftcdn.net/v2/jpg/02/70/64/54/1000_F_270645457_FR4CBhmmKSNqn4hk0X21PPzu4FuXLGxR.jpg");
-    const [profileImage,setProfileImage] = useState("assets/default_profile.jpg");
-    const [nickname,setNickname] = useState("nickname");
-    const [walletAddress,setWalletAddress] = useState("0xc2d8FcB473A1b400FED7B2b1d4c1453CB14ABdwq");
-    const [bio,setBio] = useState("Hello!");
+    const [loading , setLoading] = useState(true);
+    const user = useSelector((state)=>state.user.info);
+    const assets = useSelector((state)=>state.assets.items);
+    const index = useSelector((state)=>state.tabIndex.value);
+    const filterInfo = useSelector((state)=>state.filter.info);
     
+    useEffect(()=>{
+        if(loading) 
+        getUserInfo(initialize());
+    },[index, filterInfo])
+
+    const getUserInfo = async()=>{
+        await getMyInfo((res)=>{
+            dispatch(updateUserInfo(res.data));
+            setLoading(false);
+            getCollections(res.data, filterInfo);
+        })
+    }
+
+    const getCollections = (userData, info)=>{
+        if(index==0){
+            const query = `status=${info.status}&max=${info.to}&min=${info.from}&condition=${info.sort}`;
+            console.log(query);
+            console.log(info);
+            findAllProducts(query,(res)=>{
+                // filterInfo
+                const mySellList = res.data.sellList
+                    .filter((item)=>item.user_id===userData.userId)
+                    .filter((item)=>item.asset_name.includes(info.msg))
+                dispatch(updateItems(mySellList));
+            })
+        }
+        else{
+
+        }
+    }
     const summarize = (text)=>{
         return text.slice(0,5)+"..."+text.slice(-5);
     }
-    const onClickSettingButton = ()=>{
+    const onClickSettingButton = (e)=>{
         alert("onClickSettingButton");
     }
-    const onClickCopyButton = ()=>{
-        alert(walletAddress);
-    }
-    const handleChangeTabIndex = ()=>{
-
+    const onClickCopyButton = (e)=>{
+        e.clipboardData.setData("Text", user.walletAddress)
+        alert(user.walletAddress);
     }
     return (
-        <Container
-        >
-            <Banner imgURL={profileBackgroundImage}/>
+        <Container>
+            {
+                loading ? <div>loading...</div>
+            :<div>
+            <Banner imgURL={user.profileImageUrl}/>
             <DivContainer>
                 <FlexEndBlock>
                     <SettingButton onClick={onClickSettingButton}/>
@@ -42,25 +78,27 @@ const ProfileContainer = ()=>{
             </DivContainer>
             <MainContainer>
                 <ProfileImage>
-                    <ProfileAvartar src={profileImage} />
+                    <ProfileAvartar src={user.profileImageUrl} />
                 </ProfileImage>
                 <NicknameText>
-                    {nickname}
+                    {user.nickname}
                 </NicknameText>
                 <CopyButton onClick={onClickCopyButton}>
                     <ContentCopyIcon fontSize="small"/>
                     <TextAddress>
-                        {summarize(walletAddress)}
+                        {summarize(user.walletAddress)}
                     </TextAddress>          
                 </CopyButton>
                 <BioTextField
                     disabled={true}
-                    value={bio}
+                    value={user.bio}
                 />
             </MainContainer>
-            <ProfileTab onClick={handleChangeTabIndex}/>
-            {tabIndex==0 ? <MarketContainer items = {itemList}/>:
+            <ProfileTab/>
+            {tabIndex==0 ? <MarketContainer items = {assets? assets: itemList}/> :
                 <></>
+            }
+            </div>
             }
         </Container>
     );

@@ -10,8 +10,11 @@ import { useWeb3React } from "@web3-react/core";
 import { injected } from 'web3/connectors';
 import { ConstructionOutlined } from '@mui/icons-material';
 import axios from 'axios'
+import { useDispatch } from 'react-redux';
+import { setToken } from 'state/authSlice';
 
 function App() {
+  const dispatch = useDispatch();
   const { chainId, account, active, activate, deactivate } = useWeb3React();
 
   const [minted, setMinted] = useState(false);
@@ -54,6 +57,7 @@ function App() {
     }).then((res) => {
       localStorage.setItem("accessToken", res.data.accessToken);
       console.log("get Token success");
+      // console.log(dispatch(setToken(res.data.accessToken)));
     });
   };
 

@@ -8,30 +8,37 @@ import ToggleButtons from './ToggleButtons';
 import Select from "components/Select";
 import { EthereumIcon, USDIcon } from './Icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCurrency, changeFrom , changeTo} from 'state/priceRangeSlice';
-import { useEffect } from 'react';
+import { changeCurrency, changeFrom , changeTo} from 'state/filterSlice';
+import { useEffect,useState } from 'react';
+
 
 const SearchFilter=()=>{
-  const currency = useSelector((state)=>state.priceRange.currency);
-  const from = useSelector((state)=>state.priceRange.from);
-  const to = useSelector((state)=>state.priceRange.to);
+
   const dispatch = useDispatch();
+  const [currency,setCurrency] = useState("");
+  const [from,setFrom] = useState("");
+  const [to,setTo] = useState("");
+
   const handleValid = ()=>{
     if(from==='' || to==='') return false;
     if(from<=to) return true;
     return false;
   }
+
   const onClickRange = ()=>{
-      console.log('click!');
+    dispatch(changeCurrency(currency));
+    dispatch(changeFrom(from));
+    dispatch(changeTo(to));
+    console.log('click!');
   }
   const handleChangeCurrency = (e)=>{
-    dispatch(changeCurrency(e.target.value));
+    setCurrency(e.target.value);
   }
   const handleChangeFrom = (e)=>{
-    dispatch(changeFrom(e.target.value));
+    setFrom(e.target.value);
   }
   const handleChangeTo = (e)=>{
-    dispatch(changeTo(e.target.value));
+    setTo(e.target.value);
   }
   const init = ()=>{
     dispatch(changeCurrency(""));

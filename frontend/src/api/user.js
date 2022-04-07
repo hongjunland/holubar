@@ -1,4 +1,4 @@
-import { apiImgInstance, apiInstance } from "api";
+import { apiInstance } from "api";
 
 const api = apiInstance();
 const MAPPING_URL = "/user"
@@ -7,11 +7,10 @@ const login = async(walletAddress, success, fail)=>{
     await api.post(MAPPING_URL+"/login", walletAddress).then(success).catch(fail);
 }
 // 로그인한 사용자 정보조회
-const getMyInfo = async(accessToken, success, fail)=>{
-    api.defaults.headers.common["accessToken"] = accessToken;
+const getMyInfo = async(success, fail)=>{
+    api.defaults.headers.common["accessToken"] = localStorage.getItem('accessToken');
     await api.get(MAPPING_URL+"/profile").then(success).catch(fail);
 }
-
 // 사용자 정보 수정
 const editUser = async(user, success, fail)=>{
     api.defaults.headers.common["accessToken"] =  localStorage.getItem('accessToken');
