@@ -16,10 +16,8 @@ export default function Nav() {
   const { chainId, account, active, activate, deactivate } = useWeb3React();
 
   useEffect(() => {
-    if (active) {
-      init(
-        account
-      );
+    if (localStorage.getItem("accessToken") && !active) {
+      connectMetamask();
     }
   }, []);
 
@@ -29,16 +27,21 @@ export default function Nav() {
         window.open("https://metamask.io/download.html");
       }
     });
-
-    init(
-      account
-    );
   };
 
   const login = (address) => {
+    const nowAddress = localStorage.getItem("walletAddress");
+    if (nowAddress && nowAddress !== address) {
+      disconnectMetamask();
+      return;
+    }
+    init(address);
+    localStorage.setItem("walletAddress", address);
+
     if (localStorage.getItem("accessToken")) {
       return;
     }
+
     axios({
       url: "http://3.35.173.223:5050/user/login",
       method: "post",
@@ -48,12 +51,14 @@ export default function Nav() {
     }).then((res) => {
       localStorage.setItem("accessToken", res.data.accessToken);
       console.log("get Token success");
+      // console.log(dispatch(setToken(res.data.accessToken)));
     });
   };
 
   const disconnectMetamask = async () => {
     await deactivate();
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("walletAddress");
   };
 
   let accountButton;

@@ -25,45 +25,6 @@ function App() {
   const [minted, setMinted] = useState(false);
   let tokenId;
 
-  useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      connectMetamask();
-    }
-  }, []);
-
-  const connectMetamask = async () => {
-    await activate(injected, (error) => {
-      if ("/No Ethereum provider was found on window.ethereum/".test(error)) {
-        window.open("https://metamask.io/download.html");
-      }
-    });
-  };
-
-  const login = (address) => {
-    init(address);
-
-    if (localStorage.getItem("accessToken")) {
-      return;
-    }
-
-    axios({
-      url: "http://3.35.173.223:5050/user/login",
-      method: "post",
-      data: {
-        walletAddress: address,
-      },
-    }).then((res) => {
-      localStorage.setItem("accessToken", res.data.accessToken);
-      console.log("get Token success");
-      // console.log(dispatch(setToken(res.data.accessToken)));
-    });
-  };
-
-  const disconnectMetamask = async () => {
-    await deactivate();
-    localStorage.removeItem("accessToken");
-  };
-
   const mint = async (name, desc, url, price) => {
     await tokenMint(name, desc, url, price)
       .then((tx) => {
@@ -124,17 +85,6 @@ function App() {
     return myTokenList;
   };
 
-  let accountButton;
-  if (active) {
-    accountButton = (
-      <div>
-        <button onClick={disconnectMetamask}>Logout</button>;
-        <div>{login(account)}</div>
-      </div>
-    );
-  } else
-    accountButton = <button onClick={connectMetamask}>MetaMask Login</button>;
-
   return (
     <div className="app">
       <Router>
@@ -150,14 +100,11 @@ function App() {
             deactivate={deactivate}
             minted={minted}
             tokenId={tokenId}
-            connectMetamask={connectMetamask}
-            disconnectMetamask={disconnectMetamask}
             mint={mint}
             _newSale={_newSale}
             _cancelSale={_cancelSale}
             buying={buying}
             getToken={getToken}
-            accountButton={accountButton}
           />
         </Main>
       </Router>
