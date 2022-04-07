@@ -143,9 +143,21 @@ router.post('/trade/save',authUtil,  async function (req, res) {
 });
 
 //거래내역 조회
-router.get('/trade/history/:userId',authUtil,  async function (req, res) {
+router.get('/trade/history',authUtil,  async function (req, res) {
     
-    const userId = req.params.userId;
+    
+
+    const token = req.get('accessToken');
+	var base64Payload = token.split('.')[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE 
+	var payload = Buffer.from(base64Payload, 'base64'); 
+	var result = JSON.parse(payload.toString()) 
+
+	console.log(result.userId);
+
+	//
+	const userId = result.userId
+
+
     const { statusCode, responseBody } = await nftService.getTradeHistory(userId);
  
 
