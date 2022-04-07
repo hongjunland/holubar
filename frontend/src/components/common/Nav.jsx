@@ -30,16 +30,16 @@ export default function Nav() {
   };
 
   const login = (address) => {
-    if (!active)
-      return;
-    
+    if (!active) return;
+
     const nowAddress = localStorage.getItem("walletAddress");
+
     if (nowAddress && nowAddress !== address) {
       disconnectMetamask();
       return;
     }
     localStorage.setItem("walletAddress", address);
-    
+
     if (localStorage.getItem("accessToken")) {
       init();
       return;
@@ -53,6 +53,8 @@ export default function Nav() {
       },
     }).then((res) => {
       localStorage.setItem("accessToken", res.data.accessToken);
+      console.log(res.data.accessToken);
+      console.log(address);
       console.log("get Token success");
       // console.log(dispatch(setToken(res.data.accessToken)));
     });
