@@ -1,4 +1,5 @@
-import * as React from "react";
+import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -39,6 +40,10 @@ function Copyright(props) {
 const theme = createTheme();
 
 function ProfileEditContainer() {
+  let navigate = useNavigate();
+
+  const [show, setShow] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -71,9 +76,10 @@ function ProfileEditContainer() {
       )
       .then((res) => {
         console.log(res.data);
+        navigate("/");
       })
       .catch((error) => {
-        window.alert("닉네임 중복!");
+        setShow(true);
       });
   };
 
@@ -111,9 +117,12 @@ function ProfileEditContainer() {
               autoComplete="nickname"
               autoFocus
             />
-            {/* <Alert severity="error">
-              This is an error alert — check it out!
-            </Alert> */}
+            {show && (
+              <Alert severity="error">
+                닉네임 중복! - 다른 닉네임을 사용해주세요.
+              </Alert>
+            )}
+
             <TextField
               margin="normal"
               required
@@ -133,21 +142,6 @@ function ProfileEditContainer() {
               autoComplete="bio"
               autoFocus
             />
-
-            {/* <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            /> */}
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth

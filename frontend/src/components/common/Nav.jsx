@@ -3,14 +3,11 @@ import "./Nav.css";
 import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Button, Menu, MenuItem } from "@mui/material";
-import { holuba } from "../../assets";
-
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "web3/connectors";
 import { deleteContracts, init } from "../../web3/Web3Client";
 
 import axios from "axios";
-import { color } from "@mui/system";
 
 export default function Nav() {
   let navigate = useNavigate();
@@ -55,17 +52,9 @@ export default function Nav() {
       },
     }).then((res) => {
       localStorage.setItem("accessToken", res.data.accessToken);
-      // console.log(res.data.accessToken);
-      // console.log(address);
       console.log("get Token success");
       getNickname();
-      // navigate("/profileEdit");
-      // console.log(dispatch(setToken(res.data.accessToken)));
     });
-
-    // if (1) {
-    //   console.log("yes");
-    // }
   };
 
   function getNickname() {
