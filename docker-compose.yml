@@ -31,6 +31,22 @@ services:
     container_name: holuba_db
     networks:
       - backend-connect
+  
+  web:
+    container_name: web
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+      # - "/etc/letsencrypt/:/etc/letsencrypt/"
+      # - "/etc/ssl/:/etc/ssl/"
+    ports:
+      - "5080:80"
+    environment:
+      - NODE_ENV=development
+    restart: always
 
 networks:
   backend-connect:

@@ -11,7 +11,7 @@ import { EthereumIcon } from '../components/Icons'
 export default function ItemDetail(props) {
   const [tokenData, setTokenData] = useState(require('./../samplejson/ItemDetailPage.json'))
   const [tokenDetail, setTokenDetail] = useState(require('./../samplejson/sampleUser.json'))
-  const [userData, setUserData] = useState()
+  const [userData, setUserData] = useState(require('./../samplejson/sampleUser.json'))
   const params = useParams();
   useEffect(() => {
     axios.get(`http://3.35.173.223:5050/nft/${params.itemId}`, {
@@ -38,25 +38,15 @@ export default function ItemDetail(props) {
 
   return (
     <Container fixed>
-      <Button
-        onClick={()=>{
-          // setTokenDetail(props.props.getToken(tokenData.tokenId))
-          // console.log(tokenDetail)
-          // console.log(userData)
-        }}
-      >버어튼</Button>
       <Grid container>
         <Grid item xs={6}>
           <img src={ tokenData.assetImageUrl } width="100%" />
-          {/* {tokenImg} */}
         </Grid>
         <Grid item xs={5} style={{ margin: '1em' }}>
           <a href="/profile/{userData.userId}"
-          // <a href="/profile"
             style={{textDecoration:"none", textColor:"blue"}}
           >
-            dsfsdf
-            {/* { userData.nickname } */}
+            { userData.nickname }
           </a>
           <br />
           <h1>{ tokenData.assetName }</h1>
@@ -85,6 +75,23 @@ export default function ItemDetail(props) {
               style={{width:"132px", height:"42px"}}
               onClick={()=>{
                 props.props.buying(tokenData.tokenId, tokenData.price)
+                axios({
+                  url: 'http://3.35.173.223:5050/nft/trade/save',
+                  method: 'post',
+                  headers: {
+                    accessToken: `${localStorage.getItem("accessToken")}`,
+                  },
+                  data: {
+                    "assetId":tokenData.assetId,
+                    "price":tokenData.price,
+                    "sellerId":tokenData.userId,
+                    "buyerId":props.props.account
+                  }
+                }).then((res) => {
+                  console.log(res)
+                }).catch((err) => {
+                  console.log(err)
+                })
               }}
             >
               구매하기

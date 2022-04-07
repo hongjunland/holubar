@@ -24,7 +24,7 @@
         var rankList = await donationRepository.getRank()
 
         return {
-            statusCode: 201,
+            statusCode: 200,
             responseBody: {
                 rankList
             }
