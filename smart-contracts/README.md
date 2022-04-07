@@ -1,7 +1,7 @@
-## Guide for Testing Smart Contracts
+# Smart Contract 프로젝트
 <br/>
 
-### Prerequisites
+## 개발 환경 설정
 
 ```bash
 $ npm install -g truffle
@@ -43,7 +43,6 @@ $ truffle migrate # 컨트랙트 배포
 $ truffle test # 컨트랙트 테스트
 ```
 
-
 #### 테스트 코드 실행 예
 
 ```bash
@@ -52,4 +51,9 @@ $ truffle test ./test/SaleTest.js
 ```
 
 <br/>
-<br/>
+
+#### Ethereum 네트워크 사용 시
+
+```bash
+$ truffle migrate --network <network-name> # 해당 블록체인 네트워크에 컨트랙트 배포
+```

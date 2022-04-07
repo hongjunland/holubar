@@ -8,7 +8,7 @@
 
 ### ERD
 
-* https://www.erdcloud.com/d/8WvoeXgA37LzR8nZh
+* https://liberating-spice-3f8.notion.site/ERD-abef046f87964d5e86fc018505a507c2
 
 ### API 설계
 
