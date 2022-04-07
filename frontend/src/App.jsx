@@ -27,7 +27,7 @@ function App() {
 
   useEffect(() => {
     if (active) {
-      init(account);
+      // init(account);
     }
   }, []);
 
@@ -38,13 +38,17 @@ function App() {
       }
     });
 
-    init(account);
+    // init(account);
   };
 
   const login = (address) => {
     if (localStorage.getItem("accessToken")) {
       return;
     }
+
+    console.log(address);
+    init(address);
+
     axios({
       url: "http://3.35.173.223:5050/user/login",
       method: "post",
@@ -70,7 +74,6 @@ function App() {
         setMinted(true);
       })
       .then(() => {
-        console.log(tokenId);
         axios({
           url: "http://3.35.173.223:5050/nft/create",
           method: "post",

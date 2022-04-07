@@ -18,9 +18,6 @@ export default function Nav() {
   useEffect(() => {
     if (active) {
       init(
-        "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
-        "0x62dB9AB6FAc6f1D74891D6be930b2e3CeB824B5C", // Market Address
-        "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
         account
       );
     }
@@ -34,9 +31,6 @@ export default function Nav() {
     });
 
     init(
-      "0xD6D694F4a2048755Fc6004638b52A420CE54A49a", // NFT Address
-      "0x62dB9AB6FAc6f1D74891D6be930b2e3CeB824B5C", // Market Address
-      "0x3058a818B78f5287114024C50DFdd674cb74a2af", // Donate getter Wallet Address
       account
     );
   };
