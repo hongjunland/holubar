@@ -111,8 +111,8 @@ class NftService {
 
 
 
-    async getTradeHistory(){
-        var List = await nftRepository.getTradeHistory();
+    async getTradeHistory(assetId){
+        var List = await nftRepository.getTradeHistory(assetId);
 
         return {
             statusCode: 200,
