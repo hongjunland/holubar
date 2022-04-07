@@ -3,12 +3,14 @@ import "./Nav.css";
 import { Link } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Button, Menu, MenuItem } from "@mui/material";
+import { holuba } from "../../assets";
 
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "web3/connectors";
 import { init } from "../../web3/Web3Client";
 
 import axios from "axios";
+import { color } from "@mui/system";
 
 export default function Nav() {
   const { chainId, account, active, activate, deactivate } = useWeb3React();
@@ -86,7 +88,7 @@ export default function Nav() {
         <Link to="/">
           <div className="logo">
             <img
-              src="/logo.png"
+              src={"/logo.png"}
               style={{ display: "flex", width: "40px", margin: "25px" }}
             ></img>
             <span>Holubar</span>
