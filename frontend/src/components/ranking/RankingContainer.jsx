@@ -78,15 +78,20 @@ const RankingContainer = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rankings.map((rank, idx) => (
-              <StyledTableRow key={idx}>
-                <StyledTableCell component="th" scope="row">
-                  {idx + 1}
-                </StyledTableCell>
-                <StyledTableCell align="right">{rank.nickname}</StyledTableCell>
-                <StyledTableCell align="right">{rank.amount}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {rankings &&
+              rankings.map((ranking, idx) => (
+                <StyledTableRow key={idx}>
+                  <StyledTableCell component="th" scope="row">
+                    {idx + 1}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {ranking.nickname}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {ranking.amount}
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
