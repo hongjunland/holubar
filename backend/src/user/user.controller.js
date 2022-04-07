@@ -56,7 +56,7 @@ const { uploadFile, getFileStream } = require('../S3/s3')
 router.post('/login', async function (req, res) {
 	
 	const walletAddress = req.body.walletAddress;
-
+	var isSignUp = false;
 	if(walletAddress == null){
 		return res.send({err : "walletAddress null err"});
 	}
@@ -66,6 +66,7 @@ router.post('/login', async function (req, res) {
 	// 첫 로그인 responseBody 가 null  signup실행
 	if(!responseBody.userId){
 		console.log('유저 생성');
+		isSignUp = true;
 		await userService.signUp(walletAddress);
 	}
 	// signup 후 null정보 가져오기
@@ -77,7 +78,7 @@ router.post('/login', async function (req, res) {
 	responseBody.accessToken = jwtToken.token;
 
 	res.statusCode = statusCode;
-	res.send({accessToken : responseBody.accessToken});
+	res.send({accessToken : responseBody.accessToken, isSignUp : isSignUp});
 });
 
 

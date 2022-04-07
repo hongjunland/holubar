@@ -5,7 +5,7 @@ CREATE TABLE `user` (
   `email` varchar(50) COMMENT '이메일',
   `wallet_address` varchar(100) NOT NULL COMMENT '지갑주소',
   `nickname` varchar(10) COMMENT '닉네임' unique,
-  `profile_image_url` varchar(200)  COMMENT '프로필이미지주소' unique,
+  `profile_image_url` varchar(200)  COMMENT '프로필이미지주소' ,
   `bio` varchar(100)  COMMENT '자기소개',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='회원';
