@@ -11,6 +11,7 @@ import {
   Box,
   Typography,
   Container,
+  Alert,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -109,6 +110,9 @@ function profileEditContainer() {
               autoComplete="nickname"
               autoFocus
             />
+            {/* <Alert severity="error">
+              This is an error alert — check it out!
+            </Alert> */}
             <TextField
               margin="normal"
               required
@@ -128,6 +132,7 @@ function profileEditContainer() {
               autoComplete="bio"
               autoFocus
             />
+
             {/* <TextField
               margin="normal"
               required
@@ -151,14 +156,10 @@ function profileEditContainer() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+              <Grid item xs></Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="https://metamask.io/" variant="body2">
+                  {"Don't have an account? Go to MetaMask"}
                 </Link>
               </Grid>
             </Grid>
