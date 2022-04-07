@@ -15,6 +15,7 @@ import React from 'react';
 import {updateItems} from 'state/assetsSlice'
 import {updateUserInfo} from 'state/userSlice';
 import { initialize } from 'state/filterSlice';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 const ProfileContainer = ()=>{
     const dispatch = useDispatch();
@@ -28,7 +29,8 @@ const ProfileContainer = ()=>{
     useEffect(()=>{
         if(loading) dispatch(initialize());
         getUserInfo();
-    },[index, filterInfo])
+    // },[index, filterInfo])
+    },[dispatch, loading])
 
     const getUserInfo = async()=>{
         await getMyInfo((res)=>{
