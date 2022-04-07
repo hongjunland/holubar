@@ -19,11 +19,20 @@ NFT를 기반으로 기부자가 기부를 할 수 있는 플랫폼 제작
   * Contracts: Solidity / Truffle
   * 배포: Docker / Jenkins
 
+## 배포 프로젝트 URL
+* [http://holluba.kro.kr/](http://holluba.kro.kr/)
+
 ## 프로젝트 실행 설정
-### Docker Compose 설정
-1. Docker 사이트를 참조하여 Docker For Windows 설치
-    * https://docs.docker.com/docker-for-windows/install/
-2. Docker Compose 설치(Linux일 경우)
+### Docker Compose 설치
+* Windows: Docker 사이트를 참조하여 Docker For Windows 설치
+  * https://docs.docker.com/docker-for-windows/install/
+* Linux
+  1. Docker 설치
+    ```
+    > curl -fsSL https://get.docker.com/ | sudo sh
+    > sudo usermod -aG docker $USER
+    ```
+  2. Docker Compose 설치
     ```
     > sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     > sudo chmod +x /usr/local/bin/docker-compose
@@ -50,7 +59,7 @@ NFT를 기반으로 기부자가 기부를 할 수 있는 플랫폼 제작
     * 참고 링크: https://limsungmook.github.io/2016/11/09/jenkins-pipeline/
 
 
-### 팀원 및 역할
+## 팀원 및 역할
 
 * 김상희: Smart Contract / DevOps
 * 남근호: Frontend
