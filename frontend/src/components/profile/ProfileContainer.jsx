@@ -15,7 +15,9 @@ import React from 'react';
 import {updateItems} from 'state/assetsSlice'
 import {updateUserInfo} from 'state/userSlice';
 import { initialize } from 'state/filterSlice';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import ProfileActivityContainer from './ProfileActivityContainer';
+import { findAllActivities } from 'api/nft';
+import { updateActivities } from 'state/activitiesSlice';
 
 const ProfileContainer = ()=>{
     const dispatch = useDispatch();
@@ -25,38 +27,52 @@ const ProfileContainer = ()=>{
     const assets = useSelector((state)=>state.assets.items);
     const index = useSelector((state)=>state.tabIndex.value);
     const filterInfo = useSelector((state)=>state.filter.info);
-    
+    const activities = useSelector((state)=>state.activities.items);
+
     useEffect(()=>{
         if(loading) dispatch(initialize());
         getUserInfo();
     // },[index, filterInfo])
-    },[dispatch, loading])
+    },[dispatch, loading, index])
 
     const getUserInfo = async()=>{
         await getMyInfo((res)=>{
             dispatch(updateUserInfo(res.data));
-            setLoading(false);
-            getCollections(user, filterInfo);
+            getCollections(filterInfo);
+            getActivities();
         })
     }
 
-    const getCollections = (userData, info)=>{
+    const getCollections = (info)=>{
         if(index===0){
             const query = `status=${info.status}&max=${info.to}&min=${info.from}&condition=${info.sort}`;
             console.log(query);
             console.log(info);
+            console.log(user);
             findAllProducts(query,(res)=>{
                 // filterInfo
                 const mySellList = res.data.sellList
-                    .filter((item)=>item.user_id===userData.userId)
+                    .filter((item)=>item.user_id===user.userId)
                     .filter((item)=>item.asset_name.includes(info.msg))
+                console.log(mySellList);
                 dispatch(updateItems(mySellList));
+                setLoading(false);
             })
         }
         else{
             
         }
     }
+    const getActivities = ()=>{
+        findAllActivities((res)=>{
+            const items = res.data.history.map((item)=>Object.assign({id:item.assetId},item));
+            dispatch(updateActivities(items));
+            setLoading(false);
+            console.log(items);
+            console.log(activities);
+        })
+    }
+
     const summarize = (text)=>{
         return text.slice(0,5)+"..."+text.slice(-5);
     }
@@ -64,7 +80,6 @@ const ProfileContainer = ()=>{
         alert("onClickSettingButton");
     }
     const onClickCopyButton = (e)=>{
-        e.clipboardData.setData("Text", user.walletAddress)
         alert(user.walletAddress);
     }
     return (
@@ -98,7 +113,7 @@ const ProfileContainer = ()=>{
             </MainContainer>
             <ProfileTab/>
             {tabIndex==0 ? <MarketContainer items = {assets? assets: itemList} page={"profile"}/> :
-                <></>
+                <ProfileActivityContainer items={activities}/>
             }
             </div>
             }
