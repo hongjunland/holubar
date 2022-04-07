@@ -155,6 +155,7 @@ function App() {
             _newSale={_newSale}
             _cancelSale={_cancelSale}
             buying={buying}
+            getToken={getToken}
             accountButton={accountButton}
           />
         </Main>

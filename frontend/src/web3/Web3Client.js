@@ -2,6 +2,7 @@ import DonateNFTBuild from 'contracts/DonateNFT.json';
 import MarketBuild from 'contracts/Market.json';
 import { Contract } from '@ethersproject/contracts'
 import { Web3Provider } from '@ethersproject/providers';
+import { useEffect, useState } from 'react';
 import axios from 'axios'
 
 let donateContract;
@@ -57,6 +58,7 @@ export const init = async (_account) => {
     }
 }
 
+// const [nowId, setNowId] = useState();
 export const tokenMint = async (name, desc, tokenURI, price) => {
     const tx = await marketContract
         .donating(donateGetterAddress, name, desc, tokenURI, {
@@ -110,6 +112,21 @@ export const cancelSale = async (tokenId) => {
 }
 
 export const trading = async (tokenId, price) => {
+    // useEffect(() => {
+    //     axios({
+    //         method: 'post',
+    //         url: 'http://3.35.173.223:5050/nft/trade/save',
+    //         headers: {
+    //             "accessToken": localStorage.getItem('accessToken')
+    //         },
+    //         data: {
+    //             "assetId":int,
+    //             "price":int,
+    //             "sellerId":String,
+    //             "buyerId":String
+    //         }
+    //     })
+    // })
     const tx = await marketContract.trading(tokenId, {
         from: account,
         value: (price * ether).toString()

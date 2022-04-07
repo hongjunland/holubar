@@ -15,7 +15,7 @@ export default function routes(props) {
       <Route path="/donate" element={<DonatePage props={props}/>} />
       <Route path="/market" element={<MarketPage />} />
       <Route path="/ranking" element={<RankingPage />} />
-      <Route path="/market/:itemId" element={<ItemDetail />} />
+      <Route path="/market/:itemId" element={<ItemDetail props={props}/>} />
       <Route path="/profile/:itemId" element={<SalesRegist props={props}/>} />
     </Routes>
   );
