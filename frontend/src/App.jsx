@@ -159,39 +159,7 @@ function App() {
             accountButton={accountButton}
           />
         </Main>
-        {/* <Footer /> */}
       </Router>
-      {/* 
-      <div>
-        <div>
-          <p>Account: {account}</p>
-          <p>ChainId: {chainId}</p>
-        </div>
-        <div>
-          {accountButton}
-          */}
-      {/* <button type="button" onClick={handleConnect}>{active?'Logout':'MetaMask Login'}</button> */}
-
-      
-    {/* </div> */}
-    
-      {/* </div> */}
-      {!minted ? (
-        <button onClick={() => mint("name", "desc", "temp", "0.05")}>
-          Mint!
-        </button>
-      ) : (
-        <button onClick={() => _newSale(tokenId)}>Now Sale!</button>
-      )}
-      <br />
-      <button onClick={() => buying(tokenId, 0.05)}>Buy!</button>
-      <br />
-      <button onClick={() => _cancelSale(tokenId)}>Cancel sale</button>
-      <br />
-      <button onClick={() => getToken(58)}>Get Token</button>
-      <br />
-      <button onClick={() => getTokenList(account)}>Get my Tokens</button>
-
     </div>
   );
 }
