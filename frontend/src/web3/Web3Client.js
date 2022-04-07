@@ -31,6 +31,7 @@ export const init = async (_account) => {
             accessToken: localStorage.getItem("accessToken")
         }
     }).then((res) => {
+        console.log(res);
         donateNFTAddress = res.data.contractAddress;
         donateContract = new Contract(donateNFTAddress, DonateNFTBuild.abi, signer);
     });

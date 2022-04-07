@@ -35,10 +35,10 @@ export default function Nav() {
       disconnectMetamask();
       return;
     }
-    init(address);
     localStorage.setItem("walletAddress", address);
-
+    
     if (localStorage.getItem("accessToken")) {
+      init(address);
       return;
     }
 
