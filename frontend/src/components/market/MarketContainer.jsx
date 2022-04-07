@@ -2,20 +2,46 @@ import styled from "@emotion/styled";
 import SearchFilter from "components/SearchFilter";
 import List from "components/List";
 import SearchHeader from "components/SearchHeader";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { findAllProducts } from "api/nft";
+import { updateItems } from "state/assetsSlice";
+import { initialize } from "state/filterSlice";
 
+const MarketContainer = ()=>{
+    const dispatch = useDispatch();
+    const filterInfo = useSelector((state)=>state.filter.info);
+    const assets = useSelector((state)=>state.assets.items);
+    const [loading, setLoading] = useState(true);
+    useEffect(()=>{
+        if(loading) dispatch(initialize());
+        getCollections(filterInfo);
+    },[filterInfo]);
+    
+    const getCollections = (info)=>{
+        const query = `status=${info.status}&max=${info.to}&min=${info.from}&condition=${info.sort}`;
+        findAllProducts(query,(res)=>{
+            // filterInfo
+            const mySellList = res.data.sellList
+                .filter((item)=>item.asset_name.includes(info.msg))
+            dispatch(updateItems(mySellList));
+        })
+        setLoading(false);
+    }
 
-const MarketContainer = ({items})=>{
     return (
     <Container>
         <FilterContainer>
             <SearchFilter/>
         </FilterContainer>
+        {loading ? <div>loading...</div> :
         <MainContainer>
-            <SearchHeader items={items}/>
+            <SearchHeader items={assets}/>
             <SeachView>
-                <List items={items}/>
+                <List items={assets}/>
             </SeachView>
         </MainContainer>
+        }
     </Container>);
 }
 

@@ -20,6 +20,11 @@ const registProduct = async(priceInfo, success, fail)=>{
     api.defaults.headers.common["accessToken"] = localStorage.getItem('accessToken');
     await api.put(MAPPING_URL+"/trade/sell",JSON.stringify(priceInfo)).then(success).catch(fail);
 }
+// 토큰 
+const findAllProducts = async(query, success, fail)=>{
+    api.defaults.headers.common["accessToken"] = localStorage.getItem('accessToken');
+    await api.get(`${MAPPING_URL}/trade/sellList?${query}`).then(success).catch(fail);
+}
 
 
 // 거래내역 저장
@@ -34,4 +39,4 @@ const findAllActivities  = async(accessToken, success, fail)=>{
 }
 
 
-export {createToken, findToken,registProduct,saveActivity,findAllActivities};
+export {createToken, findToken,registProduct,saveActivity,findAllActivities,findAllProducts};

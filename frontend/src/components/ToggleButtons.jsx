@@ -1,18 +1,16 @@
 import {useState} from 'react';
-import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
-import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
-import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
-import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { Button } from '@mui/material';
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import { useDispatch } from 'react-redux';
+import { changeStatus } from 'state/filterSlice';
 const ToggleButtons = ()=>{
-    const [status, setStatus] = useState(0);
 
+    const dispatch = useDispatch();
+    const [status, setStatus] = useState(0);
     const handleAlignment = (event, newStatus) => {
         setStatus(newStatus);
+        dispatch(changeStatus(newStatus))
     };
 
     return (
@@ -25,9 +23,9 @@ const ToggleButtons = ()=>{
                 width: 100%;
             `}
         >
-            <ToggleButton value="0">ALL</ToggleButton>
+            <ToggleButton value="">ALL</ToggleButton>
+            <ToggleButton value="0">Not for sale</ToggleButton>
             <ToggleButton value="1">Buy Now</ToggleButton>
-            <ToggleButton value="2">Not for sale</ToggleButton>
         </ToggleButtonGroup>
     );
 }

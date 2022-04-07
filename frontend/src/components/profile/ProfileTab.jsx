@@ -45,7 +45,7 @@ const ProfileTab = ({
                 `}
             >
                 <Tab icon={<PhotoFilterIcon/>} iconPosition="start" label="Collected" />
-                <Tab icon={<ImagesearchRollerIcon/>} iconPosition="start" label="Created"/>
+                {/* <Tab icon={<ImagesearchRollerIcon/>} iconPosition="start" label="Created"/> */}
                 <Tab icon={<HistoryIcon/>} iconPosition="start" label="Activity"/>
             </Tabs>
         </div>

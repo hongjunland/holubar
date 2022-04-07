@@ -55,6 +55,7 @@ function App() {
     }).then((res) => {
       localStorage.setItem("accessToken", res.data.accessToken);
       console.log("get Token success");
+      // console.log(dispatch(setToken(res.data.accessToken)));
     });
   };
 
