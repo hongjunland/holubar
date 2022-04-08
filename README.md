@@ -21,6 +21,9 @@ NFT를 기반으로 기부자가 기부를 할 수 있는 플랫폼 제작
 
 ## 배포 프로젝트 URL
 * [http://holluba.kro.kr/](http://holluba.kro.kr/)
+### 필요한 설정
+* Metamask 지갑
+* Ropsten Test Network
 
 ## 프로젝트 실행 설정
 ### Docker Compose 설치
