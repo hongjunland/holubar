@@ -1,58 +1,48 @@
 /**
  *  PJT Ⅲ - Req.1-SC3) 시나리오 테스트
  */
-const SsafyToken = artifacts.require("SsafyToken");
-const SsafyNFT = artifacts.require("SsafyNFT");
-const SaleFactory = artifacts.require("SaleFactory");
-const Sale = artifacts.require("Sale");
-let ssafyTokenContract, salesFactoryContract, nftContract, salesContract;
-let itemId = 0;
+const DonateNFT = artifacts.require("DonateNFT");
+const Market = artifacts.require("Market");
 
 contract("Sale Contract Testing", (accounts) => {
-    const mintAmount = 10000;
-    const uri = "testURI";
+    let token;
+    let market;
 
-    async function print(title) {
-        const seller = accounts[0];
-        const bidder1 = accounts[1];
-        const bidder2 = accounts[2];
-        console.log(`\n--------------------  ${title} --------------------`);
-        console.log(`Seller: ${seller} ${await getBalance(seller)}`);
-        console.log(`Bidder1: ${bidder1} ${await getBalance(bidder1)}`);
-        console.log(`Bidder2: ${bidder2} ${await getBalance(bidder2)}\n`);
-    }
+    beforeEach(async function () {
+        token = await DonateNFT.new();
+        market = await Market.new();
+    })
+    
+    describe("포지티브 케이스 1: 마켓 동작 점검", () => {
+        it("Market trading", async () => {
+            const address1 = accounts[0];
+            const address2 = accounts[1];
+            const tokenURI = "tempURI";
 
-    it("Bid and confirm", async () => {
-        const seller = accounts[0];
-        const bidder1 = accounts[1];
-        const bidder2 = accounts[2]; // purchaser
+            market.setNFTAddress(token.address);
+            token.setMarketAddress(market.address);
+            
+            let tokenId = (await token.create(address1, "name", "desc", tokenURI, 5)).logs[0].args["tokenId"];
+            tokenId = (await token.create(address1, "name", "desc", tokenURI, 5)).logs[0].args["tokenId"];
+            let owner = (await token.ownerOf(tokenId));
+            console.log(await token.tokenURI(tokenId));
 
-        // TODO
-        // 다음을 테스트를 통과해야합니다.
-        // assert.equal(bidder2, await getNftOwner(), "Confirm Failed");
-        // assert.equal(1000, await getBalance(bidder1), "Refund Failed");
+            assert.equal(address1, owner, "NFT Mint Failed");
+            
+            // await token.approve(market.address, tokenId);
+            await token.newSale(tokenId, 50);
+
+            await market.trading(tokenId, {
+                from: address2,
+                value: 50
+            });
+            
+            owner = (await token.ownerOf(tokenId));
+
+            assert.equal(address2, owner, "NFT Transfer Failed.");
+            console.log(await web3.eth.getBalance(market.address));
+
+            assert.equal(tokenURI, (await token.getTokenById(tokenId)).tokenURI, "Wrong Token Id or URI.")
+        })
     });
-
-    it("Bid and Purchase", async () => {
-        const seller = accounts[0];
-        const bidder = accounts[1];
-        const purchaser = accounts[2];
-
-        // TODO
-        // 다음을 테스트를 통과해야합니다.
-        // assert.equal(purchaser, await getNftOwner(), "Not Owned By Purchaser");
-        // assert.equal(1000, await getBalance(bidder), "Refund Failed");
-        // assert.equal(900, await getBalance(purchaser), "Transfer Failed");
-    });
-
-    it("Bid and Cancel", async () => {
-        const seller = accounts[0];
-        const bidder = accounts[1];
-
-        // TODO
-        // 다음을 테스트를 통과해야합니다.
-        // assert.equal(seller, await getNftOwner(), "Cancellation Failed");
-        // assert.equal(1000, await getBalance(bidder), "Refund Failed");
-    });
-
 });
