@@ -10,8 +10,6 @@ import { deleteContracts, init } from "../../web3/Web3Client";
 import axios from "axios";
 
 export default function Nav() {
-  let navigate = useNavigate();
-
   const { chainId, account, active, activate, deactivate } = useWeb3React();
   let navigate = useNavigate();
 
