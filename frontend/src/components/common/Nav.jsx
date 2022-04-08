@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./Nav.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Button, Menu, MenuItem } from "@mui/material";
 import { holuba } from "../../assets";
@@ -14,6 +14,7 @@ import { color } from "@mui/system";
 
 export default function Nav() {
   const { chainId, account, active, activate, deactivate } = useWeb3React();
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (localStorage.getItem("accessToken") && !active) {
@@ -63,6 +64,7 @@ export default function Nav() {
     deleteContracts();
     localStorage.removeItem("accessToken");
     localStorage.removeItem("walletAddress");
+    navigate('/');
   };
 
   let accountButton;

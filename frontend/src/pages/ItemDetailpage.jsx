@@ -6,6 +6,7 @@ import {TreeView, TreeItem} from "@mui/lab";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { EthereumIcon } from '../components/Icons'
+import collapseMotion from 'antd/lib/_util/motion';
 
 
 export default function ItemDetail(props) {
@@ -32,7 +33,38 @@ export default function ItemDetail(props) {
     }).catch((err)=>{
       console.log(err)
     })
-  },[])
+  }, [])
+  
+  const letsBuy = async () => {
+    await props.props.buying(tokenData.tokenId, tokenData.price);
+    let buyerId;
+    await axios.get("http://3.35.173.223:5050/user/profile", {
+      headers: {
+        accessToken: `${localStorage.getItem("accessToken")}`,
+      }
+    })
+      .then((res) => {
+        buyerId = res.data.userId;
+      })
+    
+    await axios({
+      url: 'http://3.35.173.223:5050/nft/trade/save',
+      method: 'post',
+      headers: {
+        accessToken: `${localStorage.getItem("accessToken")}`,
+      },
+      data: {
+        "assetId":tokenData.assetId,
+        "price":tokenData.price,
+        "sellerId":tokenData.userId,
+        "buyerId":buyerId
+      }
+    }).then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 
 
 
@@ -73,26 +105,7 @@ export default function ItemDetail(props) {
               variant="contained" 
               color="primary" 
               style={{width:"132px", height:"42px"}}
-              onClick={()=>{
-                props.props.buying(tokenData.tokenId, tokenData.price)
-                axios({
-                  url: 'http://3.35.173.223:5050/nft/trade/save',
-                  method: 'post',
-                  headers: {
-                    accessToken: `${localStorage.getItem("accessToken")}`,
-                  },
-                  data: {
-                    "assetId":tokenData.assetId,
-                    "price":tokenData.price,
-                    "sellerId":tokenData.userId,
-                    "buyerId":props.props.account
-                  }
-                }).then((res) => {
-                  console.log(res)
-                }).catch((err) => {
-                  console.log(err)
-                })
-              }}
+              onClick={()=>{letsBuy()}}
             >
               구매하기
             </Button>
