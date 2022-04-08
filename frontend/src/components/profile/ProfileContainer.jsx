@@ -4,12 +4,12 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Banner from "components/Banner";
 import ProfileTab from "./ProfileTab";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { css } from "@emotion/react";
 import MarketContainer from "components/market/MarketContainer";
 import itemList from "samplejson/ItemList.json";
 import { useSelector, useDispatch } from "react-redux";
-import { getMyInfo } from "api/user";
+import { editUser, getMyInfo } from "api/user";
 import { findAllProducts } from "api/nft";
 import React from "react";
 import { updateItems } from "state/assetsSlice";
@@ -19,6 +19,7 @@ import ProfileActivityContainer from "./ProfileActivityContainer";
 import { findAllActivities } from "api/nft";
 import { updateActivities } from "state/activitiesSlice";
 import { useNavigate } from "react-router-dom";
+import { uploadImage } from "api/image";
 
 const ProfileContainer = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const ProfileContainer = () => {
   const index = useSelector((state) => state.tabIndex.value);
   const filterInfo = useSelector((state) => state.filter.info);
   const activities = useSelector((state) => state.activities.items);
-
+  const profileImageInput = useRef(null);
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -85,13 +86,32 @@ const ProfileContainer = () => {
   const onClickCopyButton = (e) => {
     alert(user.walletAddress);
   };
+  const onClickProfileImage = (e)=>{
+    console.log(123123);
+    profileImageInput.current.click();
+  }
+  const handleProfileImage = async(e)=>{
+    const formData = new FormData();
+    formData.append('image', e.target.files[0]);
+    await uploadImage(formData,(res)=>{
+      console.log(123123123);
+      changeUserInfo(res.data.imageUrl);
+    })
+  }
+  const changeUserInfo = async(imageSrc)=>{
+    const newUser = Object.assign({},user);
+    newUser["profileImageUrl"] = imageSrc;
+    await editUser(newUser,(res)=>{
+      dispatch(changeUserInfo(newUser));
+    })
+  }
   return (
     <Container>
       {loading ? (
         <div>loading...</div>
       ) : (
         <div>
-          <Banner imgURL={user.profileImageUrl} />
+          <Banner onClick={onClickProfileImage} imgURL={user.profileImageUrl} />
           <DivContainer>
             <FlexEndBlock>
               <SettingButton onClick={onClickSettingButton} />
@@ -99,7 +119,8 @@ const ProfileContainer = () => {
           </DivContainer>
           <MainContainer>
             <ProfileImage>
-              <ProfileAvartar src={user.profileImageUrl} />
+              <input onChange={handleProfileImage}ref={profileImageInput} accept="image/jpg, image/jpeg, image/png" id={"file-input"} type="file" css={css`display: none`} />
+              <ProfileAvartar onClick={onClickProfileImage} src={user.profileImageUrl} />
             </ProfileImage>
             <NicknameText>{user.nickname}</NicknameText>
             <CopyButton onClick={onClickCopyButton}>
@@ -204,13 +225,14 @@ const SettingButton = (props) => (
   </IconButton>
 );
 
-const ProfileAvartar = (props) => (
+const ProfileAvartar = ({src,...props}) => (
   <Avatar
     css={css`
       width: 100%;
       height: 100%;
     `}
-    src={props.src}
+    {...props}
+    src={src}
   />
 );
 
