@@ -2062,6 +2062,17 @@
   resolved "https://registry.yarnpkg.com/@mui/types/-/types-7.1.3.tgz#d7636f3046110bcccc63e6acfd100e2ad9ca712a"
   integrity sha512-DDF0UhMBo4Uezlk+6QxrlDbchF79XG6Zs0zIewlR4c0Dt6GKVFfUtzPtHCH1tTbcSlq/L2bGEdiaoHBJ9Y1gSA==
 
+"@mui/utils@^5.4.4":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.6.0.tgz#0ec741f5ac7c89ac76054832bed2d6e17ab1c011"
+  integrity sha512-LbZKkCOn4243vbEVGbaKV7t6eN6kz7t95DR6AcUCRk4daH3l7CXPYkWsyzysRWdXgSzHmIyrgg4FZKzTy0dTHQ==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+    "@types/prop-types" "^15.7.4"
+    "@types/react-is" "^16.7.1 || ^17.0.0"
+    prop-types "^15.7.2"
+    react-is "^17.0.2"
+
 "@mui/utils@^5.5.3":
   version "5.5.3"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.5.3.tgz#f6e1f10c0e8f4d0bf750588c2c3a96ad819c5b65"
@@ -2072,6 +2083,16 @@
     "@types/react-is" "^16.7.1 || ^17.0.0"
     prop-types "^15.7.2"
     react-is "^17.0.2"
+
+"@mui/x-data-grid@^5.8.0":
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-5.8.0.tgz#85a663ca9f700124bf260110f661a739135b8015"
+  integrity sha512-8U2Ltdi/Iy4zKfdBMwN62V20S2KSnRIuyyy7t8xK4QLSPsa9IIIM+6G6EnqL6z5ZWr4rnB/+EIjzjy+qcUlC4A==
+  dependencies:
+    "@mui/utils" "^5.4.4"
+    clsx "^1.1.1"
+    prop-types "^15.8.1"
+    reselect "^4.1.5"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -5456,6 +5477,11 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
+
+fs@^0.0.1-security:
+  version "0.0.1-security"
+  resolved "https://registry.yarnpkg.com/fs/-/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
+  integrity sha1-invTcYa23d84E/I4WLV+yq9eQdQ=
 
 fsevents@^2.3.2, fsevents@~2.3.2:
   version "2.3.2"

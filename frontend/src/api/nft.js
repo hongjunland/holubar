@@ -33,9 +33,9 @@ const saveActivity = async(activity, success, fail)=>{
     await api.post(MAPPING_URL+"/trade/save",JSON.stringify(activity)).then(success).catch(fail);
 }
 
-const findAllActivities  = async(accessToken, success, fail)=>{
-    api.defaults.headers.common["accessToken"] = accessToken;
-    await api.post(MAPPING_URL+"/trade/history").then(success).catch(fail);
+const findAllActivities  = async(success, fail)=>{
+    api.defaults.headers.common["accessToken"] = localStorage.getItem('accessToken');
+    await api.get(MAPPING_URL+"/trade/history").then(success).catch(fail);
 }
 
 

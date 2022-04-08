@@ -3,16 +3,15 @@ import "./Nav.css";
 import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Button, Menu, MenuItem } from "@mui/material";
-import { holuba } from "../../assets";
-
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "web3/connectors";
 import { deleteContracts, init } from "../../web3/Web3Client";
 
 import axios from "axios";
-import { color } from "@mui/system";
 
 export default function Nav() {
+  let navigate = useNavigate();
+
   const { chainId, account, active, activate, deactivate } = useWeb3React();
   let navigate = useNavigate();
 
@@ -31,16 +30,16 @@ export default function Nav() {
   };
 
   const login = (address) => {
-    if (!active)
-      return;
-    
+    if (!active) return;
+
     const nowAddress = localStorage.getItem("walletAddress");
+
     if (nowAddress && nowAddress !== address) {
       disconnectMetamask();
       return;
     }
     localStorage.setItem("walletAddress", address);
-    
+
     if (localStorage.getItem("accessToken")) {
       init();
       return;
@@ -55,9 +54,26 @@ export default function Nav() {
     }).then((res) => {
       localStorage.setItem("accessToken", res.data.accessToken);
       console.log("get Token success");
-      // console.log(dispatch(setToken(res.data.accessToken)));
+      getNickname();
     });
   };
+
+  function getNickname() {
+    axios
+      .get("http://3.35.173.223:5050/user/profile", {
+        headers: {
+          accessToken: `${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.nickname);
+        if (res.data.nickname === null) {
+          navigate("/profileEdit");
+        } else {
+          navigate("/");
+        }
+      });
+  }
 
   const disconnectMetamask = async () => {
     await deactivate();

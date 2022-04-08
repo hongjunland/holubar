@@ -81,7 +81,7 @@ const Contact = () => {
           <HomeTextField type="text" placeholder="Email Address" />
           <HomeTextField type="text" placeholder="Company Name" />
           <HomeButton fill="solid" type="submit">
-            Submit
+            제출
           </HomeButton>
         </S.Form>
       </S.TextWrapper>

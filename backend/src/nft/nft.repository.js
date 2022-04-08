@@ -100,10 +100,45 @@ class NftRepository {
 
     }
 
-    async getTradeHistory(assetId){
-        var a = await connection.query(`SELECT * FROM trade_history where asset_id = ?`,assetId);
+    async getTradeHistory(userId){
+
+        // var str = `SELECT asset_id as assetId, price, seller_id as \`from\`, buyer_id as \`to\`, date FROM trade_history where seller_id = ? or buyer_id =?`;
+        // console.log(str)
+        var a = await connection.query(`SELECT asset_id as assetId, price, seller_id as \`from\`, buyer_id as \`to\`, date FROM trade_history where seller_id = ? or buyer_id =?`,[userId,userId]);
+        var b = a[0]
+
+
+
+
+        for(var i in b){
+
+            if(!b[i].assetId || !b[i].from || !b[i].to){
+                return ;
+            }
+
+            var realassetname = await connection.query(`select asset_name from asset where asset_id = ?`,b[i].assetId)
+            var realfrom = await connection.query(`select nickname from user where user_id = ?`,b[i].from)
+
+            var realto = await connection.query(`select nickname from user where user_id = ?`,b[i].to)
+
+
+            b[i].assetName = realassetname[0][0].asset_name
+            b[i].from = realfrom[0][0].nickname
+            b[i].to = realto[0][0].nickname
+
+
+        }
+
         return a[0];
     }
+
+
+
+
+
+
+
+
     async  getAssetDetails(assetId){
         var a = await connection.query(`SELECT * FROM asset WHERE asset_id = ?`,assetId);
         return a[0];

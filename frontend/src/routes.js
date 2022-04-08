@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "pages/HomePage";
 import ProfilePage from "pages/ProfilePage";
+import ProfileEditPage from "pages/ProfileEditPage";
 import DonatePage from "pages/DonatePage";
 import MarketPage from "pages/MarketPage";
 import RankingPage from "pages/RankingPage";
@@ -12,11 +13,12 @@ export default function routes(props) {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/donate" element={<DonatePage props={props}/>} />
+      <Route path="/profileEdit" element={<ProfileEditPage />} />
+      <Route path="/donate" element={<DonatePage props={props} />} />
       <Route path="/market" element={<MarketPage />} />
       <Route path="/ranking" element={<RankingPage />} />
-      <Route path="/market/:itemId" element={<ItemDetail props={props}/>} />
-      <Route path="/profile/:itemId" element={<SalesRegist props={props}/>} />
+      <Route path="/market/:itemId" element={<ItemDetail props={props} />} />
+      <Route path="/profile/:itemId" element={<SalesRegist props={props} />} />
     </Routes>
   );
 }
