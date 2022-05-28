@@ -29,7 +29,7 @@ NFT를 기반으로 기부자가 기부를 할 수 있는 플랫폼 제작
 
 ![donate](./산출물/donate.jpg)
 
-2. market
+3. market
 
 ![market](./산출물/market.jpg)
 
