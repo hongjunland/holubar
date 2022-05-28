@@ -1,4 +1,4 @@
-![intro](./산출물/intro.jpg)
+![banner](./산출물/banner.jpg)
 
 # 기부 플랫폼
 
